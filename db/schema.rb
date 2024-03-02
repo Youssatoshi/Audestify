@@ -10,9 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_02_120751) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_02_144733) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "libraries", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "item_type"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_libraries_on_user_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "content"
+    t.datetime "scheduled_time"
+    t.integer "post_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "posts_social_media_accounts", id: false, force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "social_media_account_id", null: false
+    t.index ["post_id"], name: "index_posts_social_media_accounts_on_post_id"
+    t.index ["social_media_account_id"], name: "index_posts_social_media_accounts_on_social_media_account_id"
+  end
+
+  create_table "social_media_accounts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "platform_name"
+    t.string "account_name"
+    t.string "auth_token"
+    t.integer "account_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_social_media_accounts_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +63,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_02_120751) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "libraries", "users"
+  add_foreign_key "posts", "users"
+  add_foreign_key "social_media_accounts", "users"
 end
