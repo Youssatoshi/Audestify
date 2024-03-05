@@ -32,4 +32,33 @@ export default class extends Controller {
     }, {scope: 'public_profile,email,instagram_basic,instagram_graph_user_media,instagram_manage_insights,pages_show_list'});
   }
 
+  checkPermissions() {
+    FB.api('/me/permissions', response => {
+      console.log(response); // Log the response to see granted permissions
+      // Optionally, process the response to update the UI or alert the user
+      this.processPermissions(response.data);
+    });
+  }
+
+  processPermissions(permissions) {
+    // Example: Iterate through permissions and log them
+    permissions.forEach(permission => {
+      if (permission.status === 'granted') {
+        console.log(`${permission.permission}: granted`);
+      }
+    });
+    // Further processing logic here
+  }
+
+  // Modify your statusChangeCallback or login response handling to call checkPermissions
+  statusChangeCallback(response) {
+    if (response.status === 'connected') {
+      this.statusTarget.textContent = 'Facebook Connected';
+      console.log("User is logged in and authenticated", response);
+      this.checkPermissions(); // Call the permission check here
+    } else {
+      // Handle other statuses
+    }
+  }
+
 }
