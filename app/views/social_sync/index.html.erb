@@ -1,13 +1,4 @@
-<h1>SocialSync#index</h1>
-<p>Find me in app/views/social_sync/index.html.erb</p>
-
 <div data-controller="facebook">
-  <fb:login-button
-    scope="public_profile,email,user_posts"
-    onlogin="FacebookController.checkLoginState();"
-    data-action="facebook#login">
-  </fb:login-button>
+  <button data-action="facebook#login">Log in with Facebook</button>
   <p data-facebook-target="status"></p>
-  <p data-facebook-target="name"></p>
-  <div data-facebook-target="posts"></div>
 </div>

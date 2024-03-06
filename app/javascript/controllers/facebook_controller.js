@@ -1,53 +1,32 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["status", "name", "posts"]
+  static targets = ["status"]
 
   connect() {
-    this.checkLoginState();
-  }
-
-  checkLoginState() {
-    FB.getLoginStatus(response => {
-      this.statusChangeCallback(response);
-    });
-  }
-
-  statusChangeCallback(response) {
-    if (response.status === 'connected') {
-      this.statusTarget.textContent = 'Facebook Connected';
-      this.fetchUserData();
-    } else if (response.status === 'not_authorized') {
-      this.statusTarget.textContent = 'Please log into this app.';
+    if (typeof FB !== 'undefined') {
+      this.initializeFacebookSDK();
     } else {
-      this.statusTarget.textContent = 'Please log into Facebook.';
+      document.addEventListener('fbAsyncInit', this.initializeFacebookSDK.bind(this));
     }
   }
 
+  initializeFacebookSDK() {
+    // This function is called once the SDK is initialized
+    console.log("Facebook SDK initialized");
+    // You can check login status or call FB.login here as needed
+  }
+
   login() {
-    FB.login(response => {
-      this.checkLoginState();
-    }, {scope: 'public_profile,email,user_posts'});
-  }
-
-  fetchUserData() {
-    FB.api('/me', {fields: 'name,email'}, (response) => {
-      if (response && !response.error) {
-        this.nameTarget.textContent = `Welcome, ${response.name}`;
-        this.fetchUserPosts();
+    FB.login((response) => {
+      if (response.authResponse) {
+        console.log("Successfully logged in with Facebook");
+        this.statusTarget.textContent = "Logged in";
+        // Additional actions after successful login
+      } else {
+        console.log("Facebook login failed");
+        this.statusTarget.textContent = "Login failed";
       }
-    });
-  }
-
-  fetchUserPosts() {
-    FB.api('/me/posts', {limit: 5, fields: 'message,created_time'}, (response) => {
-      if (response && !response.error) {
-        let postsContent = "Latest posts:<br>";
-        response.data.forEach((post) => {
-          postsContent += `${post.message} (Posted on: ${new Date(post.created_time).toLocaleDateString()})<br>`;
-        });
-        this.postsTarget.innerHTML = postsContent;
-      }
-    });
+    }, {scope: 'public_profile,email'});
   }
 }
