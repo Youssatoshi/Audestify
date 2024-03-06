@@ -29,12 +29,18 @@ export default class extends Controller {
   }
 
   fetchUserInfo() {
-    FB.api('/me', {fields: 'name'}, (response) => {
+    FB.api('/me', {fields: 'name, picture.type(large)'}, (response) => {
       if (response && !response.error) {
-        // Update the status target to show the user's name
-        this.statusTarget.textContent = `Logged in as ${response.name}`;
-        console.log(response); // Log the response to see all available user info
+        // Create an image element to display the profile picture
+        const profilePic = `<img src="${response.picture.data.url}" alt="Profile picture">`;
+
+        // Update the status target to show the user's name and profile picture
+        this.statusTarget.innerHTML = `Logged in as ${response.name} ${profilePic}`;
+      } else {
+        console.error("Failed to fetch user info:", response.error);
+        this.statusTarget.textContent = "Failed to fetch user information";
       }
     });
-  }
+}
+
 }
