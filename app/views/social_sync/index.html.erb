@@ -3,11 +3,11 @@
 
 <div data-controller="facebook">
   <fb:login-button
-    scope="public_profile,email"
-    onlogin="checkLoginState();"
+    scope="public_profile,email,user_posts"
+    onlogin="FacebookController.checkLoginState();"
     data-action="facebook#login">
   </fb:login-button>
   <p data-facebook-target="status"></p>
+  <p data-facebook-target="name"></p>
+  <div data-facebook-target="posts"></div>
 </div>
-
-<div id="instagram-posts"></div>
