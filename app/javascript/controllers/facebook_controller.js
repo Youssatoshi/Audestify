@@ -12,21 +12,29 @@ export default class extends Controller {
   }
 
   initializeFacebookSDK() {
-    // This function is called once the SDK is initialized
     console.log("Facebook SDK initialized");
-    // You can check login status or call FB.login here as needed
+    // Now that the SDK is initialized, you can check login status or call FB.login here as needed
   }
 
   login() {
     FB.login((response) => {
       if (response.authResponse) {
         console.log("Successfully logged in with Facebook");
-        this.statusTarget.textContent = "Logged in";
-        // Additional actions after successful login
+        this.fetchUserInfo(); // Call fetchUserInfo to retrieve and display user data
       } else {
         console.log("Facebook login failed");
         this.statusTarget.textContent = "Login failed";
       }
     }, {scope: 'public_profile,email'});
+  }
+
+  fetchUserInfo() {
+    FB.api('/me', {fields: 'name'}, (response) => {
+      if (response && !response.error) {
+        // Update the status target to show the user's name
+        this.statusTarget.textContent = `Logged in as ${response.name}`;
+        console.log(response); // Log the response to see all available user info
+      }
+    });
   }
 }
