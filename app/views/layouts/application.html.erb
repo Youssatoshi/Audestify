@@ -10,42 +10,29 @@
     <%= javascript_importmap_tags %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '3839146769738510', // Your Facebook App ID
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v19.0'
+        });
+
+        FB.AppEvents.logPageView();
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+  </script>
   </head>
 
   <body>
-     <h2>Add Facebook Login to your webpage</h2>
-
-      <!-- Set the element id for the JSON response -->
-
-      <p id="profile"></p>
-
-      <script>
-          window.fbAsyncInit = function() {
-            FB.init({
-              appId      : '3839146769738510', // Your Facebook App ID
-              cookie     : true,
-              xfbml      : true,
-              version    : 'v19.0'
-            });
-
-            FB.AppEvents.logPageView();
-
-            // Check the user's login status
-            FB.getLoginStatus(function(response) {
-              if (response.status === 'connected') {
-                // The user is logged in and has authenticated your app
-                console.log("User is logged in and authenticated");
-              } else if (response.status === 'not_authorized') {
-                // The user is logged in to Facebook but has not authenticated your app
-                console.log("User is logged in to Facebook but not authenticated the app");
-              } else {
-                // The user isn't logged in to Facebook.
-                console.log("User is not logged in to Facebook");
-              }
-            });
-          };
-      </script>
-
-
+      <%= yield %>
   </body>
 </html>

@@ -16,6 +16,16 @@ export default class extends Controller {
     // Now that the SDK is initialized, you can check login status or call FB.login here as needed
   }
 
+  ensureFBLoaded() {
+    return new Promise((resolve, reject) => {
+      if (window.FB) {
+        resolve();
+      } else {
+        document.addEventListener('fbAsyncInit', resolve);
+      }
+    });
+  }
+
   login() {
     FB.login((response) => {
       if (response.authResponse) {
