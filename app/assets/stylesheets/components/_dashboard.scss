@@ -1,0 +1,75 @@
+// Reset default margin and padding, and set the font family
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif; // Poppins font family
+}
+
+// Define wrapper as a flex container
+.wrapper {
+  display: flex;
+
+  // Style the sidebar
+  .sidebar {
+    width: 200px;
+    background-color: #D3E4FF; // Low fidelity color
+    height: 100vh;
+    padding: 20px;
+
+    // Style the logo
+    .logo {
+      color: #20344D; // Low fidelity color
+      text-align: center;
+    }
+
+    // Style the navigation list
+    nav ul {
+      list-style: none;
+      padding: 0;
+
+      // Style the navigation links
+      li a {
+        color: #20344D; // Low fidelity color
+        text-decoration: none;
+        display: block;
+        padding: 10px 0;
+      }
+    }
+  }
+}
+
+// Style the main content area
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #F2FAFF; // Low fidelity color
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  // Style the account section
+  .account {
+    margin-bottom: 20px;
+
+    // Style the account placeholder
+    .account-placeholder {
+      display: flex;
+      width: 100%;
+      height: 150px;
+      background-color: #D3E4FF; // Low fidelity color
+      margin-bottom: 10px;
+    }
+
+    // Style the account name
+    .account-name {
+      display: block;
+      text-align: center;
+      background-color: #F2FAFF; // Low fidelity color
+      color: #20344D; // Low fidelity color
+      line-height: 40px;
+      border: 1px solid #ddd;
+      width: 100%;
+    }
+
+  }
+  }
