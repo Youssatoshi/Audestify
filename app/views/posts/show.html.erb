@@ -1,31 +1,149 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="components/all.scss">
-  <link rel="stylesheet" href="components/navbar.scss">
-  <link rel="stylesheet" href="components/avatar.scss">
   <title>Post Analytics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin-right: 128px;
+      margin-left: 128px;
+      padding: 0;
+    }
+
+    .back-arrow {
+      margin: 16px;
+      text-decoration: none;
+      margin-bottom: 16px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .navbar {
+      width: 200px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      padding: 10px;
+    }
+
+    .navbar ul li {
+      padding: 10px;
+    }
+
+    .navbar ul li a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .navbar ul li a:hover {
+      background-color: #94B9FF;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    .container {
+      border-radius: 16px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 0;
+      border-radius: 8px;
+      height: 300px;
+    }
+
+    .emotion-pie,
+    .graph-posts,
+    .emotion-ranking {
+      border: 1px solid #ccc;
+      flex: 1;
+      border-radius: 12px;
+      margin: 8px;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+
+    .create {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .create a {
+      text-decoration: none;
+      background-image: linear-gradient(45deg, #F2FAFF, #94B9FF);
+      padding: 16px;
+      border-radius: 8px;
+      width: 25%;
+      text-align: center;
+    }
+
+    .create a hover {
+      color: #666;
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .suggestion-box {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 800px;
+      width: 100%;
+      background-color: #f9f9f9;
+      height: 240px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="post-analytics">
-      <div class="emotion-pie"></div>
-      <div class="graph"></div>
-      <div class="emotion-ranking"></div>
+  <div class="navbar">
+    <div class="back-arrow">
+      <%= link_to('Back', social_media_accounts_show_path) %>
+    </div>
+    <ul>
+      <li><%= link_to('Dashboard', dashboard_index_path) %></li>
+      <li><a href="#">Publish Center</a></li>
+      <li><a href="#">Content Library</a></li>
+      <li><a href="#">Collaboration Hub</a></li>
+      <li><a href="#">General Analytics</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <h1 style="text-align: center;">Replace with name of Post</h1>
+    <div class="row">
+      <div class="emotion-pie">Emotion Pie</div>
+      <div class="graph-posts">Graph Posts</div>
+      <div class="emotion-ranking">Emotion Ranking</div>
     </div>
 
     <div class="create">
-      <button> New Post </button>
+      <%= link_to('New Post', posts_create_path) %>
+      <%= link_to('Publish', "some link")%>
     </div>
 
-    <div class="ai-suggestion">
-      <p>Place where to ask for suggestions</p>
+    <div class="center">
+      <div class="suggestion-box">
+        <p>Placeholder for AI box to ask for suggestions...</p>
+      </div>
     </div>
-
   </div>
 </body>
 </html>

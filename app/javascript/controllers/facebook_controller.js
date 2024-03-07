@@ -1,64 +1,57 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["status"]
 
   connect() {
-    this.checkLoginState();
-  }
-
-  checkLoginState() {
-    FB.getLoginStatus(response => {
-      this.statusChangeCallback(response);
+    this.ensureFBLoaded().then(() => {
+      console.log("Facebook SDK is now ready");
+      // Facebook SDK is ready to use, you can add additional SDK initialization code here if needed
+    }).catch(error => {
+      console.error("Error loading Facebook SDK: ", error);
     });
   }
 
-  statusChangeCallback(response) {
-    if (response.status === 'connected') {
-      this.statusTarget.textContent = 'Facebook Connected';
-      console.log("User is logged in and authenticated", response);
-    } else if (response.status === 'not_authorized') {
-      this.statusTarget.textContent = 'Please log into this app.';
-      console.log("The user is logged in to Facebook, but not your app", response);
-    } else {
-      this.statusTarget.textContent = 'Please log into Facebook.';
-      console.log("The user isn't logged in to Facebook.", response);
-    }
+  ensureFBLoaded() {
+    return new Promise((resolve, reject) => {
+      if (window.FB) {
+        resolve(); // FB is already loaded, resolve immediately
+      } else {
+        // Listen for the fbAsyncInit event
+        document.addEventListener('fbAsyncInit', () => {
+          resolve(); // FB is loaded, resolve the promise
+        }, { once: true }); // Use the { once: true } option to automatically remove the listener after it fires
+      }
+    });
   }
 
   login() {
-    FB.login(response => {
-      this.checkLoginState();
-    }, {scope: 'public_profile,email,instagram_basic,instagram_graph_user_media,instagram_manage_insights,pages_show_list'});
-  }
-
-  checkPermissions() {
-    FB.api('/me/permissions', response => {
-      console.log(response); // Log the response to see granted permissions
-      // Optionally, process the response to update the UI or alert the user
-      this.processPermissions(response.data);
+    this.ensureFBLoaded().then(() => {
+      FB.login((response) => {
+        if (response.authResponse) {
+          console.log("Successfully logged in with Facebook");
+          this.fetchUserInfo(); // Call fetchUserInfo to retrieve and display user data
+        } else {
+          console.log("Facebook login failed");
+          this.statusTarget.textContent = "Login failed";
+        }
+      }, {scope: 'public_profile,email'}); // Request permissions
+    }).catch(error => {
+      console.error("Error during FB.login: ", error);
     });
   }
 
-  processPermissions(permissions) {
-    // Example: Iterate through permissions and log them
-    permissions.forEach(permission => {
-      if (permission.status === 'granted') {
-        console.log(`${permission.permission}: granted`);
+  fetchUserInfo() {
+    FB.api('/me', {fields: 'name, picture.type(large)'}, (response) => {
+      if (response && !response.error) {
+        // Extract the profile picture URL
+        const profilePicUrl = response.picture.data.url;
+        // Update the status target to show the user's name and profile picture
+        this.statusTarget.innerHTML = `Logged in as ${response.name} <img src="${profilePicUrl}" alt="Profile picture">`;
+      } else {
+        console.error("Failed to fetch user info:", response.error);
+        this.statusTarget.textContent = "Failed to fetch user information";
       }
     });
-    // Further processing logic here
   }
-
-  // Modify your statusChangeCallback or login response handling to call checkPermissions
-  statusChangeCallback(response) {
-    if (response.status === 'connected') {
-      this.statusTarget.textContent = 'Facebook Connected';
-      console.log("User is logged in and authenticated", response);
-      this.checkPermissions(); // Call the permission check here
-    } else {
-      // Handle other statuses
-    }
-  }
-
 }

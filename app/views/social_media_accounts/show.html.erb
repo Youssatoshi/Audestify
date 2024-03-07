@@ -3,22 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to your SM(insert SM here) Dashboard</title>
-  <!-- Link to your CSS file -->
-  <link rel="stylesheet" href="stylesheets/style.css">
+  <title>Resizable Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      width: 200px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      padding: 10px;
+    }
+
+    .navbar ul li {
+      padding: 10px;
+    }
+
+    .navbar ul li a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .navbar ul li a:hover {
+      background-color: #94B9FF;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+      margin-top: 64px;
+      position: relative;
+    }
+
+    .back-arrow {
+      margin: 16px;
+      text-decoration: none;
+      margin-bottom: 16px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .content-container {
+      width: 100%;
+      max-width: 1100px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .row {
+      margin-bottom: 16px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dashboard-link {
+      width: 100px;
+      text-decoration: none;
+      color: #94B9FF;
+    }
+
+    .overall-dashboard {
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to your Dashboard</h1>
-  <!-- Other HTML content goes here -->
-  <div class="container" style="display: flex;">
-      <div class="back-arrow">&larr; Back</div>
-      <div class="vertical-container">
-          <div class="dashboard-row">Overall Dashboard</div>
-          <div class="row">Post 1</div>
-          <div class="row">Post 2</div>
-          <div class="row">Post 3</div>
-          <div class="row">Post 4</div>
-      </div>
+  <div class="navbar">
+    <div class="back-arrow">
+      <%= link_to('Back', dashboard_index_path) %>
+    </div>
+    <ul>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Publish Center</a></li>
+      <li><a href="#">Content Library</a></li>
+      <li><a href="#">Collaboration Hub</a></li>
+      <li><a href="#">General Analytics</a></li>
+    </ul>
   </div>
-</body>
-</html>
+
+
+
+  <div class="container">
+    <div class="content-container">
+      <div class="row overall-dashboard">
+        Overall Dashboard
+      </div>
+      <div class="row">
+        Post 1 <%= link_to('Dashboard', posts_show_path, class: 'dashboard-link') %>
+      </div>
+      <div class="row">
+        Post 2 <%= link_to('Dashboard', "dashboard_index_path", class: 'dashboard-link') %>
+      </div>
+      <div class="row">
+        Post 3 <%= link_to('Dashboard', "dashboard_index_path", class: 'dashboard-link') %>
+      </div>
+      <div class="row">
+        Post 4 <%= link_to('Dashboard', "dashboard_index_path", class: 'dashboard-link') %>
+      </div
