@@ -1,31 +1,60 @@
 <h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="components/all.scss">
-  <link rel="stylesheet" href="components/navbar.scss">
-  <link rel="stylesheet" href="components/avatar.scss">
+  <link rel="stylesheet" href="app/assets/stylesheets/style.css">
   <title>Post Analytics</title>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="post-analytics">
-      <div class="emotion-pie"></div>
-      <div class="graph"></div>
-      <div class="emotion-ranking"></div>
-    </div>
+  <div class="container-fluid" style="border-radius: 16px;">
+    <div class="row" style="display: flex;
+    justify-content: space-between;
+    margin: 16px;
+    border-radius: 8px;
+    height: 200px;">
+    <div class="emotion-pie" style="border: 1px solid black; flex: 1;
+    border-radius: 16px;
+    margin: 8px;"></div>
+    <div class="graph-posts" style="border: 1px solid black; flex: 1;
+    border-radius: 16px;
+    margin: 8px;"></div>
+    <div class="emotion-ranking" style="border: 1px solid black; flex: 1;
+    border-radius: 16px;
+    margin: 8px;"></div>
+</div>
 
-    <div class="create">
-      <button> New Post </button>
-    </div>
+    <div class="create" style="display: flex;
+    justify-content: space-around;">
+      <button style="width: 50%;
+      max-width: 400px;
+      background-image: linear-gradient(45deg, #F2FAFF, #94B9FF);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;"> New Post </button>
 
-    <div class="ai-suggestion">
-      <p>Place where to ask for suggestions</p>
+      <button style="width: 50%;
+      max-width: 400px;
+      background-image: linear-gradient(45deg, #F2FAFF, #94B9FF);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;"> Publish </button>
     </div>
+  </div>
 
+  <div class="center" style="display: flex; justify-content: center;">
+    <div class="row"
+      style="border: 1px solid black;
+      margin: 16px;
+      border-radius: 8px;
+      height: 200px;
+      width: 75%;
+      max-width: 800px;
+      display: flex; /* Added */
+      justify-content: center; /* Added */
+    ">
+      <p>Placeholder for AI box to ask for suggestions...</p>
+    </div>
   </div>
 </body>
 </html>
