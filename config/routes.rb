@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # Note: You have two root routes defined. Make sure to use only one to avoid conflicts.
   # root "posts#index"
+  # config/routes.rb
+  # If you haven't already, add a route for the callback
+
+  get '/auth/facebook', to: 'sessions#create'
 
   # Home
 
