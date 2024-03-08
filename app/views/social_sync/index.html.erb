@@ -1,2 +1,92 @@
-<!-- app/views/social_sync/index.html.erb -->
-<%= link_to "Connect to Facebook", "/auth/facebook", class: "btn btn-primary" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Connect Your Facebook Account</title>
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            width: 40%;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px auto;
+        }
+
+        .container {
+            padding: 2px 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2 style="text-align:center">Connect Your Facebook Account</h2>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '3839146769738510', // Replace with your Facebook App ID
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v19.0' // Use the Graph API version suited for your app
+            });
+
+            FB.AppEvents.logPageView();
+        };
+
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        function statusChangeCallback(response) {
+            console.log('Facebook login status changed.');
+            console.log(response);
+            if (response.status === 'connected') {
+                console.log('Successfully connected to Facebook.');
+
+                // Fetch and display user name and email
+                FB.api('/me', {fields: 'name,email'}, function(userData) {
+                    console.log(userData);
+                    document.getElementById("status").innerHTML = `
+                        <p>Logged in as ${userData.name}</p>
+                        <p>Email: ${userData.email}</p>
+                    `;
+
+                    // Send HTTP GET request to retrieve profile picture
+                    fetch(`https://graph.facebook.com/v19.0/${userData.id}/picture?type=large&redirect=false`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            if (data && data.data && data.data.url) {
+                                // Append the image to the status element
+                                document.getElementById("status").innerHTML += `
+                                    <img src="${data.data.url}" alt="Profile picture" style="display:block; margin:auto;" />
+                                `;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching profile picture:', error);
+                        });
+                });
+
+            } else {
+                console.log('User is not authenticated with Facebook.');
+                document.getElementById("status").innerHTML = 'Please log into this app.';
+            }
+        }
+    </script>
+
+    <div class="container">
+        <fb:login-button
+            scope="public_profile,email,user_photos"
+            onlogin="checkLoginState();">
+        </fb:login-button>
+        <div id="status"></div>
+    </div>
+</div>
+
+</body>
+</html>

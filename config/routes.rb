@@ -19,8 +19,9 @@ Rails.application.routes.draw do
   # root "posts#index"
   # config/routes.rb
   # If you haven't already, add a route for the callback
+  # config/routes.rb
 
-  get '/auth/facebook', to: 'sessions#create'
+  post '/social_media_accounts/facebook', to: 'social_media_accounts#facebook'
 
   # Home
 
