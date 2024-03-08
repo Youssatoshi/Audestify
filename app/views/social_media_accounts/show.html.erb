@@ -11,21 +11,9 @@
       padding: 0;
     }
 
-    .navbar {
-      width: 200px;
-      height: 100vh;
-      position: fixed;
-      left: 0;
-      top: 0;
-    }
-
-    .navbar ul {
-      list-style-type: none;
-      padding: 10px;
-    }
-
     .navbar ul li {
       padding: 10px;
+      list-style-type: none;
     }
 
     .navbar ul li a {
@@ -43,7 +31,7 @@
       display: flex;
       justify-content: center;
       padding: 16px;
-      margin-top: 64px;
+      margin-right: 120px;
       position: relative;
     }
 
@@ -92,6 +80,7 @@
   </style>
 </head>
 <body>
+<div class="encase" style="display: flex;">
   <div class="navbar">
     <div class="back-arrow">
       <%= link_to('Back', dashboard_index_path) %>
@@ -104,8 +93,6 @@
       <li><a href="#">General Analytics</a></li>
     </ul>
   </div>
-
-
 
   <div class="container">
     <div class="content-container">
@@ -123,4 +110,7 @@
       </div>
       <div class="row">
         Post 4 <%= link_to('Dashboard', "dashboard_index_path", class: 'dashboard-link') %>
-      </div
+      </div>
+    </div>
+  </div>
+</body>
