@@ -7,33 +7,34 @@
   <style>
     .encase {
       display: flex;
+      justify-content: center; /* Center the content horizontally */
     }
 
-    .navbar {
-      padding: 20px 10px; /* Added top padding to create space */
+    .navbar-left {
       display: flex;
       flex-direction: column;
-      justify-content: center; /* Center items vertically */
-      align-items: flex-start; /* Align items to the start (left) */
+      align-items: center; /* Align items to the center horizontally */
       position: relative;
+      margin-top: 160px;
     }
 
-    .navbar ul {
+    .navbar-left ul {
       padding: 0;
       margin: 0;
+      text-align: left; /* Align the text to the left */
     }
 
-    .navbar ul li {
+    .navbar-left ul li {
       padding: 10px;
       list-style-type: none;
     }
 
-    .navbar ul li a {
+    .navbar-left ul li a {
       color: black;
       text-decoration: none;
     }
 
-    .navbar ul li a:hover {
+    .navbar-left ul li a:hover {
       background-color: #94B9FF;
       border-radius: 8px;
       padding: 8px;
@@ -51,24 +52,29 @@
       margin: 16px;
       text-decoration: none;
       position: absolute;
-      top: 0;
       left: 0;
       z-index: 1;
+    }
+
+    .dashboard-link {
+      list-style-type: none;
+      text-decoration: none;
+      color: black;
     }
   </style>
 </head>
 <body>
   <div class="encase">
-    <div class="navbar">
       <div class="back-arrow">
         <%= link_to('Back', dashboard_index_path) %>
       </div>
+    <div class="navbar-left">
       <ul>
-        <li><%= link_to('Dashboard', dashboard_index_path) %></li>
-        <li><%= link_to('Publish Center', posts_create_path) %></li>
-        <li><%= link_to('Content Library', library_index_path) %></li>
-        <li><a href="#">Collaboration Hub</a></li>
-        <li><a href="#">General Analytics</a></li>
+        <li><%= link_to('Dashboard', dashboard_index_path, class: 'dashboard-link') %></li>
+        <li><%= link_to('Publish Center', posts_create_path, class: 'dashboard-link') %></li>
+        <li><%= link_to('Content Library', library_index_path, class: 'dashboard-link') %></li>
+        <li><%= link_to('Collaboration Hub', "library_index_path", class: 'dashboard-link') %></li>
+        <li><%= link_to('General Analytics', "library_index_path", class: 'dashboard-link') %></li>
       </ul>
     </div>
 
