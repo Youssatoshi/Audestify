@@ -2,131 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Connect Your Facebook Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Your Social Media Accounts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+            padding: 20px;
+        }
         .card {
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 40%;
             border-radius: 5px;
             padding: 20px;
-            margin: 20px auto;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 250px;
         }
-
-        .container {
-            padding: 2px 16px;
+        .card:hover {
+            transform: translateY(-5px);
         }
-        .back-arrow {
-          margin: 16px;
-          text-decoration: none;
-          margin-bottom: 16px;
+        .status-icon {
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
         }
-        .navbar-left ul li {
-          padding: 10px;
-          list-style-type: none;
+        .connected {
+            background-color: #28a745; /* Green for connected */
         }
-
-        .navbar-left ul li a {
-          color: black;
-          text-decoration: none;
+        .not-connected {
+            background-color: #dc3545; /* Red for not connected */
         }
-
-        .navbar-left ul li a:hover {
-          background-color: #94B9FF;
-          border-radius: 8px;
-          padding: 8px;
+        .sync-btn {
+            padding: 10px 20px;
+            background-color: #4267B2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
         }
-        .dashboard-link {
-          list-style-type: none;
-          text-decoration: none;
-          color: black;
+        .sync-btn:hover {
+            background-color: #365899;
+        }
+        .fa-facebook-f { color: #4267B2; }
+        .fa-tiktok { color: #000; }
+        .fa-twitter { color: #1DA1F2; }
+        .fa-linkedin-in { color: #0077B5; }
+        .fa-youtube { color: #FF0000; }
+        .fa-sync { animation: spin 2s linear infinite; }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-<div class="encase" style="display: flex;">
-    <div class="navbar-left">
-      <div class="back-arrow">
-        <%= link_to('Back', dashboard_index_path) %>
-      </div>
-      <ul>
-        <li><%= link_to('Dashboard', dashboard_index_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Publish Center', posts_create_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Content Library', library_index_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Collaboration Hub', "library_index_path", class: 'dashboard-link') %></li>
-        <li><%= link_to('General Analytics', social_sync_index_path) %></li>
-      </ul>
-    </div>
 
+<div class="container">
+    <div class="card" id="facebook-card">
+        <i class="fab fa-facebook-f fa-3x"></i>
+        <button class="sync-btn" onclick="checkLoginState();">Sync Now</button>
+        <div id="facebook-status" class="status-icon not-connected"></div>
+    </div>
+    <!-- Example of other social media cards -->
     <div class="card">
-        <h2 style="text-align:center">Connect Your Facebook Account</h2>
-        <div id="fb-root"></div>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '454640906893151', // Replace with your Facebook App ID
-                    cookie     : true,
-                    xfbml      : true,
-                    version    : 'v19.0' // Use the Graph API version suited for your app
-                });
-
-                FB.AppEvents.logPageView();
-            };
-
-            function checkLoginState() {
-                FB.getLoginStatus(function(response) {
-                    statusChangeCallback(response);
-                });
-            }
-
-            function statusChangeCallback(response) {
-                console.log('Facebook login status changed.');
-                console.log(response);
-                if (response.status === 'connected') {
-                    console.log('Successfully connected to Facebook.');
-
-                    // Fetch and display user name and email
-                    FB.api('/me', {fields: 'name,email'}, function(userData) {
-                        console.log(userData);
-                        document.getElementById("status").innerHTML = `
-                            <p>Logged in as ${userData.name}</p>
-                            <p>Email: ${userData.email}</p>
-                        `;
-
-                        // Send HTTP GET request to retrieve profile picture
-                        fetch(`https://graph.facebook.com/v19.0/${userData.id}/picture?type=large&redirect=false`)
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log(data);
-                                if (data && data.data && data.data.url) {
-                                    // Append the image to the status element
-                                    document.getElementById("status").innerHTML += `
-                                        <img src="${data.data.url}" alt="Profile picture" style="display:block; margin:auto;" />
-                                    `;
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error fetching profile picture:', error);
-                            });
-                    });
-
-                } else {
-                    console.log('User is not authenticated with Facebook.');
-                    document.getElementById("status").innerHTML = 'Please log into this app.';
-                }
-            }
-        </script>
-
-        <div class="container">
-            <fb:login-button
-                scope="public_profile,email,user_photos"
-                onlogin="checkLoginState();">
-            </fb:login-button>
-            <div id="status"></div>
-        </div>
+        <i class="fab fa-tiktok fa-3x"></i>
+        <p class="status">Not Connected</p>
+        <div class="status-icon not-connected"></div>
     </div>
-
+    <div class="card">
+        <i class="fab fa-twitter fa-3x"></i>
+        <p class="status">Not Connected</p>
+        <div class="status-icon not-connected"></div>
+    </div>
+    <!-- Add additional cards for other social media platforms as needed -->
 </div>
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '454640906893151', // Replace with your Facebook App ID
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v19.0' // Use the Graph API version suited for your app
+        });
+
+        FB.AppEvents.logPageView();
+    };
+
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            // Update the Facebook card to show connected status
+            document.getElementById("facebook-status").classList.remove("not-connected");
+            document.getElementById("facebook-status").classList.add("connected");
+            // Swap the Sync button with a syncing animation
+            var fbCard = document.getElementById("facebook-card");
+            fbCard.querySelector('.sync-btn').innerHTML = '<i class="fas fa-sync fa-2x"></i>';
+        } else {
+            document.getElementById("facebook-status").classList.remove("connected");
+            document.getElementById("facebook-status").classList.add("not-connected");
+        }
+    }
+</script>
+
 </body>
 </html>
