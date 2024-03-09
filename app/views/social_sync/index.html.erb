@@ -122,8 +122,7 @@
         });
     }
 
-function createSocialMediaAccount() {
-    var authToken = document.getElementById("auth-token").value;
+function createSocialMediaAccount(authToken) {
     if (authToken) {
         // Hna authToken will be sent to the backend
         $.ajax({
@@ -161,7 +160,7 @@ function statusChangeCallback(response) {
             document.getElementById("facebook-status").classList.add("connected");
             var fbCard = document.getElementById("facebook-card");
             fbCard.querySelector('.sync-btn').classList.add("hidden");
-            createSocialMediaAccount();
+            createSocialMediaAccount(response.auth.accessToken);
         } else {
             // The person is not logged into your app or we are unable to tell.
             facebookStatusText.classList.remove("hidden");
