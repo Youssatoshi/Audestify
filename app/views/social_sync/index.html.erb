@@ -27,7 +27,8 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            height: 250px;
+            height: 350px;
+
         }
         .card:hover {
             transform: translateY(-5px);
@@ -69,26 +70,36 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .status-text {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- Facebook Card -->
     <div class="card" id="facebook-card">
-        <i class="fab fa-facebook-f fa-3x"></i>
-        <button class="sync-btn" onclick="checkLoginState();">Sync Now</button>
+        <i class="fab fa-facebook-f fa-3x mb-3"></i>
         <div id="facebook-status" class="status-icon not-connected"></div>
+        <button class="sync-btn" onclick="checkLoginState();">Sync Now</button>
+        <p id="facebook-status-text" class="status-text hidden">Not Connected</p>
     </div>
-    <!-- Example of other social media cards -->
+    <!-- Other Social Media Cards -->
     <div class="card">
-        <i class="fab fa-tiktok fa-3x"></i>
-        <p class="status">Not Connected</p>
+        <i class="fab fa-tiktok fa-3x mb-3"></i>
         <div class="status-icon not-connected"></div>
+        <button class="sync-btn">Sync Now</button>
+        <p class="status-text">Not Connected</p>
     </div>
     <div class="card">
-        <i class="fab fa-twitter fa-3x"></i>
-        <p class="status">Not Connected</p>
+        <i class="fab fa-twitter fa-3x mb-3"></i>
         <div class="status-icon not-connected"></div>
+        <button class="sync-btn">Sync Now</button>
+        <p class="status-text">Not Connected</p>
     </div>
     <!-- Add additional cards for other social media platforms as needed -->
 </div>
@@ -100,29 +111,51 @@
             appId      : '454640906893151', // Replace with your Facebook App ID
             cookie     : true,
             xfbml      : true,
-            version    : 'v19.0' // Use the Graph API version suited for your app
+            version    : 'v19.0' // Use the correct Graph API version for your app
         });
 
         FB.AppEvents.logPageView();
+         checkLoginState();
     };
 
     function checkLoginState() {
         FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
+            if (response.status !== 'connected') {
+                // If not already connected, explicitly call the login method
+                FB.login(function(response) {
+                    statusChangeCallback(response);
+                }, {scope: 'public_profile,email'});
+            } else {
+                // If already connected, handle the status change
+                statusChangeCallback(response);
+            }
         });
     }
 
+
     function statusChangeCallback(response) {
+        var facebookStatusText = document.getElementById("facebook-status-text");
         if (response.status === 'connected') {
-            // Update the Facebook card to show connected status
+            // The user is logged in and has authenticated your app
+            console.log('Facebook Access Token:', response.authResponse.accessToken);
+            facebookStatusText.classList.remove("hidden");
+            facebookStatusText.innerHTML = 'Checking...';
+            FB.api('/me', function(response) {
+                facebookStatusText.innerHTML = 'Logged in as ' + response.name;
+            });
+            // Change the status icon and button
             document.getElementById("facebook-status").classList.remove("not-connected");
             document.getElementById("facebook-status").classList.add("connected");
-            // Swap the Sync button with a syncing animation
             var fbCard = document.getElementById("facebook-card");
-            fbCard.querySelector('.sync-btn').innerHTML = '<i class="fas fa-sync fa-2x"></i>';
+            fbCard.querySelector('.sync-btn').classList.add("hidden");
         } else {
+            // The person is not logged into your app or we are unable to tell.
+            facebookStatusText.classList.remove("hidden");
+            facebookStatusText.innerHTML = 'Not Connected';
             document.getElementById("facebook-status").classList.remove("connected");
             document.getElementById("facebook-status").classList.add("not-connected");
+            var fbCard = document.getElementById("facebook-card");
+            fbCard.querySelector('.sync-btn').classList.remove("hidden");
         }
     }
 </script>
