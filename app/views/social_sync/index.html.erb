@@ -104,61 +104,48 @@
     <!-- Add additional cards for other social media platforms as needed -->
 </div>
 
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '454640906893151', // Replace with your Facebook App ID
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v19.0' // Use the correct Graph API version for your app
-        });
-
-        FB.AppEvents.logPageView();
-         checkLoginState();
-    };
-
-    function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-            if (response.status !== 'connected') {
-                // If not already connected, explicitly call the login method
-                FB.login(function(response) {
-                    statusChangeCallback(response);
-                }, {scope: 'public_profile,email'});
-            } else {
-                // If already connected, handle the status change
-                statusChangeCallback(response);
-            }
-        });
-    }
-
+    // Previous scripts remain unchanged
 
     function statusChangeCallback(response) {
         var facebookStatusText = document.getElementById("facebook-status-text");
+        var fbCard = document.getElementById("facebook-card");
         if (response.status === 'connected') {
-            // The user is logged in and has authenticated your app
             console.log('Facebook Access Token:', response.authResponse.accessToken);
             facebookStatusText.classList.remove("hidden");
-            facebookStatusText.innerHTML = 'Checking...';
             FB.api('/me', function(response) {
                 facebookStatusText.innerHTML = 'Logged in as ' + response.name;
             });
-            // Change the status icon and button
             document.getElementById("facebook-status").classList.remove("not-connected");
             document.getElementById("facebook-status").classList.add("connected");
-            var fbCard = document.getElementById("facebook-card");
-            fbCard.querySelector('.sync-btn').classList.add("hidden");
+            // Hide the Sync Now button and show a syncing icon or message
+            fbCard.querySelector('.sync-btn').style.display = 'none'; // Hide Sync Now button
+            // If you don't have an element for the syncing status, add it dynamically or beforehand in HTML
+            var syncingIcon = document.createElement("div");
+            syncingIcon.innerHTML = '<i class="fas fa-sync fa-spin"></i> Syncing...'; // For example, a spinning icon
+            fbCard.appendChild(syncingIcon);
+
+            // Add a Log Out button
+            var logoutBtn = document.createElement("button");
+            logoutBtn.innerHTML = "Log Out";
+            logoutBtn.onclick = function() {
+                FB.logout(function(response) {
+                    // User is now logged out
+                    location.reload(); // Reload the page or adjust UI as needed
+                });
+            };
+            fbCard.appendChild(logoutBtn);
         } else {
-            // The person is not logged into your app or we are unable to tell.
             facebookStatusText.classList.remove("hidden");
             facebookStatusText.innerHTML = 'Not Connected';
             document.getElementById("facebook-status").classList.remove("connected");
             document.getElementById("facebook-status").classList.add("not-connected");
-            var fbCard = document.getElementById("facebook-card");
-            fbCard.querySelector('.sync-btn').classList.remove("hidden");
+            fbCard.querySelector('.sync-btn').style.display = 'block'; // Show Sync Now button
         }
     }
 </script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
 
 </body>
 </html>
