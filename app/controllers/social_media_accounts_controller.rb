@@ -1,17 +1,14 @@
+# app/controllers/social_media_accounts_controller.rb
+
 class SocialMediaAccountsController < ApplicationController
-  def show
-  end
-
-  def facebook
-    # Example assumes you have a method to decode and verify the Facebook token
-    # and retrieve user data from Facebook
-    fb_data = verify_facebook_token(params[:token])
-
-    if fb_data
-      # Handle user data, such as creating a new SocialMediaAccount record
-      render json: { success: true }
+  def update_token
+    platform_name = params[:platform_name]
+    account = current_user.social_media_accounts.find_by(platform_name: platform_name)
+    if account
+      account.update(auth_token: params[:access_token])
+      render json: { message: "Access token updated successfully" }
     else
-      render json: { success: false, error: "Invalid token" }, status: :unauthorized
+      render json: { error: "Social media account not found for platform: #{platform_name}" }, status: :not_found
     end
   end
 end

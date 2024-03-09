@@ -134,30 +134,45 @@
 
 
     function statusChangeCallback(response) {
-        var facebookStatusText = document.getElementById("facebook-status-text");
-        if (response.status === 'connected') {
-            // The user is logged in and has authenticated your app
-            console.log('Facebook Access Token:', response.authResponse.accessToken);
-            facebookStatusText.classList.remove("hidden");
-            facebookStatusText.innerHTML = 'Checking...';
-            FB.api('/me', function(response) {
-                facebookStatusText.innerHTML = 'Logged in as ' + response.name;
-            });
-            // Change the status icon and button
-            document.getElementById("facebook-status").classList.remove("not-connected");
-            document.getElementById("facebook-status").classList.add("connected");
-            var fbCard = document.getElementById("facebook-card");
-            fbCard.querySelector('.sync-btn').classList.add("hidden");
-        } else {
-            // The person is not logged into your app or we are unable to tell.
-            facebookStatusText.classList.remove("hidden");
-            facebookStatusText.innerHTML = 'Not Connected';
-            document.getElementById("facebook-status").classList.remove("connected");
-            document.getElementById("facebook-status").classList.add("not-connected");
-            var fbCard = document.getElementById("facebook-card");
-            fbCard.querySelector('.sync-btn').classList.remove("hidden");
-        }
-    }
+    var facebookStatusText = document.getElementById("facebook-status-text");
+    var fbCard = document.getElementById("facebook-card");
+    var syncBtn = fbCard.querySelector('.sync-btn');
+
+    if (response.status === 'connected') {
+        var accessToken = response.authResponse.accessToken;
+
+        // Make AJAX request to update access token
+          fetch(`/social_media_accounts/update_token`, {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+              },
+              body: JSON.stringify({ platform_name: 'facebook', access_token: accessToken })
+          })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
+
+          // Update UI to indicate connection
+          facebookStatusText.classList.remove("hidden");
+          facebookStatusText.innerHTML = 'Checking...';
+          FB.api('/me', function(response) {
+              facebookStatusText.innerHTML = 'Logged in as ' + response.name;
+          });
+          document.getElementById("facebook-status").classList.remove("not-connected");
+          document.getElementById("facebook-status").classList.add("connected");
+          syncBtn.classList.add("hidden");
+      } else {
+          // Update UI to indicate disconnection
+          facebookStatusText.classList.remove("hidden");
+          facebookStatusText.innerHTML = 'Not Connected';
+          document.getElementById("facebook-status").classList.remove("connected");
+          document.getElementById("facebook-status").classList.add("not-connected");
+          syncBtn.classList.remove("hidden");
+      }
+  }
+
 </script>
 
 </body>
