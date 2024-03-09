@@ -125,19 +125,22 @@
 function createSocialMediaAccount(authToken) {
     if (authToken) {
         // Hna authToken will be sent to the backend
-        $.ajax({
-            url: '/social_media_accounts',
-            type: 'POST',
-            data: { auth_token: authToken },
-            success: function(response) {
-                console.log('Social media account created successfully:', response);
-                // Dazet
-            },
-            error: function(error) {
-                console.error('Error creating social media account:', error);
-                // Madazetch
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/social_media_accounts");
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 201) {
+                    console.log('Social media account created successfully');
+                    // Dazet
+                } else {
+                    console.error('Error creating social media account:', xhr.responseText);
+                    // Madazetch 🧦
+                }
             }
-        });
+        };
+        var data = JSON.stringify({ auth_token: authToken });
+        xhr.send(data);
     } else {
         console.error('No auth token found');
     }
