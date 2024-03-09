@@ -76,7 +76,10 @@
         <i class="fab fa-facebook-f fa-3x mb-3"></i>
         <div id="facebook-status" class="status-icon not-connected"></div>
         <button class="sync-btn" onclick="checkLoginState();">Sync Now</button>
-        <button class="sync-btn" onclick="checkLoginState();"> <i class="fa-solid fa-gear"></i> Manage </button>
+        <%= link_to social_media_accounts_path, class: "sync-btn", id: "manage-btn" do %>
+           <i class="fa-solid fa-gear"></i> Manage
+        <% end %>
+
         <p id="facebook-status-text" class="status-text hidden">Not Connected</p>
     </div>
     <!-- Other Social Media Cards -->
