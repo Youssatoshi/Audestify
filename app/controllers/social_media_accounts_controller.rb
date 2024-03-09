@@ -17,6 +17,12 @@ class SocialMediaAccountsController < ApplicationController
     end
   end
 
+  def index
+    # Ensure only the logged-in user's accounts are fetched
+    accounts = SocialMediaAccount.where(user_id: current_user.id, platform_name: 'Facebook').select(:id, :account_name, :auth_token)
+
+    render json: accounts
+  end
 
 
 
