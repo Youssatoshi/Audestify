@@ -104,10 +104,36 @@
     <!-- Add additional cards for other social media platforms as needed -->
 </div>
 
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
-    // Previous scripts remain unchanged
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '454640906893151', // Replace with your Facebook App ID
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v19.0' // Use the correct Graph API version for your app
+        });
 
-    function statusChangeCallback(response) {
+        FB.AppEvents.logPageView();
+         checkLoginState();
+    };
+
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            if (response.status !== 'connected') {
+                // If not already connected, explicitly call the login method
+                FB.login(function(response) {
+                    statusChangeCallback(response);
+                }, {scope: 'public_profile,email'});
+            } else {
+                // If already connected, handle the status change
+                statusChangeCallback(response);
+            }
+        });
+    }
+
+
+ function statusChangeCallback(response) {
         var facebookStatusText = document.getElementById("facebook-status-text");
         var fbCard = document.getElementById("facebook-card");
         if (response.status === 'connected') {
@@ -144,8 +170,6 @@
         }
     }
 </script>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-
 
 </body>
 </html>
