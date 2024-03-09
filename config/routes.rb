@@ -21,7 +21,8 @@ Rails.application.routes.draw do
   # If you haven't already, add a route for the callback
   # config/routes.rb
 
-  post '/social_media_accounts/facebook', to: 'social_media_accounts#facebook'
+  post '/social_media_accounts/update_token', to: 'social_media_accounts#update_token'
+
 
   # Home
 
