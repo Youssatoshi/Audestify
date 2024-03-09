@@ -15,4 +15,10 @@ class SocialMediaAccountsController < ApplicationController
       render json: { error: 'Failed to create social media account' }, status: :unprocessable_entity
     end
   end
+
+  private
+
+  def social_media_account_params
+    params.require(:social_media_account).permit(:auth_token)
+  end
 end
