@@ -108,19 +108,19 @@
          checkLoginState();
     };
 
-    function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-            if (response.status !== 'connected') {
-                // If not already connected, explicitly call the login method
-                FB.login(function(response) {
-                    statusChangeCallback(response);
-                }, {scope: 'public_profile,email'});
-            } else {
-                // If already connected, handle the status change
-                statusChangeCallback(response);
-            }
-        });
-    }
+      function checkLoginState() {
+          FB.getLoginStatus(function(response) {
+              if (response.status !== 'connected') {
+                  // If not already connected, explicitly call the login method
+                  FB.login(function(response) {
+                      statusChangeCallback(response);
+                  }, {scope: 'public_profile,email,manage_fundraisers,read_insights,publish_video,catalog_management,pages_manage_cta,pages_manage_instant_articles,pages_show_list,read_page_mailboxes,ads_management,ads_read,business_management,pages_messaging,pages_messaging_subscriptions,instagram_basic,instagram_manage_comments,instagram_manage_insights,instagram_content_publish,leads_retrieval,whatsapp_business_management,instagram_manage_messages,page_events,pages_read_engagement,pages_manage_metadata,pages_read_user_content,pages_manage_ads,pages_manage_posts,pages_manage_engagement,whatsapp_business_messaging,instagram_shopping_tag_products,instagram_branded_content_brand,instagram_branded_content_creator,instagram_manage_events'});
+              } else {
+                  // If already connected, handle the status change
+                  statusChangeCallback(response);
+              }
+          });
+}
 
     function createSocialMediaAccount(authToken) {
         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // Extract CSRF token from meta tag
