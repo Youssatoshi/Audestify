@@ -1,14 +1,18 @@
-# app/controllers/social_media_accounts_controller.rb
-
 class SocialMediaAccountsController < ApplicationController
-  def update_token
-    platform_name = params[:platform_name]
-    account = current_user.social_media_accounts.find_by(platform_name: platform_name)
-    if account
-      account.update(auth_token: params[:access_token])
-      render json: { message: "Access token updated successfully" }
+  def create
+    auth_token = params[:auth_token]
+    user_id = current_user.id
+    social_media_account = SocialMediaAccount.new(
+      user_id: user_id,
+      platform_name: 'Facebook',
+      auth_token: auth_token,
+      account_status: 1,
+      account_name: 'test_account'
+    )
+    if social_media_account.save
+      render json: { message: 'Social media account created successfully' }, status: :created
     else
-      render json: { error: "Social media account not found for platform: #{platform_name}" }, status: :not_found
+      render json: { error: 'Failed to create social media account' }, status: :unprocessable_entity
     end
   end
 end

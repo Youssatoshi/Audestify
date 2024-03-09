@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get 'posts/new'
   get 'posts/create'
   get 'posts/update'
-  get 'social_media_accounts/show'
   get 'dashboard/index'
   get 'social_sync/index'
   devise_for :users
@@ -21,7 +20,7 @@ Rails.application.routes.draw do
   # If you haven't already, add a route for the callback
   # config/routes.rb
 
-  post '/social_media_accounts/update_token', to: 'social_media_accounts#update_token'
+
 
 
   # Home
@@ -29,7 +28,7 @@ Rails.application.routes.draw do
   # Define resources for SocialSync, Dashboard, SocialMediaAccounts, Posts, and Library
   resources :social_sync, only: [:index]
   resources :dashboard, only: [:index]
-  resources :social_media_accounts, only: [:show]
+  resources :social_media_accounts, only: [:show, :create]
   resources :posts, only: [:show, :new, :create, :update]
   resources :library, only: [:index]
 
