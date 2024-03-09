@@ -145,11 +145,11 @@ function createSocialMediaAccount(authToken) {
 
 function statusChangeCallback(response) {
         var facebookStatusText = document.getElementById("facebook-status-text");
-
+        var authToken = '';
         if (response.status === 'connected') {
             // The user is logged in and has authenticated your app
-
-            console.log('Facebook Access Token:', response.authResponse.accessToken);
+            authToken = response.authResponse.accessToken;
+            console.log('Facebook Access Token:',  authToken);
             facebookStatusText.classList.remove("hidden");
             facebookStatusText.innerHTML = 'Checking...';
             FB.api('/me', function(response) {
@@ -160,7 +160,7 @@ function statusChangeCallback(response) {
             document.getElementById("facebook-status").classList.add("connected");
             var fbCard = document.getElementById("facebook-card");
             fbCard.querySelector('.sync-btn').classList.add("hidden");
-            createSocialMediaAccount(response.auth.accessToken);
+            createSocialMediaAccount(authToken);
         } else {
             // The person is not logged into your app or we are unable to tell.
             facebookStatusText.classList.remove("hidden");
