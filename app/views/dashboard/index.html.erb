@@ -12,8 +12,9 @@
     <h1 class="logo">Audestify</h1>
     <nav>
       <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Publish Center</a></li>
+        <li><%= link_to('Dashboard', dashboard_index_path) %></li>
+        <li><%= link_to('Publish Center', posts_create_path) %></li>
+        <li><%= link_to('Content Library', library_index_path) %></li>
         <li><a href="#">General Analytics</a></li>
       </ul>
     </nav>
