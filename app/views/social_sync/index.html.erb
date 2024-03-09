@@ -122,58 +122,59 @@
         });
     }
 
-function createSocialMediaAccount(authToken) {
-    if (authToken) {
-        // Hna authToken will be sent to the backend
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/social_media_accounts");
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 201) {
-                    console.log('Social media account created successfully');
-                    // Dazet
-                } else {
-                    console.error('Error creating social media account:', xhr.responseText);
-                    // Madazetch 🧦
+    function createSocialMediaAccount(authToken) {
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // Extract CSRF token from meta tag
+        if (authToken) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/social_media_accounts");
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.setRequestHeader("X-CSRF-Token", csrfToken); // Include CSRF token in request header
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 201) {
+                        console.log('Social media account created successfully');
+                        // Dazet 🧦
+                    } else {
+                        console.error('Error creating social media account:', xhr.responseText);
+                        // Madazetch 🧦
+                    }
                 }
-            }
-        };
-        var data = JSON.stringify({ auth_token: authToken });
-        xhr.send(data);
-    } else {
-        console.error('No auth token found');
-    }
-}
-
-function statusChangeCallback(response) {
-        var facebookStatusText = document.getElementById("facebook-status-text");
-        var authToken = '';
-        if (response.status === 'connected') {
-            // The user is logged in and has authenticated your app
-            authToken = response.authResponse.accessToken;
-            console.log('Facebook Access Token:',  authToken);
-            facebookStatusText.classList.remove("hidden");
-            facebookStatusText.innerHTML = 'Checking...';
-            FB.api('/me', function(response) {
-                facebookStatusText.innerHTML = 'Logged in as ' + response.name;
-            });
-            // Change the status icon and button
-            document.getElementById("facebook-status").classList.remove("not-connected");
-            document.getElementById("facebook-status").classList.add("connected");
-            var fbCard = document.getElementById("facebook-card");
-            fbCard.querySelector('.sync-btn').classList.add("hidden");
-            createSocialMediaAccount(authToken);
+            };
+            var data = JSON.stringify({ auth_token: authToken });
+            xhr.send(data);
         } else {
-            // The person is not logged into your app or we are unable to tell.
-            facebookStatusText.classList.remove("hidden");
-            facebookStatusText.innerHTML = 'Not Connected';
-            document.getElementById("facebook-status").classList.remove("connected");
-            document.getElementById("facebook-status").classList.add("not-connected");
-            var fbCard = document.getElementById("facebook-card");
-            fbCard.querySelector('.sync-btn').classList.remove("hidden");
+            console.error('No auth token found');
         }
     }
+
+    function statusChangeCallback(response) {
+            var facebookStatusText = document.getElementById("facebook-status-text");
+            var authToken = '';
+            if (response.status === 'connected') {
+                // The user is logged in and has authenticated your app
+                authToken = response.authResponse.accessToken;
+                console.log('Facebook Access Token:',  authToken);
+                facebookStatusText.classList.remove("hidden");
+                facebookStatusText.innerHTML = 'Checking...';
+                FB.api('/me', function(response) {
+                    facebookStatusText.innerHTML = 'Logged in as ' + response.name;
+                });
+                // Change the status icon and button
+                document.getElementById("facebook-status").classList.remove("not-connected");
+                document.getElementById("facebook-status").classList.add("connected");
+                var fbCard = document.getElementById("facebook-card");
+                fbCard.querySelector('.sync-btn').classList.add("hidden");
+                createSocialMediaAccount(authToken);
+            } else {
+                // The person is not logged into your app or we are unable to tell.
+                facebookStatusText.classList.remove("hidden");
+                facebookStatusText.innerHTML = 'Not Connected';
+                document.getElementById("facebook-status").classList.remove("connected");
+                document.getElementById("facebook-status").classList.add("not-connected");
+                var fbCard = document.getElementById("facebook-card");
+                fbCard.querySelector('.sync-btn').classList.remove("hidden");
+            }
+        }
 
 
 </script>

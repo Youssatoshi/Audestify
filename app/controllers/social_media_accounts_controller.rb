@@ -1,4 +1,5 @@
 class SocialMediaAccountsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create]
   def create
     auth_token = params[:auth_token]
     user_id = current_user.id
