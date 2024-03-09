@@ -19,8 +19,6 @@ class SocialMediaAccountsController < ApplicationController
 
 
 
-
-
   private
 
   def social_media_account_params

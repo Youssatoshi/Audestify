@@ -1,3 +1,6 @@
-<div data-controller="social-media-accounts" data-target="social-media-accounts.cardsContainer">
-  <!-- Profile cards will be inserted here by the Stimulus controller -->
+<%# app/views/social_media_accounts/index.html.erb %>
+
+<div data-controller="facebook-data"
+     data-facebook-data-auth-token-value="<%= current_user.social_media_accounts.find_by(platform_name: 'Facebook').auth_token %>">
+  <!-- This div will be populated with data fetched by the Stimulus controller -->
 </div>
