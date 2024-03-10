@@ -113,7 +113,7 @@ aside .toggle {
 aside .toggle .logo {
     display: flex;
     gap: 0.5rem;
-    margin-left: 40px;
+    margin-left: 15px;
 }
 
 aside .toggle .logo img {
@@ -223,6 +223,7 @@ main .general-analytics .data {
     gap: 1.4rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 99px;
 }
 
 main .general-analytics .data:hover {
@@ -328,7 +329,7 @@ main .accounts .account-card .account-logo img {
 }
 
 .right-section {
-    margin-top: 1.4rem;
+    margin-top: 2.4rem;
 }
 
 .right-section .nav {
