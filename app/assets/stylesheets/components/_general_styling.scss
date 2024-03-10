@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=PT+Sans:wght@400;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
+
+
+
 :root {
     --color-primary: #6C9BCF;
     --color-danger: #FF0060;
@@ -31,23 +34,8 @@
     --box-shadow: 0 2rem 3rem var(--color-light);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    outline: 0;
-    appearance: 0;
-    border: 0;
-    text-decoration: none;
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 14px;
-}
-
-body {
-    width: 100vw;
-    height: 100vh;
+.all {
+    width: auto;
     font-family: 'Poppins', sans-serif;
     font-size: 0.88rem;
     user-select: none;
@@ -58,6 +46,8 @@ body {
 
 a {
     color: var(--color-dark);
+    text-decoration: none;
+    font-size: 14px;
 }
 
 img {
@@ -99,10 +89,18 @@ b {
     margin: 0 auto;
     gap: 1.8rem;
     grid-template-columns: 15rem auto 23rem;
+    padding: 0;
+    outline: 0;
+    appearance: 0;
+    border: 0;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 aside {
     height: 100vh;
+
+
 }
 
 aside .toggle {
@@ -207,9 +205,7 @@ aside .sidebar .message-count {
     border-radius: var(--border-radius-1);
 }
 
-main {
-    margin-top: 1.4rem;
-}
+
 
 main .general-analytics {
     margin-top: 1.3rem;
@@ -316,8 +312,8 @@ main .accounts .account-card .account-logo img {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 15px;
-    min-width: 100px;
+    border-radius: 10px;
+    min-width: 110px;
 }
 
 .dashboard-button:hover {

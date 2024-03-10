@@ -1,6 +1,6 @@
 <%# app/views/social_media_accounts/index.html.erb %>
-
-<div data-controller="facebook-data"
-     data-facebook-data-auth-token-value="<%= current_user.social_media_accounts.find_by(platform_name: 'Facebook').auth_token %>">
-  <!-- This div will be populated with data fetched by the Stimulus controller -->
-</div>
+<%= render partial: "shared/navbar" %>
+  <div data-controller="facebook-data"
+      data-facebook-data-auth-token-value="<%= current_user.social_media_accounts.where(platform_name: 'Facebook').order(created_at: :desc).first.auth_token %>">
+    <!-- This div will be populated with data fetched by the Stimulus controller -->
+  </div>

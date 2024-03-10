@@ -1,0 +1,62 @@
+.status-icon.connected i.fa-circle {
+  color: green;
+}
+
+.status-icon.not-connected i.fa-circle {
+  color: red;
+}
+
+main .social-media-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 85px;
+  margin-bottom: 50px;
+}
+
+
+
+/* Ensure the account-card class aligns with your design */
+main .account-card {
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.0rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 300px;
+}
+
+main .account-card:hover {
+  box-shadow: none;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rotating {
+  animation: rotate 2s linear infinite;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column;
+  }
+
+  aside, .right-section {
+      width: 100%; /* Full width on smaller screens */
+  }
+
+  main {
+      order: -1; /* Moves the main content above the sidebar and right section on small screens */
+  }
+}
