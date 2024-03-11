@@ -80,107 +80,17 @@
 
             <div class="general-analytics">
                 <div class="data">
-                    <div class="chart">
-                        <img src="img/1324046-200.png">
-                    </div>
-                    <div class="chart">
-                        <img src="img/1324046-200.png">
-                    </div>
-                    <div class="chart">
-                        <img src="img/1324046-200.png">
-                    </div>
                 </div>
             </div>
+
+
             <div class="accounts">
-                <h2>Accounts</h2>
-                <div class="account-card">
-                    <div class="account-logo">
-                        <img src="img/Instagram_icon.png">
-                    </div>
-                    <div class="account-name">
-                        <h3>@User_account_1</h3>
-                    </div>
-                    <div class="account-info">
-                        <h3>Impressions</h3>
-                        <div class="text">
-                            <p>6323</p>
-                        </div>
-                    </div>
-                    <div class="account-info">
-                        <h3>Emotion</h3>
-                        <div class="text">
-                            <p>Hate</p>
-                        </div>
-                    </div>
-                    <div class="account-info">
-                        <h3>Toxicity</h3>
-                        <div class="text">
-                            <p>High</p>
-                        </div>
-                    </div>
-                    <div class="dashboard-button">
-                        <h3>Dashboard</h3>
-                    </div>
-                </div>
-                <div class="account-card">
-                    <div class="account-logo">
-                        <img src="img/Instagram_icon.png">
-                    </div>
-                    <div class="account-name">
-                        <h3>@User_account_2</h3>
-                    </div>
-                    <div class="account-info">
-                        <h3>Impressions</h3>
-                        <div class="text">
-                            <p>14576</p>
-                        </div>
-                    </div>
-                    <div class="account-info">
-                        <h3>Emotion</h3>
-                        <div class="text">
-                            <p>Happines</p>
-                        </div>
-                    </div>
-                    <div class="account-info">
-                        <h3>Toxicity</h3>
-                        <div class="text">
-                            <p>Low</p>
-                        </div>
-                    </div>
-                    <div class="dashboard-button">
-                        <h3>Dashboard</h3>
-                    </div>
-                </div>
-                <div class="account-card">
-                    <div class="account-logo">
-                        <img src="img/Instagram_icon.png">
-                    </div>
-                    <div class="account-name">
-                        <h3>@User_account_3</h3>
-                    </div>
-                    <div class="account-info">
-                        <h3>Impressions</h3>
-                        <div class="text">
-                            <p>8345</p>
-                        </div>
-                    </div>
-                    <div class="account-info">
-                        <h3>Emotion</h3>
-                        <div class="text">
-                            <p>Excitement</p>
-                        </div>
-                    </div>
-                    <div class="account-info">
-                        <h3>Toxicity</h3>
-                        <div class="text">
-                            <p>Low</p>
-                        </div>
-                    </div>
-                    <div class="dashboard-button">
-                        <h3>Dashboard</h3>
-                    </div>
-                </div>
+              <div data-controller="facebook-data"
+                  data-facebook-data-auth-token-value="<%= current_user.social_media_accounts.where(platform_name: 'Facebook').order(created_at: :desc).first.auth_token %>">
+                <!-- This div will be populated with data fetched by the Stimulus controller -->
+              </div>
             </div>
+
         </main>
 
         <div class="right-section">
@@ -231,12 +141,3 @@
 
 
 <%= javascript_include_tag 'navabar' %>
-
-
-
-
-<%# app/views/social_media_accounts/index.html.erb %>
-  <div data-controller="facebook-data"
-      data-facebook-data-auth-token-value="<%= current_user.social_media_accounts.where(platform_name: 'Facebook').order(created_at: :desc).first.auth_token %>">
-    <!-- This div will be populated with data fetched by the Stimulus controller -->
-  </div>

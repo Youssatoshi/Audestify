@@ -1,30 +1,323 @@
-.container {
+main .general-analytics {
+  margin-top: 1.3rem;
+}
+
+main .general-analytics .data {
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  margin-top: 1rem;
+  box-shadow: var(--box-shadow);
   display: flex;
-  align-items: center; /* Vertically center items */
-  justify-content: flex-start; /* Align items to the start of the container */
-  padding: 20px; /* Add padding for spacing */
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 99px;
+  height: 350px;
 }
 
-.back-arrow {
-  margin-right: 24px;
-  font-weight: bold; /* Make the arrow text bold */
-  cursor: pointer; /* Change cursor to indicate interactivity */
-}
 
-.vertical-container {
+.accounts {
+
   display: flex;
-  flex-direction: column; /* Arrange items vertically */
-  margin-left: 20px; /* Add margin to separate from back-arrow */
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: 10px;
+  margin-top: 99px; /* Consolidated the repeated margin-top property */
+  box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: auto;
+  max-height: 400px; /* Maximum height before scrollbar appears */
+  overflow-y: auto; /* Enables vertical scrolling */
 }
 
-.dashboard-box {
-  background-color: #f0f0f0; /* Light gray background */
-  padding: 10px;
-  margin-bottom: 10px; /* Add margin between boxes */
+/* Custom scrollbar styles */
+.accounts::-webkit-scrollbar {
+  width: 8px; /* Scrollbar width */
 }
 
-.row {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px; /* Add margin between boxes */
+.accounts::-webkit-scrollbar-track {
+  background: var(--color-white); /* Scrollbar track color */
+  border-radius: var(--card-border-radius);
+  box-shadow: inset 0 0 2px grey; /* Adds inset shadow to the track */
+}
+
+.accounts::-webkit-scrollbar-thumb {
+  background: var(--color-primary); /* Scrollbar thumb color */
+  border-radius: var(--card-border-radius);
+  border: 2px solid var(--color-white); /* Adds a white border around the thumb */
+}
+
+.accounts::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary); /* Scrollbar thumb color on hover */
+}
+
+.accounts-card {
+  background-color: var(--color-white);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--card-padding);
+  width: 600px; /* Adjust width as needed */
+  height: 110px; /* Adjust height as needed */
+  position: relative; /* For absolute positioning of the Facebook icon */
+  cursor: pointer;
+  margin: 16px;
+}
+
+.card-image-container {
+  position: relative;
+}
+
+.card-image {
+  width: 70px; /* Adjust as needed */
+  height: 70px; /* Adjust as needed */
+  border-radius: 50%; /* Make image round */
+  object-fit: cover; /* Ensure the image covers the area */
+}
+
+.facebook-icon {
+  position: absolute;
+  top: -10px; /* Adjust as needed */
+  left: 50px; /* Adjust as needed */
+  font-size: 24px; /* Adjust icon size as needed */
+  color: #3b5998; /* Facebook blue color */
+}
+
+.instagram-icon {
+  position: absolute;
+  top: -10px; /* Adjust as needed */
+  left: 50px; /* Adjust as needed */
+  font-size: 24px; /* Adjust icon size as needed */
+  color: #C13584;
+  border-radius: 15px; /* Instagram color */
+}
+
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.data-placeholder {
+  width: 150px; /* Adjust as needed */
+  height: 20px; /* Adjust as needed */
+  background-color: #f0f0f0; /* Placeholder color, adjust as needed */
+  border-radius: 10px; /* Rounded corners for the placeholder */
+}
+
+.card-button {
+  padding: 0.6rem 1.2rem; /* Adjust padding as needed */
+  border: none; /* Remove default border */
+  background-color: var(--color-primary); /* Use your primary color variable */
+  color: var(--color-white); /* Text color */
+  border-radius: var(--card-border-radius); /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-button:hover {
+  background-color: var(--color-secondary);
+  color: var(--color--primary); /* Color on hover */
+}
+
+main .general-analytics .data:hover {
+  box-shadow: none;
+}
+
+main .general-analytics .data .chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main .general-analytics .data .chart img {
+  width: 150%;
+  margin-bottom: 0.4rem;
+}
+
+main .accounts {
+  margin-top: 1.3rem;
+}
+
+main .accounts .account-card {
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  margin-top: 1rem;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+main .accounts .account-card:hover {
+  box-shadow: none;
+}
+
+main .accounts .account-card .account-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main .accounts .account-card .account-logo img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.account-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.account-name h3{
+  font-size: 15px;
+}
+
+
+.account-info {
+  display: inline-block;
+}
+
+.account-info h3 {
+  font-weight: 700;
+}
+
+.account-info .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.dashboard-button {
+  background-color: var(--color-white);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  min-width: 110px;
+}
+
+.dashboard-button:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.dashboard-button div {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.metrics-container {
+  /* This will align the metrics horizontally and space them closer together */
+  display: flex;
+  gap: 50px; /* Adjust the gap size to bring icons closer or further apart */
+  justify-content: center; /* Center the metrics within the container */
+  align-items: start;
+  margin-top: -10px;
+}
+
+.metric-icon {
+
+  font-size: 24px;/* Replace with your desired color */
+}
+
+.metric-text {
+  /* Initially hide the text content */
+  display: none;
+}
+
+.heart-icon {
+  color: #ff4757; /* A vibrant red */
+}
+
+.chart-line-icon {
+  color: #2ed573; /* A fresh, vivid green */
+}
+
+.eye-icon {
+  color: #1e90ff; /* A clear blue */
+}
+
+@keyframes beat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.heart-icon {
+  animation: beat 1s ease infinite;
+}
+
+@keyframes grow {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.2);
+  }
+}
+
+.chart-line-icon {
+  color: #2ed573; /* Green color for chart line */
+  animation: grow 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.eye-icon {
+  animation: blink 3s ease infinite;
+}
+
+.metric-icon.curious {
+  display: inline-block;
+  font-size: 24px; /* Adjust size as needed */
+  color: #ffcc00; /* Yellow color */
+  animation: curious 2s infinite ease-in-out;
+}
+
+@keyframes curious {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* A subtle 'thinking' pulse */
+  }
 }
