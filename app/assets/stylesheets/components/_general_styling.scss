@@ -83,9 +83,9 @@ b {
     color: var(--color-dark);
 }
 
-.container {
+.page-container {
     display: grid;
-    width: 96%;
+    width: 90%;
     margin: 0 auto;
     gap: 1.8rem;
     grid-template-columns: 15rem auto 23rem;
