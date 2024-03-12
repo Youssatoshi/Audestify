@@ -1,23 +1,5 @@
-<div class="navigation">
-    <div class="landing-logo">
-        <%= link_to root_path do %>
-          <%= image_tag "LOGOS.png" %>
-        <% end %>
-        <h2>Audestify<span class="danger"></span></h2>
-    </div>
-    <div class="navigation">
-        <div class="menu">
-            <a href="">Home</a>
-            <a href="">Features</a>
-            <a href="">Community</a>
-            <a href="">Resources</a>
-            <a href="">Pricing</a>
-            <a href="">About Us</a>
-            <a href="">Contact</a>
-        </div>
-        <div class="menu session">
-            <%= link_to "Log In", new_user_session_path %>
-            <%= link_to "Sign Up", new_user_registration_path, class: "signup" %>
-        </div>
-    </div>
-</div>
+<%= render partial: "shared/navbar" %>
+
+<h1>Pages#home</h1>
+<p>Find me in app/views/pages/home.html.erb</p>
+<p>This is the landing page</p>

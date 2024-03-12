@@ -1,58 +1,25 @@
-<div class="navigation">
-    <div class="landing-logo">
-        <%= link_to root_path do %>
-          <%= image_tag "LOGOS.png" %>
-        <% end %>
-        <h2>Audestify<span class="danger"></span></h2>
-    </div>
-    <div class="navigation">
-        <div class="menu">
-            <a href="">Home</a>
-            <a href="">Features</a>
-            <a href="">Community</a>
-            <a href="">Resources</a>
-            <a href="">Pricing</a>
-            <a href="">About Us</a>
-            <a href="">Contact</a>
-        </div>
-        <div class="menu session">
-            <%= link_to "Log In", new_user_session_path %>
-            <%= link_to "Sign Up", new_user_registration_path, class: "signup" %>
-        </div>
-    </div>
-</div>
+<h2>Sign up</h2>
 
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= f.error_notification %>
 
-<div class="form-container">
-  <div class="title">
-    <h2>Sign Up</h2>
+  <div class="form-inputs">
+    <%= f.input :email,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "email" }%>
+    <%= f.input :password,
+                required: true,
+                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                input_html: { autocomplete: "new-password" } %>
+    <%= f.input :password_confirmation,
+                required: true,
+                input_html: { autocomplete: "new-password" } %>
   </div>
-  <form action="<%= user_registration_path %>" method="post" enctype="application/x-www-form-urlencoded">
-    <%= csrf_meta_tags %>
 
-    <div class="form-inputs">
+  <div class="form-actions">
+    <%= f.button :submit, "Sign up" %>
+  </div>
+<% end %>
 
-      <div class="form-input-group">
-        <input class="input" type="email" id="user_email" name="user[email]" required autofocus autocomplete="email">
-        <label class="label" for="user_email">Email</label>
-      </div>
-
-      <div class="form-input-group">
-        <input class="input" type="password" id="user_password" name="user[password]" required autocomplete="new-password">
-        <label class="label" for="user_password">Password</label>
-      </div>
-
-      <div class="form-input-group">
-        <input class="input" type="password" id="user_password_confirmation" name="user[password_confirmation]" required autocomplete="new-password">
-        <label class="label" for="user_password_confirmation">Confirm Password</label>
-      </div>
-
-    </div>
-
-    <div class="form-actions">
-      <input class="btn btn-primary" type="submit" value="Sign up">
-      <%= link_to "Log In", new_user_session_path, class: "login" %>
-    </div>
-  </form>
-
-</div>
+<%= render "devise/shared/links" %>
