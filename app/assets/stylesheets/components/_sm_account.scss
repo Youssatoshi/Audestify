@@ -19,25 +19,40 @@ main .general-analytics .data {
 }
 
 
+/* Responsive container for the accounts */
 .accounts {
-
   display: flex;
   flex-wrap: wrap;
   gap: 1.4rem;
   background-color: var(--color-white);
   padding: var(--card-padding);
-  border-radius: 10px;
-  margin-top: 99px; /* Consolidated the repeated margin-top property */
+  border-radius: 15px;
+  margin-top: 99px;
   box-shadow: var(--box-shadow);
-  display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 1.4rem;
   cursor: pointer;
   transition: all 0.3s ease;
   height: auto;
-  max-height: 400px; /* Maximum height before scrollbar appears */
-  overflow-y: auto; /* Enables vertical scrolling */
+  max-height: 38.65%;
+  overflow-y: auto;
+  width: 100%;
+  margin-bottom: 20px; /* Ensures the container is fully responsive */
+}
+
+/* Responsive individual account cards */
+.accounts-card {
+  background-color: var(--color-white);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--card-padding);
+  width: 700px; /* Adjusts based on the parent's width */
+  height: 110px;
+  position: relative;
+  cursor: pointer;
+  margin: 16px auto; /* Centered horizontally */
 }
 
 /* Custom scrollbar styles */
@@ -61,20 +76,7 @@ main .general-analytics .data {
   background: var(--color-secondary); /* Scrollbar thumb color on hover */
 }
 
-.accounts-card {
-  background-color: var(--color-white);
-  border-radius: var(--card-border-radius);
-  box-shadow: var(--box-shadow);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--card-padding);
-  width: 600px; /* Adjust width as needed */
-  height: 110px; /* Adjust height as needed */
-  position: relative; /* For absolute positioning of the Facebook icon */
-  cursor: pointer;
-  margin: 16px;
-}
+
 
 .card-image-container {
   position: relative;
@@ -115,7 +117,8 @@ main .general-analytics .data {
   width: 150px; /* Adjust as needed */
   height: 20px; /* Adjust as needed */
   background-color: #f0f0f0; /* Placeholder color, adjust as needed */
-  border-radius: 10px; /* Rounded corners for the placeholder */
+  border-radius: 10px;
+  color: #3b5998 /* Rounded corners for the placeholder */
 }
 
 .card-button {
@@ -238,7 +241,7 @@ main .accounts .account-card .account-logo img {
 .metrics-container {
   /* This will align the metrics horizontally and space them closer together */
   display: flex;
-  gap: 50px; /* Adjust the gap size to bring icons closer or further apart */
+  gap: 70px; /* Adjust the gap size to bring icons closer or further apart */
   justify-content: center; /* Center the metrics within the container */
   align-items: start;
   margin-top: -10px;
@@ -249,9 +252,15 @@ main .accounts .account-card .account-logo img {
   font-size: 24px;/* Replace with your desired color */
 }
 
+.metric-text.emoji-text-adjustment {
+  position: relative;
+  top: -5px; /* Adjusts the text a bit higher. Tweak this value as needed. */
+}
+
+
 .metric-text {
-  /* Initially hide the text content */
-  display: none;
+  margin-top: 7px;
+  font-size: 12px;
 }
 
 .heart-icon {

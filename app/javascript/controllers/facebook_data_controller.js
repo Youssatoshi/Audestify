@@ -51,27 +51,30 @@ export default class extends Controller {
     profileImage.className = 'card-image';
     imageContainer.appendChild(profileImage);
 
+    // Append the image container to the card container
+    cardContainer.appendChild(imageContainer);
+
     // Create the Facebook icon
     const fbIcon = document.createElement('i');
     fbIcon.className = 'fab fa-facebook-square facebook-icon';
     imageContainer.appendChild(fbIcon);
 
-    // Append the image container to the card container
-    cardContainer.appendChild(imageContainer);
+    // Append metrics container to the card
+    this.appendMetrics(cardContainer, true); // True indicates it's a Facebook card
 
-    // Create the first card content container
-    this.appendMetrics(cardContainer);
+    // Fetch and update Facebook-specific metrics
+    this.fetchFacebookMetrics(page.id, cardContainer);
 
-    // Create the button
+    // Create and append the button
     const button = document.createElement('button');
     button.className = 'card-button';
     button.textContent = 'Dashboard';
     cardContainer.appendChild(button);
 
-    // Finally, append the card container to the accounts container
+    // Append the card container to the accounts container
     this.element.appendChild(cardContainer);
     return cardContainer;
-  }
+}
 
   fetchInstagramProfile(pageId, fbCard) {
     const accessToken = this.authTokenValue;
@@ -135,10 +138,10 @@ export default class extends Controller {
   }
 
 
-  appendMetrics(cardContainer) {
+  appendMetrics(cardContainer, isFacebook = true) {
     // Metrics container
     const metricsContainer = document.createElement('div');
-    metricsContainer.className = 'metrics-container mb-5';
+    metricsContainer.className = 'metrics-container mb-3';
     metricsContainer.style.display = 'flex';
     metricsContainer.style.justifyContent = 'space-between';
     metricsContainer.style.alignItems = 'center';
@@ -171,16 +174,48 @@ export default class extends Controller {
 
       const text = document.createElement('span');
       text.className = 'metric-text';
-      text.textContent = metric.name;
-      metricElement.appendChild(text);
+      text.textContent = metric.emoji ? 'N/A' :  text.textContent = isFacebook ? 'Loading...' : 'N/A'; ;
 
+      // Add a special class if the metric has an emoji
+      if (metric.emoji) {
+        text.classList.add('emoji-text-adjustment');
+      }
+
+      metricElement.appendChild(text);
       metricsContainer.appendChild(metricElement);
     });
-
 
     // Insert the metrics container into the card
     const imageContainer = cardContainer.querySelector('.card-image-container');
     cardContainer.insertBefore(metricsContainer, imageContainer.nextSibling);
+  }
+
+
+  fetchFacebookMetrics(pageId, cardContainer) {
+    const accessToken = this.authTokenValue;
+    const fanCountUrl = `https://graph.facebook.com/${pageId}?fields=fan_count&access_token=${accessToken}`;
+    const pageViewsUrl = `https://graph.facebook.com/${pageId}/insights/page_views_total?period=days_28&access_token=${accessToken}`;
+
+    // Fetch fan count
+    fetch(fanCountUrl)
+      .then(response => response.json())
+      .then(data => {
+        // Update fan count in the card
+        const fanCountMetric = cardContainer.querySelector('.heart-icon').nextElementSibling;
+        fanCountMetric.textContent = data.fan_count;
+      })
+      .catch(error => console.error('Error fetching fan count:', error));
+
+    // Fetch page views
+    fetch(pageViewsUrl)
+      .then(response => response.json())
+      .then(data => {
+        // Assuming data format and finding the correct metric to update
+        const pageViews = data.data[0].values[0].value; // Adjust based on actual API response format
+        const pageViewsMetric = cardContainer.querySelector('.eye-icon').nextElementSibling;
+        pageViewsMetric.textContent = pageViews;
+      })
+      .catch(error => console.error('Error fetching page views:', error));
   }
 
 
