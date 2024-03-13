@@ -96,7 +96,6 @@
   z-index: 1;
 }
 
-
 .features-container {
   text-align: center;
   margin-top: 4rem;
@@ -104,11 +103,25 @@
   margin-left: auto;
   margin-right: auto;
   height: 600px;
+  position: relative; /* Necessary for positioning the line */
 }
 
-.features-container .title{
+.features-container .title {
   font-size: 2rem;
   color: var(--color-primary);
+  position: relative; /* Required for positioning the pseudo-element */
+}
+
+.features-container .title::before {
+  content: ""; /* Required for pseudo-elements */
+  position: absolute; /* Position the line */
+  top: 50%; /* Vertically center the line */
+  width: 100%; /* Full width */
+  height: 1px; /* Line thickness */
+  background-color: var(--color-primary); /* Same color as the title */
+  z-index: -1; /* Behind the text */
+  left: 0; /* Align to the left */
+  right: 0; /* Align to the right */
 }
 
 .cards-container {
@@ -128,25 +141,23 @@
 }
 
 .feature-card .image-container {
-  overflow: hidden; /* Ensures the image doesn't overflow the rounded corners */
-  border-top-left-radius: 15px; /* Match the border-radius of the card */
-  border-top-right-radius: 15px; /* Match the border-radius of the card */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Your preferred shadow */
+  overflow: hidden;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lighter shadow */
 }
 
 .feature-card .image-container img {
-  width: 100%; /* Makes the image full width of the container */
-  height: auto; /* Keep the image's aspect ratio */
-  display: block; /* Remove any extra space below the image */
-  transition: transform 0.3s ease; /* Optional: for a zoom effect on hover */
-
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* Optional: Zoom effect on hover */
-.feature-card:hover .image-container img {
-  transform: scale(1.05);
+/* Move card up slightly on hover */
+.feature-card:hover {
+  transform: translateY(-5px);
 }
 
 .feature-card h2, .feature-card p {
-  padding: 1.2rem 3rem; /* Add padding to text to match previous card style */
+  padding: 1rem 3rem;
 }
