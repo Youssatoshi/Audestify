@@ -190,7 +190,6 @@ export default class extends Controller {
     cardContainer.insertBefore(metricsContainer, imageContainer.nextSibling);
   }
 
-
   fetchFacebookMetrics(pageId, cardContainer) {
     const accessToken = this.authTokenValue;
     const fanCountUrl = `https://graph.facebook.com/${pageId}?fields=fan_count&access_token=${accessToken}`;
@@ -200,9 +199,11 @@ export default class extends Controller {
     fetch(fanCountUrl)
       .then(response => response.json())
       .then(data => {
-        // Update fan count in the card
-        const fanCountMetric = cardContainer.querySelector('.heart-icon').nextElementSibling;
-        fanCountMetric.textContent = data.fan_count;
+        if (data && data.fan_count !== undefined) {
+          // Update fan count in the card
+          const fanCountMetric = cardContainer.querySelector('.heart-icon').nextElementSibling;
+          fanCountMetric.textContent = data.fan_count;
+        }
       })
       .catch(error => console.error('Error fetching fan count:', error));
 
@@ -210,10 +211,14 @@ export default class extends Controller {
     fetch(pageViewsUrl)
       .then(response => response.json())
       .then(data => {
-        // Assuming data format and finding the correct metric to update
-        const pageViews = data.data[0].values[0].value; // Adjust based on actual API response format
-        const pageViewsMetric = cardContainer.querySelector('.eye-icon').nextElementSibling;
-        pageViewsMetric.textContent = pageViews;
+        if (data.data && data.data.length > 0 && data.data[0].values && data.data[0].values.length > 1) {
+          // Assuming data format and finding the correct metric to update
+          const pageViews = data.data[0].values[1].value; // Adjust based on actual API response format
+          const pageViewsMetric = cardContainer.querySelector('.eye-icon').nextElementSibling;
+          pageViewsMetric.textContent = pageViews;
+        } else {
+          console.error('Unexpected data structure:', data);
+        }
       })
       .catch(error => console.error('Error fetching page views:', error));
   }
