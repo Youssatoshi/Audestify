@@ -109,7 +109,7 @@
 .features-container .title {
   font-size: 2rem;
   color: var(--color-primary);
-  position: relative; /* Required for positioning the pseudo-element */
+  /* Required for positioning the pseudo-element */
 }
 
 .features-container .title::before {
