@@ -1,2 +1,124 @@
-<h1>Library#index</h1>
-<p>Find me in app/views/library/index.html.erb</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+
+<div class = "all">
+ <div class="page-container">
+    <!-- Navbar -->
+  <aside>
+    <div class="toggle">
+        <div class="logo">
+          <img src="<%= asset_path('LOGOS.png') %>" alt="logo" style="width: 45px; height: auto;"> <!-- Adjust the width as needed -->
+          <h2 class = "mt-2" style="font-size: 25px;">Audestify<span class="danger"></span></h2>
+        </div>
+        <div class="close" id="close-btn">
+            <span class="material-icons-sharp">
+              close
+            </span>
+        </div>
+    </div>
+
+     <div class="sidebar">
+
+       <a href="social_sync.html" >
+          <span class="material-icons-sharp">
+              sync
+          </span>
+          <h3>Social Sync</h3>
+        </a>
+        <a href="analytics.html">
+            <span class="material-icons-sharp">
+                insights
+            </span>
+            <h3>General Analytics</h3>
+        </a>
+        <a href="dashboard.html">
+            <span class="material-icons-sharp">
+                dashboard
+            </span>
+            <h3>Dashboard</h3>
+        </a>
+        <a href="publish_center.html">
+            <span class="material-icons-sharp">
+                library_add
+            </span>
+            <h3>Publish Center</h3>
+        </a>
+        <a href="<%= library_index_path %>" class="active">
+            <span class="material-icons-sharp">
+                photo_library
+            </span>
+            <h3>Content Library</h3>
+        </a>
+        <a  href="#">
+            <span class="material-icons-sharp">
+                groups
+            </span>
+            <h3>Collaboration Hub</h3>
+        </a>
+        <a href="settings.html">
+            <span class="material-icons-sharp">
+                settings
+            </span>
+            <h3>Settings</h3>
+        </a>
+        <a href="new_login.html">
+            <span class="material-icons-sharp">
+                add
+            </span>
+            <h3>New Login</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">
+                logout
+            </span>
+            <h3>Logout</h3>
+        </a>
+     </div>
+  </aside>
+<div class="right-section">
+       <div class="nav">
+           <div class="dark-mode">
+               <span class="material-icons-sharp active">
+                   light_mode
+               </span>
+               <span class="material-icons-sharp">
+                   dark_mode
+               </span>
+           </div>
+       </div>
+<div class="main-content">
+  <div class="card">Created</div>
+  <div class="card">Saved</div>
+  <div class="card">Drafts</div>
+  <div class="card">Archived</div>
+  <div class="card">Created</div>
+  <div class="card">Created</div>
+</div>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #F2FAFF;
+}
+
+.sidebar {
+  float: left;
+  width: 200px;
+}
+
+.main-content {
+  margin-left: 10px;
+  width: 800px;
+  height: 500px;
+}
+
+.card {
+  width: 200px;
+  height: 150px;
+  border: 1px solid #94B9FF;
+  background-color: #F2FAFF;
+  margin: 10px;
+  padding: 20px;
+  text-align: center;
+
+}
+</style>

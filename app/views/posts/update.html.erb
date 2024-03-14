@@ -1,2 +1,115 @@
-<h1>Posts#update</h1>
-<p>Find me in app/views/posts/update.html.erb</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+
+<div class = "all">
+ <div class="page-container">
+    <!-- Navbar -->
+  <aside>
+    <div class="toggle">
+        <div class="logo">
+          <img src="<%= asset_path('LOGOS.png') %>" alt="logo" style="width: 45px; height: auto;"> <!-- Adjust the width as needed -->
+          <h2 class = "mt-2" style="font-size: 25px;">Audestify<span class="danger"></span></h2>
+        </div>
+        <div class="close" id="close-btn">
+            <span class="material-icons-sharp">
+              close
+            </span>
+        </div>
+    </div>
+
+     <div class="sidebar">
+
+       <a href="<%= social_sync_index_path %>" class="active">
+          <span class="material-icons-sharp">
+              sync
+          </span>
+          <h3>Social Sync</h3>
+        </a>
+        <a href="analytics.html">
+            <span class="material-icons-sharp">
+                insights
+            </span>
+            <h3>General Analytics</h3>
+        </a>
+        <a href="dashboard.html">
+            <span class="material-icons-sharp">
+                dashboard
+            </span>
+            <h3>Dashboard</h3>
+        </a>
+        <a href="publish_center.html">
+            <span class="material-icons-sharp">
+                library_add
+            </span>
+            <h3>Publish Center</h3>
+        </a>
+        <a href="content_library.html">
+            <span class="material-icons-sharp">
+                photo_library
+            </span>
+            <h3>Content Library</h3>
+        </a>
+        <a  href="#">
+            <span class="material-icons-sharp">
+                groups
+            </span>
+            <h3>Collaboration Hub</h3>
+        </a>
+        <a href="settings.html">
+            <span class="material-icons-sharp">
+                settings
+            </span>
+            <h3>Settings</h3>
+        </a>
+        <a href="new_login.html">
+            <span class="material-icons-sharp">
+                add
+            </span>
+            <h3>New Login</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">
+                logout
+            </span>
+            <h3>Logout</h3>
+        </a>
+     </div>
+  </aside>
+
+
+  <!-- ... sidebar as before ... -->
+  <div class="main-content">
+    <form action="/posts/update" method="post">
+      <label for="post-image">Image:</label>
+      <input type="file" id="post-image" name="image"><br><br> <!-- Existing image can be shown here -->
+      <label for="post-description">Description:</label>
+      <textarea id="post-description" name="description">Existing description goes here...</textarea><br><br>
+      <input type="submit" value="Update Post">
+    </form>
+  </div>
+  <!-- ... rest of the page ... -->
+
+
+
+
+
+
+
+
+
+
+          <!-- Add additional cards for other social media platforms as needed -->
+      </div>
+
+
+   <div class="right-section">
+       <div class="nav">
+           <div class="dark-mode">
+               <span class="material-icons-sharp active">
+                   light_mode
+               </span>
+               <span class="material-icons-sharp">
+                   dark_mode
+               </span>
+           </div>
+       </div>
