@@ -7,4 +7,11 @@ class SocialMediaAccount < ApplicationRecord
   def self.facebook_tokens_for_user(user_id)
     where(user_id: user_id, platform_name: 'Facebook').pluck(:auth_token)
   end
+
+  def self.any_token_for_user(user_id)
+    facebook_token = where(user_id: user_id, platform_name: 'Facebook').pluck(:auth_token).first
+    return facebook_token if facebook_token.present?
+
+    where(user_id: user_id).pluck(:auth_token).first
+  end
 end

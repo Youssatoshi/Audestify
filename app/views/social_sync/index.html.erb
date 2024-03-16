@@ -90,7 +90,7 @@
           <div class="account-card" id="facebook-card">
               <i class="fab fa-brands fa-meta fa-5x"></i>
               <!-- Green dot for connected status -->
-              <div id="facebook-status" class="status-icon connected">
+              <div id="facebook-status" class="status-icon not-connected">
                   <i class="fas fa-circle"></i> <!-- FontAwesome green dot -->
               </div>
               <a class="sync-btn dashboard-button" onclick="checkLoginState(); startSyncing();">
@@ -260,7 +260,7 @@
 </script>
 
 <!-------------------------------------------------------------------------------------------------------------------------------------------------->
-<!-- Facebook login JS Script CODE TO NOT TOUCH , add any code about this line-->
+<!-- Facebook login JS Script CODE TO NOT TOUCH , add any code above this line-->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
     window.fbAsyncInit = function() {
@@ -281,6 +281,7 @@
                   // If not already connected, explicitly call the login method
                   FB.login(function(response) {
                       statusChangeCallback(response);
+                      console.log(response);
                   }, {scope: 'public_profile,email,manage_fundraisers,read_insights,publish_video,catalog_management,pages_manage_cta,pages_manage_instant_articles,pages_show_list,read_page_mailboxes,ads_management,ads_read,business_management,pages_messaging,pages_messaging_subscriptions,instagram_basic,instagram_manage_comments,instagram_manage_insights,instagram_content_publish,leads_retrieval,whatsapp_business_management,instagram_manage_messages,page_events,pages_read_engagement,pages_manage_metadata,pages_read_user_content,pages_manage_ads,pages_manage_posts,pages_manage_engagement,whatsapp_business_messaging,instagram_shopping_tag_products,instagram_branded_content_brand,instagram_branded_content_creator,instagram_manage_events'});
               } else {
                   // If already connected, handle the status change
@@ -316,34 +317,38 @@
 
 
     function statusChangeCallback(response) {
-            var facebookStatusText = document.getElementById("facebook-status-text");
-            var authToken = '';
-            if (response.status === 'connected') {
-                // The user is logged in and has authenticated your app
-                authToken = response.authResponse.accessToken;
-                console.log('Facebook Access Token:',  authToken);
-                facebookStatusText.classList.remove("hidden");
-                facebookStatusText.innerHTML = 'Checking...';
-                FB.api('/me', function(response) {
-                    facebookStatusText.innerHTML =  `<div style="text-align: center;">Hey there! 🌟 <br> ${response.name}!</div>`;
-                });
-                // Change the status icon and button
-                facebookStatusIcon.classList.remove("text-danger");
-                facebookStatusIcon.classList.add("text-success");
-                document.getElementById("facebook-status").classList.remove("not-connected");
-                document.getElementById("facebook-status").classList.add("connected");
-                var fbCard = document.getElementById("facebook-card");
-                fbCard.querySelector('.sync-btn').classList.add("hidden");
-                createSocialMediaAccount(authToken);
-            } else {
-                // The person is not logged into your app or we are unable to tell.
-                facebookStatusText.classList.remove("hidden");
-                facebookStatusText.innerHTML = 'Not Connected';
-                document.getElementById("facebook-status").classList.remove("connected");
-                document.getElementById("facebook-status").classList.add("not-connected");
-                var fbCard = document.getElementById("facebook-card");
-                fbCard.querySelector('.sync-btn').classList.remove("hidden");
-            }
+                var facebookStatusText = document.getElementById("facebook-status-text");
+                var authToken = '';
+                if (response.status === 'connected') {
+                    // The user is logged in and has authenticated your app
+                    authToken = response.authResponse.accessToken;
+                    console.log('Facebook Access Token:',  authToken);
+                    console.log('jma3 Karrek');
+
+                    facebookStatusText.classList.remove("hidden");
+                    facebookStatusText.innerHTML = 'Checking...';
+                    FB.api('/me', function(response) {
+                        facebookStatusText.innerHTML =  `<div style="text-align: center;">Hey there! 🌟 <br> ${response.name}!</div>`;
+                    });
+                    // Change the status icon and button
+                    facebookStatusIcon = document.getElementById("facebook-status");
+                    facebookStatusIcon.classList.remove("not-connected");
+                    facebookStatusIcon.classList.add("connected");
+                    facebookStatusIcon.classList.remove("text-danger");
+                    facebookStatusIcon.classList.add("text-success");
+                    var fbCard = document.getElementById("facebook-card");
+                    fbCard.querySelector('.sync-btn').classList.add("hidden");
+                    console.log("kane3aytou l create");
+                    createSocialMediaAccount(authToken);
+                } else {
+                    // The person is not logged into your app or we are unable to tell.
+                    facebookStatusText.classList.remove("hidden");
+                    facebookStatusText.innerHTML = 'Not Connected';
+                    document.getElementById("facebook-status").classList.remove("connected");
+                    document.getElementById("facebook-status").classList.add("not-connected");
+                    var fbCard = document.getElementById("facebook-card");
+                    fbCard.querySelector('.sync-btn').classList.remove("hidden");
+                }
         }
 
 
