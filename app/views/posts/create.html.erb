@@ -1,85 +1,314 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .encase {
-      display: flex;
-      justify-content: center; /* Center the content horizontally */
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 
-    .navbar-left {
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* Align items to the center horizontally */
-      position: relative;
-      margin-top: 160px;
-    }
-
-    .navbar-left ul {
-      padding: 0;
-      margin: 0;
-      text-align: left; /* Align the text to the left */
-    }
-
-    .navbar-left ul li {
-      padding: 10px;
-      list-style-type: none;
-    }
-
-    .navbar-left ul li a {
-      color: black;
-      text-decoration: none;
-    }
-
-    .navbar-left ul li a:hover {
-      background-color: #94B9FF;
-      border-radius: 8px;
-      padding: 8px;
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      padding: 16px;
-      margin-right: 120px;
-      position: relative;
-    }
-
-    .back-arrow {
-      margin: 16px;
-      text-decoration: none;
-      position: absolute;
-      left: 0;
-      z-index: 1;
-    }
-
-    .dashboard-link {
-      list-style-type: none;
-      text-decoration: none;
-      color: black;
-    }
-  </style>
-</head>
-<body>
-  <div class="encase">
-      <div class="back-arrow">
-        <%= link_to('Back', dashboard_index_path) %>
-      </div>
-    <div class="navbar-left">
-      <ul>
-        <li><%= link_to('Dashboard', dashboard_index_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Publish Center', posts_create_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Content Library', library_index_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Collaboration Hub', "library_index_path", class: 'dashboard-link') %></li>
-        <li><%= link_to('General Analytics', social_sync_index_path) %></li>
-      </ul>
+<div class = "all">
+ <div class="page-container">
+    <!-- Navbar -->
+  <aside>
+    <div class="toggle">
+        <div class="logo">
+          <img src="<%= asset_path('LOGOS.png') %>" alt="logo" style="width: 45px; height: auto;"> <!-- Adjust the width as needed -->
+          <h2 class = "mt-2" style="font-size: 25px;">Audestify<span class="danger"></span></h2>
+        </div>
+        <div class="close" id="close-btn">
+            <span class="material-icons-sharp">
+              close
+            </span>
+        </div>
     </div>
 
-    <div class="container">
+
+
+     <div class="sidebar">
+
+       <a href="social_sync.html">
+          <span class="material-icons-sharp">
+              sync
+          </span>
+          <h3>Social Sync</h3>
+        </a>
+        <a href="analytics.html">
+            <span class="material-icons-sharp">
+                insights
+            </span>
+            <h3>General Analytics</h3>
+        </a>
+        <a href="dashboard.html">
+            <span class="material-icons-sharp">
+                dashboard
+            </span>
+            <h3>Dashboard</h3>
+        </a>
+        <a href="<%= publish_center_create_path %>" class="active">
+            <span class="material-icons-sharp">
+                library_add
+            </span>
+            <h3>Publish Center</h3>
+        </a>
+        <a href="content_library.html">
+            <span class="material-icons-sharp">
+                photo_library
+            </span>
+            <h3>Content Library</h3>
+        </a>
+        <a  href="#">
+            <span class="material-icons-sharp">
+                groups
+            </span>
+            <h3>Collaboration Hub</h3>
+        </a>
+        <a href="settings.html">
+            <span class="material-icons-sharp">
+                settings
+            </span>
+            <h3>Settings</h3>
+        </a>
+        <a href="new_login.html">
+            <span class="material-icons-sharp">
+                add
+            </span>
+            <h3>New Login</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">
+                logout
+            </span>
+            <h3>Logout</h3>
+        </a>
+     </div>
+  </aside>
+<div class="right-section">
+       <div class="nav">
+           <div class="dark-mode">
+               <span class="material-icons-sharp active">
+                   light_mode
+               </span>
+               <span class="material-icons-sharp">
+                   dark_mode
+               </span>
+           </div>
+       </div>
+
+
+<div class="main-content">
+  <div class="header">
+    <h1>Sample workspace</h1>
+    <div class="image-placeholder">Image</div>
+    <div class="text-description"># Text Description</div>
+    <button class="confirm-button">Confirm</button>
+  </div>
+<div class="right-panel">
+    <h2>Push to the following</h2>
+    <div class="account">
+      <img src="images/instagram-icon.png" alt="Instagram">
+      <span>User_Account 1</span>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round">
+
+    </div>
+    <div class="account">
+      <img src="images/instagram-icon.png" alt="Instagram">
+      <span>User_Account 2</span>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round">
+    </div>
+    <div class="account">
+      <img src="images/facebook-icon.png" alt="Facebook">
+      <span>User_Account 1</span>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="account">
+      <img src="images/facebook-icon.png" alt="Facebook">
+      <span>User_Account 2</span>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
     </div>
   </div>
-</body>
-</html>
+</div>
+<div class="popup">
+  <div class="popup-content">
+    <p>Are you sure you want to push?</p>
+    <button class="cancel-button">Cancel</button>
+    <button class="push-button">Push</button>
+  </div>
+</div>
+  </div>
+
+
+
+
+
+<style>
+/* Styles for the workspace section */
+.main-content {
+  margin-top: 80px;
+  margin-bottom: 100px;
+
+}
+h1 {
+  margin-top: 15px;
+  margin-left: 80px;
+}
+.workspace {
+  margin-bottom: 20px;
+}
+
+.image-placeholder {
+  background-color: #ccc; /* Placeholder background color */
+  width: 200px; /* Adjust width as needed */
+  height: 150px; /* Adjust height as needed */
+  line-height: 150px; /* Center the text vertically */
+  text-align: center;
+  margin-top: 70px;
+  margin-right: 200px;
+  margin-left: 100px; /* Center the text horizontally */
+}
+
+.text-description {
+  margin-top: 10px;
+  margin-left: 140px;/* Add some spacing between image placeholder and text description */
+}
+
+.confirm-button {
+  background-color: #94B9FF; /* Button background color */
+  color: white; /* Text color */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left:140px;
+}
+
+/* Styles for the right panel section */
+.right-panel {
+  padding: 20px;
+  background-color: #F2FAFF; /* Panel background color */
+  border-radius: 5px;
+  width: 500px;
+
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.account {
+  margin-bottom: 10px;
+}
+
+.account img {
+  width: 30px; /* Adjust image size as needed */
+  height: 30px; /* Adjust image size as needed */
+  margin-right: 10px; /* Add some spacing between image and text */
+}
+
+/* Styles for the switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.page-container {
+  gap: 10rem;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc; /* Default color for the switch background */
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #94B9FF; /* Color for the switch background when checked */
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup button {
+  margin: 0 10px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup button.cancel-button {
+  background-color: #ccc;
+}
+
+.popup button.push-button {
+  background-color: #94B9FF;
+  color: #fff;
+}
+
+</style>
+
+  <script src="script.js"></script>
+
+<script>
+document.querySelector('.confirm-button').addEventListener('click', function() {
+  document.querySelector('.popup').style.display = 'block';
+});
+
+document.querySelector('.cancel-button').addEventListener('click', function() {
+  document.querySelector('.popup').style.display = 'none';
+});
+
+document.querySelector('.push-button').addEventListener('click', function() {
+  // Add logic to push the content
+  document.querySelector('.popup').style.display = 'none';
+});
+
+
+</script>

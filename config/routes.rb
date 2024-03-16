@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   resources :dashboard, only: [:index]
   resources :social_media_accounts
   resources :posts, only: [:show, :new, :create, :update]
+  get '/publish_center/create', to: 'posts#new', as: 'publish_center_create'
+  post '/publish_center/create', to: 'posts#create'
   resources :library, only: [:index]
 
   # Custom route for deleting SocialMediaAccount
