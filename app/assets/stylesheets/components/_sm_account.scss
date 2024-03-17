@@ -33,7 +33,7 @@ main .general-analytics .data {
   cursor: pointer;
   transition: all 0.3s ease;
   height: auto;
-  max-height: 38.65%;
+  max-height: 36.3%;
   overflow-y: auto;
   width: 100%;
   margin-bottom: 20px; /* Ensures the container is fully responsive */
@@ -268,11 +268,11 @@ main .accounts .account-card .account-logo img {
 }
 
 .chart-line-icon {
-  color: #2ed573; /* A fresh, vivid green */
+  color: #0e63b8;
 }
 
 .eye-icon {
-  color: #1e90ff; /* A clear blue */
+  color: #000000;
 }
 
 @keyframes beat {
@@ -297,10 +297,7 @@ main .accounts .account-card .account-logo img {
   }
 }
 
-.chart-line-icon {
-  color: #2ed573; /* Green color for chart line */
-  animation: grow 1.5s ease-in-out infinite;
-}
+
 
 @keyframes blink {
   0%, 100% {
