@@ -234,66 +234,52 @@ export default class extends Controller {
 
   fetchFacebookMetrics(pageId, cardContainer, pageAccessToken) {
     const accessToken = this.authTokenValue;
+    let totalScore = 0; // Initialize total score
+
     const fanCountUrl = `https://graph.facebook.com/${pageId}?fields=fan_count&access_token=${accessToken}`;
     const pageViewsUrl = `https://graph.facebook.com/${pageId}/insights/page_views_total?access_token=${pageAccessToken}`;
+    const latestPostUrl = `https://graph.facebook.com/${pageId}/posts?limit=1&access_token=${pageAccessToken}`;
+
+    // Helper function to handle metric values, converting "NPY" or undefined to 0
+    const handleMetricResponse = (metricValue) => {
+      return (!isNaN(metricValue) && metricValue !== undefined && metricValue !== "NPY") ? parseInt(metricValue, 10) : 0;
+    };
 
     // Fetch fan count
     fetch(fanCountUrl)
       .then(response => response.json())
       .then(data => {
-        if (data && data.fan_count !== undefined) {
-          const fanCountMetric = cardContainer.querySelector('.chart-line-icon').nextElementSibling;
-          fanCountMetric.textContent = data.fan_count;
-        }
+        const fanCount = handleMetricResponse(data.fan_count);
+        totalScore += fanCount;
+        return fetch(pageViewsUrl); // Chain the next fetch call
       })
-      .catch(error => console.error('Error fetching fan count:', error));
-
-    // Fetch page views
-    fetch(pageViewsUrl)
       .then(response => response.json())
       .then(data => {
-        if (data.data && data.data.length > 0 && data.data[0].values && data.data[0].values.length > 1) {
-          const pageViews = data.data[0].values[0].value;
-          const pageViewsMetric = cardContainer.querySelector('.eye-icon').nextElementSibling;
-          pageViewsMetric.textContent = pageViews;
-        }
+        const pageViews = data.data && data.data.length > 0 ? handleMetricResponse(data.data[0].values[0].value) : 0;
+        totalScore += pageViews;
+        return fetch(latestPostUrl); // Chain the next fetch call
       })
-      .catch(error => console.error('Error fetching page views:', error));
-
-    // Fetch latest post's likes
-    const latestPostUrl = `https://graph.facebook.com/${pageId}/posts?limit=1&access_token=${pageAccessToken}`; // Note: Using pageAccessToken here
-    fetch(latestPostUrl)
       .then(response => response.json())
       .then(data => {
         if (data.data && data.data.length > 0) {
           const latestPostId = data.data[0].id;
           const latestPostLikesUrl = `https://graph.facebook.com/${latestPostId}/insights?metric=post_reactions_by_type_total&access_token=${pageAccessToken}`;
-
-          return fetch(latestPostLikesUrl);
+          return fetch(latestPostLikesUrl); // Fetch reactions for the latest post
         } else {
-          // No posts found
           console.log("No posts available for this page.");
-          return Promise.resolve("N/A"); // Handle no posts found scenario
+          return { data: [{ values: [{ value: {} }] }] }; // Default to 0 likes if no posts are found
         }
       })
-      .then(response => response === "N/A" ? "N/A" : response.json())
+      .then(response => {
+        if (response.json) return response.json();
+        return response; // Handle the direct return in case of no posts
+      })
       .then(data => {
-        if (data !== "N/A" && data.data && data.data.length > 0) {
-          // Sum all types of reactions
-          const reactions = data.data[0].values[0].value;
-          const totalReactions = Object.values(reactions).reduce((sum, current) => sum + current, 0);
-
-          // Log the total reactions count
-          console.log("Total Reactions for the latest post:", totalReactions);
-
-          // Example: Update a metric in the card with totalReactions
-          // This assumes you have a place in your card specifically for this metric.
-          // For demonstration purposes only; adjust according to your actual UI element.
-          const reactionsMetric = cardContainer.querySelector('.heart-icon').nextElementSibling;
-          reactionsMetric.textContent = totalReactions.toString();
-        }
+        const totalReactions = data.data && data.data.length > 0 ? handleMetricResponse(Object.values(data.data[0].values[0].value).reduce((sum, current) => sum + current, 0)) : 0;
+        totalScore += totalReactions;
+        console.log(`Total Score for account ${pageId}:`, totalScore); // Log the total score for this account
       })
-      .catch(error => console.error('Error fetching latest post likes:', error));
-}
+      .catch(error => console.error('Error fetching metrics for account ID ' + pageId + ':', error)); // Catch any errors in the fetch chain
+  }
 
 }
