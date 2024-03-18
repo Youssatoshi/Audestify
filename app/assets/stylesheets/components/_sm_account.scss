@@ -16,7 +16,10 @@ main .general-analytics .data {
   transition: all 0.3s ease;
   margin-top: 99px;
   height: 350px;
+  display: flex;
 }
+
+
 
 
 /* Responsive container for the accounts */
@@ -326,4 +329,23 @@ main .accounts .account-card .account-logo img {
   50% {
     transform: scale(1.1); /* A subtle 'thinking' pulse */
   }
+}
+
+
+.analytics-dashboard-card {
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  margin-top: 1rem;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.analytics-dashboard-card{
+  box-shadow: none;
 }
