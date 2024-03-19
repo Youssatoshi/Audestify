@@ -68,20 +68,15 @@ export default class extends Controller {
     this.fetchFacebookMetrics(page.id, cardContainer, page.access_token);
 
     // Create and append the button
-// Create and append the button for Facebook page card
     const button = document.createElement('button');
     button.className = 'card-button';
     button.textContent = 'Dashboard';
-    button.addEventListener('click', () => {
-      // Redirect to the dashboard with the Facebook page ID as a parameter
-      window.location.href = `/dashboard?entity_id=${page.id}&type=facebook`;
-    });
     cardContainer.appendChild(button);
 
-        // Append the card container to the accounts container
-        this.element.appendChild(cardContainer);
-        return cardContainer;
-    }
+    // Append the card container to the accounts container
+    this.element.appendChild(cardContainer);
+    return cardContainer;
+}
 
   fetchInstagramProfile(pageId, fbCard) {
     const accessToken = this.authTokenValue;
@@ -157,16 +152,10 @@ export default class extends Controller {
     // Create the first card content container
     this.appendMetrics(cardContainer);
     // Create the button
-// Assuming this is within the createInstagramCard function and you have access to an instagramId variable
     const button = document.createElement('button');
     button.className = 'card-button';
     button.textContent = 'Dashboard';
-    button.addEventListener('click', () => {
-      // Redirect to the dashboard with the Instagram ID as a parameter
-      window.location.href = `/dashboard?entity_id=${instagramId}&type=instagram`;
-    });
     cardContainer.appendChild(button);
-
 
     // Finally, append the card container to the accounts container
     this.element.appendChild(cardContainer);

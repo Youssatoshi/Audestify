@@ -1,8 +1,72 @@
-<h1>Dashboard</h1>
-<% if @type == "facebook" %>
-  <p>Displaying Facebook data for entity ID: <%= @entity_id %></p>
-  <!-- Add more specific data display logic here -->
-<% elsif @type == "instagram" %>
-  <p>Displaying Instagram data for entity ID: <%= @entity_id %></p>
-  <!-- Add more specific data display logic here -->
-<% end %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Media Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrapper">
+  <aside class="sidebar">
+    <h1 class="logo">Audestify</h1>
+    <nav>
+      <ul>
+        <li><%= link_to('Dashboard', dashboard_index_path, class: 'dashboard-link') %></li>
+        <li><%= link_to('Publish Center', posts_create_path, class: 'dashboard-link') %></li>
+        <li><%= link_to('Content Library', library_index_path, class: 'dashboard-link') %></li>
+        <li><%= link_to('Collaboration Hub', "library_index_path", class: 'dashboard-link') %></li>
+        <li><%= link_to('General Analytics', social_sync_index_path) %></li>
+      </ul>
+    </nav>
+  </aside>
+<main class="main-content">
+  <!-- First row -->
+  <div class="column">
+    <section class="account">
+      <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 1</span>
+
+    </section>
+    <section class="account">
+     <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 4</span>
+      </section>
+    </section>
+
+    <section class="account">
+      <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 7</span>
+    </section>
+  </div>
+
+  <!-- Second row -->
+  <div class="column">
+    <section class="account">
+      <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 2</span>
+    </section>
+    <section class="account">
+      <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 5</span>
+    </section>
+    <section class="account">
+      <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 8</span>
+    </section>
+  </div>
+<!-- Third row -->
+<div class="column">
+    <section class="account">
+      <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 3</span>
+    </section>
+    <section class="account">
+      <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 6</span>
+    </section>
+    <section class="account">
+      <div class="account-placeholder"></div>
+      <span class="account-name">@User_Account 9</span>
+    </section>
+  </div>

@@ -9,47 +9,7 @@ main .general-analytics {
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 99px;
-  height: 450px;
-}
-
-.left-data {
-  height: 100%;
-  border-radius: 1rem;
-}
-
-.right-data {
-  height: 100%;
-  border-radius: 1rem;
-}
-
-.left-cards {
-  height: 100%;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 1rem;
-}
-
-.left-data-card {
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
-  gap: .5rem;
-  padding: 0.5rem;
-  background-color: gray;
-}
-
-.data-card {
-  height: 100%;
-  padding: 0.5rem;
-  background-color: gray;
-}
-
-.data {
-  height: 100%;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 350px;
 }
 
 
@@ -361,23 +321,4 @@ main .accounts .account-card .account-logo img {
   50% {
     transform: scale(1.1); /* A subtle 'thinking' pulse */
   }
-}
-
-
-.analytics-dashboard-card {
-  background-color: var(--color-white);
-  padding: var(--card-padding);
-  border-radius: var(--card-border-radius);
-  margin-top: 1rem;
-  box-shadow: var(--box-shadow);
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 1.4rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.analytics-dashboard-card{
-  box-shadow: none;
 }

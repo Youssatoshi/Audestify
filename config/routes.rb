@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
   # Define resources for SocialSync, Dashboard, SocialMediaAccounts, Posts, and Library
   resources :social_sync, only: [:index]
-  resources :dashboard, only: [:index, :show]
+  resources :dashboard, only: [:index]
   resources :social_media_accounts, only: [:create, :index]
   resources :posts, only: [:show, :new, :create, :update]
   resources :library, only: [:index]
