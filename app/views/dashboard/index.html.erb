@@ -1,3 +1,8 @@
+<script>
+    document.querySelector('.flip-container-unique').addEventListener('click', function() {
+      this.classList.toggle('flipped');
+    });
+</script>
 <% if params[:type] == 'facebook'%>
   <p>Page Auth Token: <%= params[:page_auth_token] %></p>
   <p>User Auth Token: <%= params[:user_auth_token] %></p>
@@ -137,7 +142,7 @@
                 <div class="flip-container-unique" onclick="this.classList.toggle('flipped');">
                   <!-- Front Side (click to reveal) -->
                   <div class="flip-front-unique">
-                    Click to reveal the emotion!
+                    Reveal Emotion 🤔?
                   </div>
                   <!-- Back Side (hidden content) -->
                   <div class="flip-back-unique">
