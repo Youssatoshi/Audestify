@@ -1,8 +1,4 @@
-<script>
-    document.querySelector('.flip-container-unique').addEventListener('click', function() {
-      this.classList.toggle('flipped');
-    });
-</script>
+
 <% if params[:type] == 'facebook'%>
   <p>Page Auth Token: <%= params[:page_auth_token] %></p>
   <p>User Auth Token: <%= params[:user_auth_token] %></p>
@@ -94,12 +90,12 @@
 
 
 
-
-
         <main>
             <div class="general-analytics">
-                <div class="data">
-                <p class="center"> </p>
+                <!-- Define a specific area for the chart -->
+                <div class="chart-area">
+                    <!-- Canvas element for the chart -->
+                    <canvas id="performanceChart"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script></canvas>
                 </div>
             </div>
             <div class="unique-card-container">
@@ -204,3 +200,37 @@
 
 <%= javascript_include_tag 'navabar' %>
 <%end%>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('performanceChart').getContext('2d');
+        var performanceChart = new Chart(ctx, {
+            type: 'bar', // Change to desired type
+            data: {
+                labels: ['Post 1', 'Post 2', 'Post 3'], // Example labels
+                datasets: [{
+                    label: 'Performance Metric',
+                    data: [10, 20, 30], // Example data
+                    backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+                    borderColor: ['rgba(255,99,132,1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.querySelector('.flip-container-unique').addEventListener('click', function() {
+      this.classList.toggle('flipped');
+    });
+</script>
