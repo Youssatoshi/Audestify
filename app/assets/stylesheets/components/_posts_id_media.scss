@@ -13,7 +13,7 @@
   background-color: #fff; /* Background color */
   border-radius: 10px; /* Rounded corners */
   /* Assign a fixed height or keep it auto based on content */
-  height: 370px; /* Example fixed height, adjust as needed */
+  height: 353px; /* Example fixed height, adjust as needed */
   display: flex;
   flex-direction: column;
 
@@ -86,9 +86,9 @@
 /* Container holding the flip elements */
 .flip-container-unique {
   perspective: 1000px;
-  width: 220px; /* Match button width */
-  height: 50px; /* Match button height */
-  margin: 30px auto; /* Centering and spacing */
+  width: 180px; /* Match button width */
+  height: 38px; /* Match button height */
+
   border-radius: 25px; /* Rounded corners like the button */
   background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%); /* Gradient background */
   display: flex;
@@ -102,7 +102,7 @@
 /* Front and back of the flip container */
 .flip-front-unique, .flip-back-unique {
   color: #fff; /* Text color */
-  font-size: 18px; /* Font size */
+  font-size: 13px; /* Font size */
   white-space: nowrap; /* Prevent wrapping */
   width: 100%;
   height: 100%;
