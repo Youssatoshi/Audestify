@@ -133,9 +133,19 @@
                     </div>
                   </div>
                                     <!-- Container for emojis and text -->
-                  <div class="emoji-text-container">
-                    <!-- Placeholder for emojis and text -->
+                  <!-- Flip Container -->
+                <div class="flip-container-unique" onclick="this.classList.toggle('flipped');">
+                  <!-- Front Side (click to reveal) -->
+                  <div class="flip-front-unique">
+                    Click to reveal the emotion!
                   </div>
+                  <!-- Back Side (hidden content) -->
+                  <div class="flip-back-unique">
+                    <%= generate_random_emotion %>
+                  </div>
+                </div>
+
+
                 </div>
               <% end %>
             </div>
