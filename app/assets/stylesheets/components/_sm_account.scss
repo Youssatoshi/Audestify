@@ -3,16 +3,12 @@ main .general-analytics {
   padding: var(--card-padding);
   border-radius: var(--card-border-radius);
   box-shadow: var(--box-shadow);
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
-  gap: 1rem;
+
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 99px;
   height: 350px;
 }
-
-
 
 
 /* Responsive container for the accounts */

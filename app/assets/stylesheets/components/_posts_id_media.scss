@@ -1,0 +1,98 @@
+.unique-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: center; /* Centers the cards in the container */
+  padding-top: 20px; /* Space above the card container */
+}
+
+.unique-card {
+  flex: 0 1 calc(33.333% - 20px); /* Each card takes up a third of the container width minus the gap */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  padding: 20px; /* Inner space */
+  background-color: #fff; /* Background color */
+  border-radius: 10px; /* Rounded corners */
+  /* Assign a fixed height or keep it auto based on content */
+  height: 370px; /* Example fixed height, adjust as needed */
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.media-container {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(97, 97, 255, 0.6); /* Add shadow effect */
+}
+
+.media-container img,
+.media-container video {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; /* Ensure the content covers the entire container */
+}
+
+
+/* Existing styles */
+.info-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background-color: rgba(97, 97, 255, 0.01);
+  min-height: 80px;
+  width: 90%;
+  border-radius: 15px;
+  flex-wrap: wrap;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-item i {
+  margin-bottom: 5px;
+}
+
+.icon-item span {
+  font-size: 0.75rem;
+}
+
+/* New styles for icon colors */
+.likes i {
+  color: #e74c3c; /* Red for likes */
+}
+
+.comments i {
+  color: #3498db; /* Blue for comments */
+}
+
+.globe i {
+  color: #2ecc71; /* Green for global/globe */
+}
+
+.charts i {
+  color: #f1c40f; /* Yellow for charts */
+}
+
+.emoji-text-container {
+  padding: 10px;
+  background-color: rgba(97, 97, 255, 0.05);
+  margin-top: 11px;
+  height: 40px;
+  width: 90%;
+  border-radius: 15px;
+}
+
+/* Optional: Set a max-width for the cards for larger screens */
+@media (min-width: 1024px) {
+  .unique-card {
+    max-width: 300px; /* Adjust max-width as needed */
+  }
+}

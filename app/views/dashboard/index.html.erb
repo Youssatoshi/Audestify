@@ -1,72 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Media Dashboard</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<div class="wrapper">
-  <aside class="sidebar">
-    <h1 class="logo">Audestify</h1>
-    <nav>
-      <ul>
-        <li><%= link_to('Dashboard', dashboard_index_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Publish Center', posts_create_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Content Library', library_index_path, class: 'dashboard-link') %></li>
-        <li><%= link_to('Collaboration Hub', "library_index_path", class: 'dashboard-link') %></li>
-        <li><%= link_to('General Analytics', social_sync_index_path) %></li>
-      </ul>
-    </nav>
-  </aside>
-<main class="main-content">
-  <!-- First row -->
-  <div class="column">
-    <section class="account">
-      <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 1</span>
+<% if params[:type] == 'facebook'%>
+  <p>Page Auth Token: <%= params[:page_auth_token] %></p>
+  <p>User Auth Token: <%= params[:user_auth_token] %></p>
+<% end %>
 
-    </section>
-    <section class="account">
-     <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 4</span>
-      </section>
-    </section>
+<!-- Assuming @media_urls contains all the media URLs -->
+<% if params[:type] == 'instagram'%>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 
-    <section class="account">
-      <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 7</span>
-    </section>
-  </div>
+      <div class = "all">
+      <div class="page-container">
+          <!-- Navbar -->
+        <aside>
+          <div class="toggle">
+              <div class="logo">
+                <img src="<%= asset_path('LOGOS.png') %>" alt="logo" style="width: 45px; height: auto;"> <!-- Adjust the width as needed -->
+                <h2 class = "mt-2" style="font-size: 25px;">Audestify<span class="danger"></span></h2>
+              </div>
+              <div class="close" id="close-btn">
+                  <span class="material-icons-sharp">
+                    close
+                  </span>
+              </div>
+          </div>
 
-  <!-- Second row -->
-  <div class="column">
-    <section class="account">
-      <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 2</span>
-    </section>
-    <section class="account">
-      <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 5</span>
-    </section>
-    <section class="account">
-      <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 8</span>
-    </section>
-  </div>
-<!-- Third row -->
-<div class="column">
-    <section class="account">
-      <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 3</span>
-    </section>
-    <section class="account">
-      <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 6</span>
-    </section>
-    <section class="account">
-      <div class="account-placeholder"></div>
-      <span class="account-name">@User_Account 9</span>
-    </section>
-  </div>
+          <div class="sidebar">
+
+            <a href="<%= social_sync_index_path %>">
+                <span class="material-icons-sharp">
+                    sync
+                </span>
+                <h3>Social Sync</h3>
+              </a>
+              <a href="analytics.html">
+                  <span class="material-icons-sharp">
+                      insights
+                  </span>
+                  <h3>General Analytics</h3>
+              </a>
+              <a href="dashboard.html"class="active">
+                  <span class="material-icons-sharp">
+                      dashboard
+                  </span>
+                  <h3>Dashboard</h3>
+              </a>
+              <a href="publish_center.html">
+                  <span class="material-icons-sharp">
+                      library_add
+                  </span>
+                  <h3>Publish Center</h3>
+              </a>
+              <a href="content_library.html">
+                  <span class="material-icons-sharp">
+                      photo_library
+                  </span>
+                  <h3>Content Library</h3>
+              </a>
+              <a  href="#">
+                  <span class="material-icons-sharp">
+                      groups
+                  </span>
+                  <h3>Collaboration Hub</h3>
+              </a>
+              <a href="settings.html">
+                  <span class="material-icons-sharp">
+                      settings
+                  </span>
+                  <h3>Settings</h3>
+              </a>
+              <a href="new_login.html">
+                  <span class="material-icons-sharp">
+                      add
+                  </span>
+                  <h3>New Login</h3>
+              </a>
+              <a href="#">
+                  <span class="material-icons-sharp">
+                      logout
+                  </span>
+                  <h3>Logout</h3>
+              </a>
+          </div>
+        </aside>
+
+
+
+
+
+
+
+
+
+        <main>
+            <div class="general-analytics">
+                <div class="data">
+                <p class="center"> </p>
+                </div>
+            </div>
+            <div class="unique-card-container">
+              <% @media_data.each do |media| %>
+                <div class="unique-card">
+                  <!-- Media container for image or video -->
+                  <div class="media-container">
+                    <% if media[:url].include?("mp4") || media[:url].include?("/o1/v/t16/f1/m69/")%>
+                      <!-- If it's an mp4 video, use the video tag -->
+                      <video controls autoplay loop muted>
+                        <source src="<%= media[:url] %>" type="video/mp4">
+                      </video>
+                    <% else %>
+                      <!-- If it's an image, use the image tag -->
+                      <img src="<%= media[:url] %>" alt="Media">
+                    <% end %>
+                  </div>
+
+                  <!-- Container for likes and other details -->
+                  <div class="info-container">
+                    <div class="icon-item likes">
+                      <i class="fa-regular fa-heart"></i>
+                      <span><%= media[:insights][:likes] %></span>
+                    </div>
+                    <div class="icon-item comments">
+                      <i class="fa-solid fa-comment"></i>
+                      <span><%= media[:insights][:comments_count] %></span>
+                    </div>
+                    <div class="icon-item globe">
+                      <i class="fa-solid fa-globe"></i>
+                      <span><%= media[:insights][:reach] %></span>
+                    </div>
+                    <div class="icon-item charts">
+                      <i class="fa-solid fa-chart-simple"></i>
+                      <span><%= media[:insights][:total_interactions] %></span>
+                    </div>
+                  </div>
+                                    <!-- Container for emojis and text -->
+                  <div class="emoji-text-container">
+                    <!-- Placeholder for emojis and text -->
+                  </div>
+                </div>
+              <% end %>
+            </div>
+        </main>
+
+        <div class="right-section">
+            <div class="nav">
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div>
+            </div>
+
+            <div class="user-profile">
+                <div class="logo">
+                    <img src="<%= asset_path('149071.png') %>" alt="logo">
+                    <h2>Youssef Boulahcen</h2>
+                    <p>Content Creator</p>
+                </div>
+            </div>
+
+            <div class="notifications">
+                <div class="header">
+                    <h2>Notifications</h2>
+                    <span class="material-icons-sharp">
+                        notifications_none
+                    </span>
+                </div>
+
+                <div class="notification">
+                    <div class="content">
+                        <div class="content">
+                            <h3><span>@C-TOTAL Beauty</span> reached more than <span>100🔥</span> impressions!!!🎉🎉</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification">
+                    <div class="content">
+                        <h3><span>@LunaTheCat</span> reached more than <span>20🔥</span> impressions!!! 🎉🎉</h3>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<%= javascript_include_tag 'navabar' %>
+<%end%>

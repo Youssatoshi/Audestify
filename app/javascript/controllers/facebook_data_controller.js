@@ -68,67 +68,79 @@ export default class extends Controller {
     this.fetchFacebookMetrics(page.id, cardContainer, page.access_token);
 
     // Create and append the button
+    // Create and append the button for Facebook page card
     const button = document.createElement('button');
     button.className = 'card-button';
     button.textContent = 'Dashboard';
+    button.addEventListener('click', () => {
+      const userAuthToken = this.authTokenValue;
+      // Redirect to the dashboard with the Facebook page ID as a parameter
+      window.location.href = `/dashboard?entity_id=${page.id}&type=facebook&page_auth_token=${page.access_token}&user_auth_token=${userAuthToken}`;
+    });
     cardContainer.appendChild(button);
 
-    // Append the card container to the accounts container
-    this.element.appendChild(cardContainer);
-    return cardContainer;
-}
+        // Append the card container to the accounts container
+        this.element.appendChild(cardContainer);
+        return cardContainer;
+    }
 
   fetchInstagramProfile(pageId, fbCard) {
     const accessToken = this.authTokenValue;
     const url = `https://graph.facebook.com/${pageId}?fields=instagram_business_account&access_token=${accessToken}`;
 
     fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (data.instagram_business_account) {
-          const instagramId = data.instagram_business_account.id;
-          const instagramUrl = `https://graph.facebook.com/${instagramId}?fields=profile_picture_url&access_token=${accessToken}`;
-          const followsCountUrl = `https://graph.facebook.com/${instagramId}?fields=followers_count&access_token=${accessToken}`;
-          const profileViewsUrl = `https://graph.facebook.com/${instagramId}/insights?metric=profile_views&period=day&access_token=${accessToken}`;
-          const latestMediaUrl = `https://graph.facebook.com/v11.0/${instagramId}/media?fields=id&limit=1&access_token=${accessToken}`;
+    .then(response => response.json())
+    .then(data => {
+      if (!data.instagram_business_account) throw new Error('Instagram Business Account not found');
+      const instagramId = data.instagram_business_account.id;
 
-          // Initial Promise.all to fetch profile picture, followers count, and profile views
-          return Promise.all([fetch(instagramUrl), fetch(followsCountUrl), fetch(profileViewsUrl), fetch(latestMediaUrl)]);
-        } else {
-          throw new Error('Instagram Business Account not found');
-        }
-      })
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(data => {
-        const profile_picture_url = data[0].profile_picture_url;
-        const followers_count = data[1].followers_count;
-        const profile_views = data[2].data[0].values[0].value;
+      // Prepare URLs for the additional data you need
+      const additionalDataUrls = [
+        `https://graph.facebook.com/${instagramId}?fields=profile_picture_url&access_token=${accessToken}`,
+        `https://graph.facebook.com/${instagramId}?fields=followers_count&access_token=${accessToken}`,
+        `https://graph.facebook.com/${instagramId}/insights?metric=profile_views&period=day&access_token=${accessToken}`,
+        `https://graph.facebook.com/v11.0/${instagramId}/media?fields=id&limit=1&access_token=${accessToken}`
+      ];
 
-        if(data[3].data.length > 0) {
-          const latestMediaId = data[3].data[0].id;
-          const likesUrl = `https://graph.facebook.com/v11.0/${latestMediaId}/insights?metric=likes&access_token=${accessToken}`;
+      // Fetch additional data and pass instagramId along with the fetched data
+      return Promise.all(additionalDataUrls.map(url => fetch(url)))
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .then(results => ({ results, instagramId })); // Pack the results and instagramId together
+    })
+    .then(({ results, instagramId }) => { // Destructure results and instagramId
+      const [profilePictureData, followersCountData, profileViewsData, latestMediaData] = results;
 
-          // Fetch likes for the latest media post
-          fetch(likesUrl)
-            .then(response => response.json())
-            .then(likesData => {
-              const likesCount = likesData.data[0].values[0].value;
+      const profile_picture_url = profilePictureData.profile_picture_url;
+      const followers_count = followersCountData.followers_count;
+      const profile_views = profileViewsData.data[0].values[0].value;
+      let likesCount = 0;
 
-              // Now, with likesCount, create the Instagram card
-              const instagramCard = this.createInstagramCard(profile_picture_url, followers_count, profile_views, likesCount);
-              fbCard.after(instagramCard);
-            })
-            .catch(error => console.error('Error fetching likes:', error));
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching Instagram profile details:', error);
-      });
+      // Assuming latestMediaData has the information about the latest media
+      if (latestMediaData.data.length > 0) {
+        const latestMediaId = latestMediaData.data[0].id;
+        const likesUrl = `https://graph.facebook.com/v11.0/${latestMediaId}/insights?metric=likes&access_token=${accessToken}`;
+
+        return fetch(likesUrl) // Fetch likes for the latest media post
+          .then(response => response.json())
+          .then(likesData => {
+            likesCount = likesData.data[0].values[0].value;
+            return { profile_picture_url, followers_count, profile_views, likesCount, instagramId }; // Pass all needed data along
+          });
+      }
+      return { profile_picture_url, followers_count, profile_views, likesCount, instagramId };
+    })
+    .then(({ profile_picture_url, followers_count, profile_views, likesCount, instagramId }) => {
+      // Now, with all data including instagramId, create the Instagram card
+      const instagramCard = this.createInstagramCard(profile_picture_url, followers_count, profile_views, likesCount, instagramId);
+      fbCard.after(instagramCard);
+    })
+    .catch(error => console.error('Error:', error));
+
   }
 
 
 
-  createInstagramCard(profilePictureUrl, followers_count, profile_views, likesCount) {
+  createInstagramCard(profilePictureUrl, followers_count, profile_views, likesCount, instagramId) {
     const cardContainer = document.createElement('div');
     cardContainer.className = 'accounts-card';
 
@@ -152,10 +164,18 @@ export default class extends Controller {
     // Create the first card content container
     this.appendMetrics(cardContainer);
     // Create the button
+// Assuming this is within the createInstagramCard function and you have access to an instagramId variable
+// Assuming instagramId is passed as an argument to createInstagramCard function
     const button = document.createElement('button');
     button.className = 'card-button';
     button.textContent = 'Dashboard';
+    button.addEventListener('click', () => {
+      const dashboardPath = `/dashboard?entity_id=${instagramId}&type=instagram`; // Make sure instagramId is available
+      window.location.href = dashboardPath; // Modify this line to use Turbolinks if applicable
+    });
     cardContainer.appendChild(button);
+
+
 
     // Finally, append the card container to the accounts container
     this.element.appendChild(cardContainer);
@@ -223,52 +243,66 @@ export default class extends Controller {
 
   fetchFacebookMetrics(pageId, cardContainer, pageAccessToken) {
     const accessToken = this.authTokenValue;
-    let totalScore = 0; // Initialize total score
-
     const fanCountUrl = `https://graph.facebook.com/${pageId}?fields=fan_count&access_token=${accessToken}`;
     const pageViewsUrl = `https://graph.facebook.com/${pageId}/insights/page_views_total?access_token=${pageAccessToken}`;
-    const latestPostUrl = `https://graph.facebook.com/${pageId}/posts?limit=1&access_token=${pageAccessToken}`;
-
-    // Helper function to handle metric values, converting "NPY" or undefined to 0
-    const handleMetricResponse = (metricValue) => {
-      return (!isNaN(metricValue) && metricValue !== undefined && metricValue !== "NPY") ? parseInt(metricValue, 10) : 0;
-    };
 
     // Fetch fan count
     fetch(fanCountUrl)
       .then(response => response.json())
       .then(data => {
-        const fanCount = handleMetricResponse(data.fan_count);
-        totalScore += fanCount;
-        return fetch(pageViewsUrl); // Chain the next fetch call
+        if (data && data.fan_count !== undefined) {
+          const fanCountMetric = cardContainer.querySelector('.chart-line-icon').nextElementSibling;
+          fanCountMetric.textContent = data.fan_count;
+        }
       })
+      .catch(error => console.error('Error fetching fan count:', error));
+
+    // Fetch page views
+    fetch(pageViewsUrl)
       .then(response => response.json())
       .then(data => {
-        const pageViews = data.data && data.data.length > 0 ? handleMetricResponse(data.data[0].values[0].value) : 0;
-        totalScore += pageViews;
-        return fetch(latestPostUrl); // Chain the next fetch call
+        if (data.data && data.data.length > 0 && data.data[0].values && data.data[0].values.length > 1) {
+          const pageViews = data.data[0].values[0].value;
+          const pageViewsMetric = cardContainer.querySelector('.eye-icon').nextElementSibling;
+          pageViewsMetric.textContent = pageViews;
+        }
       })
+      .catch(error => console.error('Error fetching page views:', error));
+
+    // Fetch latest post's likes
+    const latestPostUrl = `https://graph.facebook.com/${pageId}/posts?limit=1&access_token=${pageAccessToken}`; // Note: Using pageAccessToken here
+    fetch(latestPostUrl)
       .then(response => response.json())
       .then(data => {
         if (data.data && data.data.length > 0) {
           const latestPostId = data.data[0].id;
           const latestPostLikesUrl = `https://graph.facebook.com/${latestPostId}/insights?metric=post_reactions_by_type_total&access_token=${pageAccessToken}`;
-          return fetch(latestPostLikesUrl); // Fetch reactions for the latest post
+
+          return fetch(latestPostLikesUrl);
         } else {
+          // No posts found
           console.log("No posts available for this page.");
-          return { data: [{ values: [{ value: {} }] }] }; // Default to 0 likes if no posts are found
+          return Promise.resolve("N/A"); // Handle no posts found scenario
         }
       })
-      .then(response => {
-        if (response.json) return response.json();
-        return response; // Handle the direct return in case of no posts
-      })
+      .then(response => response === "N/A" ? "N/A" : response.json())
       .then(data => {
-        const totalReactions = data.data && data.data.length > 0 ? handleMetricResponse(Object.values(data.data[0].values[0].value).reduce((sum, current) => sum + current, 0)) : 0;
-        totalScore += totalReactions;
-        console.log(`Total Score for account ${pageId}:`, totalScore); // Log the total score for this account
+        if (data !== "N/A" && data.data && data.data.length > 0) {
+          // Sum all types of reactions
+          const reactions = data.data[0].values[0].value;
+          const totalReactions = Object.values(reactions).reduce((sum, current) => sum + current, 0);
+
+          // Log the total reactions count
+          console.log("Total Reactions for the latest post:", totalReactions);
+
+          // Example: Update a metric in the card with totalReactions
+          // This assumes you have a place in your card specifically for this metric.
+          // For demonstration purposes only; adjust according to your actual UI element.
+          const reactionsMetric = cardContainer.querySelector('.heart-icon').nextElementSibling;
+          reactionsMetric.textContent = totalReactions.toString();
+        }
       })
-      .catch(error => console.error('Error fetching metrics for account ID ' + pageId + ':', error)); // Catch any errors in the fetch chain
-  }
+      .catch(error => console.error('Error fetching latest post likes:', error));
+}
 
 }

@@ -9,9 +9,16 @@ class SocialMediaAccount < ApplicationRecord
   end
 
   def self.any_token_for_user(user_id)
-    facebook_token = where(user_id: user_id, platform_name: 'Facebook').pluck(:auth_token).first
-    return facebook_token if facebook_token.present?
+    token = where(user_id: user_id, platform_name: 'Facebook')
+            .order(created_at: :desc)
+            .pluck(:auth_token)
+            .first
+    return token if token.present?
 
-    where(user_id: user_id).pluck(:auth_token).first
+    # If no Facebook token, try to get the most recent token for any platform
+    where(user_id: user_id)
+    .order(created_at: :desc)
+    .pluck(:auth_token)
+    .first
   end
 end
