@@ -92,12 +92,172 @@
 
         <main>
             <div class="general-analytics">
-                <!-- Define a specific area for the chart -->
-                <div class="chart-area">
-                    <!-- Canvas element for the chart -->
-                    <canvas id="performanceChart"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script></canvas>
+
+              <!-- Column 1: Bar Chart -->
+                <div class="dashboard-column bar-chart">
+                  <div class="chart-container mt-5">
+                    <canvas id="barChartCanvas"></canvas>
+                  </div>
                 </div>
+
+                <!-- Column 2: Pie Chart -->
+                <div class="dashboard-column pie-chart ">
+                  <div class="chart-container mt-4">
+                    <canvas id="pieChartCanvas"></canvas>
+                  </div>
+                </div>
+
+                <!-- Column 3: Divided into two -->
+                <div class="dashboard-column small-column">
+                  <!-- Top half for metric or sentiment -->
+                  <div class="top-metric">
+                    <% emotion_with_emoji = generate_random_emotion %>
+                    <% emotion, emoji = emotion_with_emoji.split(': ') %>
+                    <div class="emoji-container mt-4">
+                      <%= emoji %> <!-- Display Emoji -->
+                    </div>
+                    <div class="emotion-name">
+                      <%= emotion %> <!-- Display Emotion Name -->
+                    </div>
+                  </div>
+                  <!-- Bottom half for another metric or detail -->
+                  <!-- Bottom half for another metric or detail -->
+                  <div class="bottom-metric" style="font-size: 12px;">
+                    <h4 style="font-size: 10.5px; font-weight: bold;">Average Engagement Rate:</h4>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: <%= @average_engagement_rate %>%;">
+                        <%= number_to_percentage(@average_engagement_rate, precision: 2) %>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
             </div>
+
+             <!-- Bar Chart for Dashboard -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                var ctxBar = document.getElementById('barChartCanvas').getContext('2d');
+
+                // Get the performance data from the controller
+                var performanceData = <%= @bar_chart_data.map { |data| data[:value] }.to_json.html_safe %>;
+
+                // Find the maximum value in the performance data to represent the best performing post
+                var maxPerformance = Math.max(...performanceData);
+
+                // Calculate the fluctuation as a percentage of the best performance
+                var fluctuationData = performanceData.map(value => (value / maxPerformance) * 100);
+
+                var barData = {
+                  labels: <%= (1..@bar_chart_data.length).map { |i| "Post ##{i}" }.to_json.html_safe %>,
+                  datasets: [
+                    {
+                      type: 'bar',
+                      label: 'Post Performance 📊',
+                      data: performanceData,
+                      backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                      borderColor: 'rgba(54, 162, 235, 1)',
+                      borderWidth: 1
+                    },
+                    {
+                      type: 'line',
+                      label: 'Performance Relative to Best Post 🚀',
+                      data: fluctuationData,
+                      backgroundColor: 'rgba(255, 99, 132, 0)',
+                      borderColor: 'rgba(255, 99, 132, 1)',
+                      borderWidth: 2,
+                      fill: false,
+                      tension: 0.4 // This will make the line a bit curved
+                    }
+                  ]
+                };
+
+                var barOptions = {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        // Include a percentage sign in the ticks
+                        callback: function(value) {
+                          return value + '%';
+                        }
+                      }
+                    }
+                  },
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      position: 'bottom',
+                    }
+                  }
+                };
+
+                new Chart(ctxBar, {
+                  type: 'bar',
+                  data: barData,
+                  options: barOptions
+                });
+              });
+            </script>
+
+             <!-- Pie Chart for Dashboard -->
+             <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  var ctxPie = document.getElementById('pieChartCanvas').getContext('2d');
+
+                  // Sample data for the pie chart
+                  var pieData = {
+                    labels: <%= (1..@media_data.length).map { |i| "Post ##{i}" }.to_json.html_safe %>,
+                    datasets: [{
+                      label: 'Post Performance',
+                      data: <%= @media_data.map { |media| media[:insights][:total_interactions] }.to_json.html_safe %>,
+                      backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                      ],
+                      borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                    }]
+                  };
+
+                  // Options for the pie chart
+                  var pieOptions = {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 1.5,
+                    plugins: {
+                      legend: {
+                        position: 'bottom'
+                      }
+                    }
+                  };
+
+                  // Initialize the pie chart
+                  new Chart(ctxPie, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                  });
+                });
+              </script>
+
+
+
             <div class="unique-card-container">
               <% @media_data.each do |media| %>
                 <div class="unique-card">
@@ -202,32 +362,6 @@
 <%end%>
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var ctx = document.getElementById('performanceChart').getContext('2d');
-        var performanceChart = new Chart(ctx, {
-            type: 'bar', // Change to desired type
-            data: {
-                labels: ['Post 1', 'Post 2', 'Post 3'], // Example labels
-                datasets: [{
-                    label: 'Performance Metric',
-                    data: [10, 20, 30], // Example data
-                    backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-                    borderColor: ['rgba(255,99,132,1)'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    });
-</script>
 
 <script>
     document.querySelector('.flip-container-unique').addEventListener('click', function() {

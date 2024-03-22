@@ -146,25 +146,79 @@
   box-sizing: border-box; /* Includes padding in the element's total width and height */
 }
 
-.chart-area {
-  /* Adjusts the chart area to provide padding and possibly a border */
-  padding: 15px;
-  background-color: #f9f9f9; /* Light background color for the chart area */
-  border-radius: 8px; /* Optional: Adds rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for depth */
-  margin: auto; /* Center the chart area if its width is less than 100% */
-}
-
-canvas#performanceChart {
-  /* Makes the canvas responsive */
-  width: 100% !important; /* Forces the canvas to expand to the full width of its container */
-  max-width: 600px; /* Ensures the canvas doesn't overflow its container */
-  height: auto !important; /* Adjust height automatically based on the width to maintain aspect ratio */
-}
 
 @media (max-width: 768px) {
   /* For smaller screens, you might want to adjust padding or margins */
   .general-analytics, .chart-area {
       padding: 10px;
   }
+}
+
+.general-analytics {
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr; /* Adjust the ratio based on your preference */
+  gap: 20px;
+  padding: 20px;
+}
+
+.dashboard-column {
+  background: #fff; /* Background color for the column */
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bar-chart, .pie-chart {
+  /* Additional styling specific to bar and pie chart sections if necessary */
+
+}
+
+.small-column {
+  display: grid;
+  grid-template-rows: 1fr 1fr; /* Divide the small column into two rows */
+  gap: 20px;
+  width:150px;
+}
+
+.top-metric, .bottom-metric {
+  /* Additional styling specific to the top and bottom metric sections if necessary */
+}
+
+.top-metric {
+  text-align: center;
+}
+
+.emoji-container {
+  font-size: 45px; /* Adjust size as needed */
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.emotion-name {
+  font-size: 16px;
+  color: #333;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.bottom-metric .progress-bar {
+  background-color: #9398ed94;
+  border-radius: 10px;
+  padding: 3px;
+  margin-top: 5px;
+}
+
+.bottom-metric .progress-fill {
+  background-color: #ffc65a;
+  text-align: right;
+  border-radius: 8px;
+  padding: 5px;
+  color: white;
+  /* Dynamically set width via inline style */
 }

@@ -19,7 +19,24 @@ class DashboardController < ApplicationController
       else
         Rails.logger.info "No access token found for user #{current_user.id}"
       end
+
+      @bar_chart_data = @media_data.map do |media|
+        {
+          label: media[:url], # This should be a unique identifier for the post
+          value: media[:insights][:likes].to_i +
+                 media[:insights][:comments_count].to_i +
+                 media[:insights][:reach].to_i +
+                 media[:insights][:total_interactions].to_i
+        }
+      end
     end
+
+    total_engagement = @media_data.sum { |media| media[:insights][:likes].to_i + media[:insights][:comments_count].to_i }
+    total_reach = @media_data.sum { |media| media[:insights][:reach].to_i }
+    @average_engagement_rate = total_engagement.to_f / total_reach * 100
+
+
+
   end
 
   private
