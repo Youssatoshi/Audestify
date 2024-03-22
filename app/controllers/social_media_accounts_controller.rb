@@ -22,10 +22,4 @@ class SocialMediaAccountsController < ApplicationController
 
   def index
   end
-
-  private
-
-  def social_media_account_params
-    params.require(:social_media_account).permit(:auth_token)
-  end
 end

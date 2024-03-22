@@ -1,10 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
+
+
+
 export default class extends Controller {
   static values = { authToken: String }
 
     connect() {
-      this.fetchFacebookData();
+      this.dataStore = {};
+      this.fetchFacebookData().then(() => {this.generateFacebookComparisonChart(); this.generateSocialMediaPieChart();
+      });
     }
 
     fetchFacebookData() {
@@ -81,61 +86,86 @@ export default class extends Controller {
 
         // Append the card container to the accounts container
         this.element.appendChild(cardContainer);
+
+        if (!this.dataStore[page.id]) this.dataStore[page.id] = {};
+        this.dataStore[page.id].profilePictureUrl = profileImage.src;
+
+        // Continue with fetching Facebook-specific metrics
+
         return cardContainer;
     }
 
-  fetchInstagramProfile(pageId, fbCard) {
-    const accessToken = this.authTokenValue;
-    const url = `https://graph.facebook.com/${pageId}?fields=instagram_business_account&access_token=${accessToken}`;
+    fetchInstagramProfile(pageId, fbCard) {
+      const accessToken = this.authTokenValue;
+      const url = `https://graph.facebook.com/${pageId}?fields=instagram_business_account&access_token=${accessToken}`;
 
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      if (!data.instagram_business_account) throw new Error('Instagram Business Account not found');
-      const instagramId = data.instagram_business_account.id;
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+          if (!data.instagram_business_account) throw new Error('Instagram Business Account not found');
+          const instagramId = data.instagram_business_account.id;
 
-      // Prepare URLs for the additional data you need
-      const additionalDataUrls = [
-        `https://graph.facebook.com/${instagramId}?fields=profile_picture_url&access_token=${accessToken}`,
-        `https://graph.facebook.com/${instagramId}?fields=followers_count&access_token=${accessToken}`,
-        `https://graph.facebook.com/${instagramId}/insights?metric=profile_views&period=day&access_token=${accessToken}`,
-        `https://graph.facebook.com/v11.0/${instagramId}/media?fields=id&limit=1&access_token=${accessToken}`
-      ];
+          if (!this.dataStore[instagramId]) {
+              this.dataStore[instagramId] = { platform: 'Instagram' };
+          }
 
-      // Fetch additional data and pass instagramId along with the fetched data
-      return Promise.all(additionalDataUrls.map(url => fetch(url)))
-        .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(results => ({ results, instagramId })); // Pack the results and instagramId together
-    })
-    .then(({ results, instagramId }) => { // Destructure results and instagramId
-      const [profilePictureData, followersCountData, profileViewsData, latestMediaData] = results;
+          // Prepare URLs for the additional data you need
+          const additionalDataUrls = [
+              `https://graph.facebook.com/${instagramId}?fields=profile_picture_url&access_token=${accessToken}`,
+              `https://graph.facebook.com/${instagramId}?fields=followers_count&access_token=${accessToken}`,
+              `https://graph.facebook.com/${instagramId}/insights?metric=profile_views&period=day&access_token=${accessToken}`,
+              `https://graph.facebook.com/v11.0/${instagramId}/media?fields=id&limit=1&access_token=${accessToken}`
+          ];
 
-      const profile_picture_url = profilePictureData.profile_picture_url;
-      const followers_count = followersCountData.followers_count;
-      const profile_views = profileViewsData.data[0].values[0].value;
-      let likesCount = 0;
+          // Fetch additional data and pass instagramId along with the fetched data
+          return Promise.all(additionalDataUrls.map(url => fetch(url)))
+          .then(responses => Promise.all(responses.map(response => response.json())))
+          .then(results => ({ results, instagramId }));
+      })
+      .then(({ results, instagramId }) => {
+          const [profilePictureData, followersCountData, profileViewsData, latestMediaData] = results;
 
-      // Assuming latestMediaData has the information about the latest media
-      if (latestMediaData.data.length > 0) {
-        const latestMediaId = latestMediaData.data[0].id;
-        const likesUrl = `https://graph.facebook.com/v11.0/${latestMediaId}/insights?metric=likes&access_token=${accessToken}`;
+          this.dataStore[instagramId].profilePictureUrl = profilePictureData.profile_picture_url;
+          this.dataStore[instagramId].followersCount = followersCountData.followers_count;
+          this.dataStore[instagramId].profileViews = profileViewsData.data[0].values[0].value;
 
-        return fetch(likesUrl) // Fetch likes for the latest media post
-          .then(response => response.json())
-          .then(likesData => {
-            likesCount = likesData.data[0].values[0].value;
-            return { profile_picture_url, followers_count, profile_views, likesCount, instagramId }; // Pass all needed data along
-          });
-      }
-      return { profile_picture_url, followers_count, profile_views, likesCount, instagramId };
-    })
-    .then(({ profile_picture_url, followers_count, profile_views, likesCount, instagramId }) => {
-      // Now, with all data including instagramId, create the Instagram card
-      const instagramCard = this.createInstagramCard(profile_picture_url, followers_count, profile_views, likesCount, instagramId);
-      fbCard.after(instagramCard);
-    })
-    .catch(error => console.error('Error:', error));
+          let likesCount = 0;
 
+          // Assuming latestMediaData has the information about the latest media
+          if (latestMediaData.data.length > 0) {
+              const latestMediaId = latestMediaData.data[0].id;
+              const likesUrl = `https://graph.facebook.com/v11.0/${latestMediaId}/insights?metric=likes&access_token=${accessToken}`;
+
+              return fetch(likesUrl) // Fetch likes for the latest media post
+              .then(response => response.json())
+              .then(likesData => {
+                  likesCount = likesData.data[0].values[0].value;
+                  this.dataStore[instagramId].likesCount = likesCount;
+                  // Now, with all data including instagramId, create the Instagram card
+                  const instagramCard = this.createInstagramCard(
+                      this.dataStore[instagramId].profilePictureUrl,
+                      this.dataStore[instagramId].followersCount,
+                      this.dataStore[instagramId].profileViews,
+                      likesCount,
+                      instagramId
+                  );
+                  fbCard.after(instagramCard);
+              });
+          } else {
+              // No posts available
+              this.dataStore[instagramId].likesCount = "N/A";
+              // Even without likes data, create and append the Instagram card
+              const instagramCard = this.createInstagramCard(
+                  this.dataStore[instagramId].profilePictureUrl,
+                  this.dataStore[instagramId].followersCount,
+                  this.dataStore[instagramId].profileViews,
+                  "N/A", // Placeholder for no likes data
+                  instagramId
+              );
+              fbCard.after(instagramCard);
+          }
+      })
+      .catch(error => console.error('Error:', error));
   }
 
 
@@ -225,7 +255,7 @@ export default class extends Controller {
 
       const text = document.createElement('span');
       text.className = 'metric-text';
-      text.textContent = metric.emoji ? 'N/A' :  text.textContent = isFacebook ? 'NPY' : 'N/A'; ;
+      text.textContent = metric.emoji ? 'N/A' :  text.textContent = isFacebook ? 0 : 'N/A'; ;
 
       // Add a special class if the metric has an emoji
       if (metric.emoji) {
@@ -246,6 +276,10 @@ export default class extends Controller {
     const fanCountUrl = `https://graph.facebook.com/${pageId}?fields=fan_count&access_token=${accessToken}`;
     const pageViewsUrl = `https://graph.facebook.com/${pageId}/insights/page_views_total?access_token=${pageAccessToken}`;
 
+    if (!this.dataStore[pageId]) {
+      this.dataStore[pageId] = {};
+    }
+
     // Fetch fan count
     fetch(fanCountUrl)
       .then(response => response.json())
@@ -253,6 +287,8 @@ export default class extends Controller {
         if (data && data.fan_count !== undefined) {
           const fanCountMetric = cardContainer.querySelector('.chart-line-icon').nextElementSibling;
           fanCountMetric.textContent = data.fan_count;
+          this.dataStore[pageId].fanCount = data.fan_count;
+          this.checkDataLoaded();
         }
       })
       .catch(error => console.error('Error fetching fan count:', error));
@@ -265,6 +301,9 @@ export default class extends Controller {
           const pageViews = data.data[0].values[0].value;
           const pageViewsMetric = cardContainer.querySelector('.eye-icon').nextElementSibling;
           pageViewsMetric.textContent = pageViews;
+          this.dataStore[pageId].pageViews = pageViews;
+          console.log(`Page views for page ${pageId}:`, pageViews);
+          this.checkDataLoaded();
         }
       })
       .catch(error => console.error('Error fetching page views:', error));
@@ -291,6 +330,8 @@ export default class extends Controller {
           // Sum all types of reactions
           const reactions = data.data[0].values[0].value;
           const totalReactions = Object.values(reactions).reduce((sum, current) => sum + current, 0);
+          this.dataStore[pageId].totalReactions = totalReactions;
+          this.checkDataLoaded();
 
           // Log the total reactions count
           console.log("Total Reactions for the latest post:", totalReactions);
@@ -303,6 +344,150 @@ export default class extends Controller {
         }
       })
       .catch(error => console.error('Error fetching latest post likes:', error));
+
+
 }
+     // Inside your Stimulus controller
+
+      checkDataLoaded() {
+        // Assuming this method checks if all data is loaded
+        console.log("DataStore contents:", this.dataStore);
+        this.generateFacebookComparisonChart(); // Call chart generation here
+        this.generateSocialMediaPieChart()
+      }
+
+      generateFacebookComparisonChart() {
+        const labels = [];
+        const facebookEngagementData = [];
+        const instagramEngagementData = [];
+
+        // Go through each entry in the data store
+        Object.entries(this.dataStore).forEach(([pageId, pageInfo]) => {
+          // For Facebook pages
+          if (!pageInfo.platform) { // Assuming no platform specified means it's a Facebook page
+            labels.push(`Fb.#${labels.length + 1}`);
+            facebookEngagementData.push((pageInfo.fanCount || 0) + (pageInfo.pageViews || 0) + (pageInfo.totalReactions || 0));
+            instagramEngagementData.push(0); // Push zero to keep the arrays aligned
+          }
+          // For Instagram accounts
+          else if (pageInfo.platform === 'Instagram') {
+            labels.push(`Ig.#${labels.length + 1}`);
+            instagramEngagementData.push((pageInfo.followersCount || 0) + (pageInfo.profileViews || 0) + (pageInfo.likesCount || 0));
+            facebookEngagementData.push(0); // Push zero to keep the arrays aligned
+          }
+        });
+
+        const ctx = document.getElementById('barChartCanvas').getContext('2d');
+        // Destroy the chart before creating a new one if it already exists
+        if (window.myFacebookComparisonChart) {
+          window.myFacebookComparisonChart.destroy();
+        }
+
+        // Create a new chart
+        window.myFacebookComparisonChart = new Chart(ctx, {
+          type: 'bar', // This specifies that the base chart is a bar chart
+          data: {
+            labels: labels,
+            datasets: [
+              // Facebook Bar Dataset
+              {
+                label: 'Facebook Engagement',
+                data: facebookEngagementData,
+                backgroundColor: 'rgba(59, 89, 152, 0.6)',
+                borderColor: 'rgba(59, 89, 152, 1)',
+                borderWidth: 1,
+                type: 'bar',
+              },
+              // Instagram Bar Dataset
+              {
+                label: 'Instagram Engagement',
+                data: instagramEngagementData,
+                backgroundColor: 'rgba(193, 53, 132, 0.6)',
+                borderColor: 'rgba(193, 53, 132, 1)',
+                borderWidth: 1,
+                type: 'bar',
+              },
+              // Progression Lines
+              // They simply mirror the data in the bar datasets to trace the top
+              {
+                label: 'Facebook Progression',
+                data: facebookEngagementData, // Same data as Facebook bar
+                borderColor: 'rgba(59, 89, 152, 1)',
+                type: 'line',
+                fill: false,
+                pointRadius: 0, // No points, just a line
+              },
+              {
+                label: 'Instagram Progression',
+                data: instagramEngagementData, // Same data as Instagram bar
+                borderColor: 'rgba(193, 53, 132, 1)',
+                type: 'line',
+                fill: false,
+                pointRadius: 0, // No points, just a line
+              }
+            ]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+
+      generateSocialMediaPieChart() {
+        let totalFacebookEngagement = 0;
+        let totalInstagramEngagement = 0;
+
+        // Sum up engagement for each platform
+        Object.entries(this.dataStore).forEach(([pageId, pageInfo]) => {
+          if (!pageInfo.platform) { // Sum for Facebook pages
+            totalFacebookEngagement += Number(pageInfo.fanCount || 0) + Number(pageInfo.pageViews || 0) + Number(pageInfo.totalReactions || 0);
+          } else if (pageInfo.platform === 'Instagram') { // Sum for Instagram accounts
+            totalInstagramEngagement += Number(pageInfo.followersCount || 0) + Number(pageInfo.profileViews || 0) + Number(pageInfo.likesCount || 0);
+          }
+        });
+
+        const ctx = document.getElementById('pieChartCanvas').getContext('2d');
+        if (window.mySocialMediaPieChart) {
+          window.mySocialMediaPieChart.destroy();
+        }
+
+        window.mySocialMediaPieChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['Facebook', 'Instagram'],
+            datasets: [{
+              data: [totalFacebookEngagement, totalInstagramEngagement],
+              backgroundColor: [
+                'rgba(59, 89, 152, 0.6)', // Facebook color
+                'rgba(193, 53, 132, 0.6)' // Instagram color
+              ],
+              borderColor: [
+                'rgba(59, 89, 152, 1)',
+                'rgba(193, 53, 132, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.5,
+            legend: {
+              position: 'top',
+            },
+            animation: {
+              animateScale: true,
+              animateRotate: true
+            }
+          }
+        });
+      }
+
+
+
 
 }

@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   resources :social_media_accounts, only: [:create, :index]
   resources :posts, only: [:show, :new, :create, :update]
   resources :library, only: [:index]
+  post '/social_media_accounts/receive_data', to: 'social_media_accounts#receive_data'
+
+
 
   # Custom route for deleting SocialMediaAccount
   delete '/socialmediaaccounts/:id', to: 'social_media_accounts#destroy', as: 'destroy_social_media'

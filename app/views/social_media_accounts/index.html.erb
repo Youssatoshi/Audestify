@@ -77,12 +77,27 @@
   </aside>
 
         <main>
-
-            <div class="general-analytics">
-                <div class="data">
-                <p class="center"> </p>
-                </div>
+          <div class="general-analyticos">
+            <!-- Large Column for Bar Chart -->
+            <div class="large-chart-column">
+              <div class="chart-container mt-4">
+                <canvas id="barChartCanvas"></canvas>
+              </div>
             </div>
+
+            <!-- Small Column for Metrics and Pie Chart -->
+            <div class="small-metrics-column">
+              <!-- Top Metric Row -->
+              <div class="metric-row top-metric">
+                <!-- Insert your emoji and metric display here -->
+              </div>
+              <!-- Bottom Metric Row -->
+              <div class="metric-row bottom-metric">
+                <canvas id="pieChartCanvas"></canvas>
+              </div>
+            </div>
+          </div>
+
 
 
             <div class="accounts">
@@ -140,5 +155,6 @@
     </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <%= javascript_include_tag 'navabar' %>

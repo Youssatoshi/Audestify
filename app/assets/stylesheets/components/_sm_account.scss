@@ -24,8 +24,7 @@ main .general-analytics {
   justify-content: space-around;
   cursor: pointer;
   transition: all 0.3s ease;
-  height: 1210px;
-  max-height: 36.3%;
+  max-height: 34.5%;
   overflow-y: auto;
   width: 100%;
   margin-bottom: 20px; /* Ensures the container is fully responsive */
@@ -319,3 +318,46 @@ main .accounts .account-card .account-logo img {
     transform: scale(1.1); /* A subtle 'thinking' pulse */
   }
 }
+
+.general-analyticos {
+  display: flex;
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 99px;
+  height: 350px;
+}
+
+.large-chart-column {
+  background: #fff; /* Background color for the column */
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  width: 66.66%; /* approx 2/3 of the container */
+  padding-right: 10px; /* or any spacing as needed */
+  margin-right: 15px;
+}
+
+.small-metrics-column {
+  width: 33.33%; /* approx 1/3 of the container */
+  display: flex;
+  flex-direction: column;
+  background: #fff; /* Background color for the column */
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.metric-row {
+  flex: 1; /* equally divide the space in the column */
+  margin-bottom: 10px; /* or any spacing as needed */
+  background: #fff; /* Background color for the column */
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Add some padding if needed and adjust margins to suit your layout */
