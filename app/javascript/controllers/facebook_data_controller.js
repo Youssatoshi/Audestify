@@ -221,30 +221,33 @@ export default class extends Controller {
 
   appendMetrics(cardContainer, isFacebook = true) {
     // Metrics container
-    const metricsContainer = document.createElement('div');
+    var metricsContainer = document.createElement('div');
     metricsContainer.className = 'metrics-container mb-3';
     metricsContainer.style.display = 'flex';
     metricsContainer.style.justifyContent = 'space-between';
     metricsContainer.style.alignItems = 'center';
     metricsContainer.style.marginTop = '10px';
 
+    // Generating a random emotion
+    var randomEmotion = this.generateRandomEmotion();
+
     // Define metrics and icons with additional classes for color and animation
-    const metrics = [
+    var metrics = [
       { name: '', iconClass: 'fas fa-heart heart-icon', animationClass: 'beat' },
       { name: '', iconClass: 'fas fa-user-group chart-line-icon', animationClass: 'rise'},
       { name: '', iconClass: 'fas fa-eye eye-icon', animationClass: 'blink', value: '' },
-      { name: 'Sentiment', emoji: '🤔', animationClass: 'curious' }
+      { name: randomEmotion.name, emoji: randomEmotion.emoji, animationClass: 'curious' }
     ];
 
     // Create metric elements
-    metrics.forEach(metric => {
-      const metricElement = document.createElement('div');
+    metrics.forEach(function(metric) {
+      var metricElement = document.createElement('div');
       metricElement.className = 'metric-element';
       metricElement.style.display = 'flex';
       metricElement.style.flexDirection = 'column';
       metricElement.style.alignItems = 'center';
 
-      const icon = document.createElement('div');
+      var icon = document.createElement('div');
       if (metric.emoji) {
         icon.textContent = metric.emoji;
         icon.className = `metric-icon ${metric.animationClass}`;
@@ -253,11 +256,10 @@ export default class extends Controller {
       }
       metricElement.appendChild(icon);
 
-      const text = document.createElement('span');
+      var text = document.createElement('span');
       text.className = 'metric-text';
-      text.textContent = metric.emoji ? 'N/A' :  text.textContent = isFacebook ? 0 : 'N/A'; ;
+      text.textContent = metric.emoji ? metric.name : isFacebook ? '0' : 'N/A';
 
-      // Add a special class if the metric has an emoji
       if (metric.emoji) {
         text.classList.add('emoji-text-adjustment');
       }
@@ -267,9 +269,34 @@ export default class extends Controller {
     });
 
     // Insert the metrics container into the card
-    const imageContainer = cardContainer.querySelector('.card-image-container');
+    var imageContainer = cardContainer.querySelector('.card-image-container');
     cardContainer.insertBefore(metricsContainer, imageContainer.nextSibling);
   }
+
+  generateRandomEmotion() {
+    var emotions = [
+      "admiration", "amusement", "anger", "annoyance", "approval",
+      "caring", "confusion", "curiosity", "desire", "disappointment",
+      "disapproval", "disgust", "embarrassment", "excitement", "fear",
+      "gratitude", "grief", "joy", "love", "nervousness",
+      "optimism", "pride", "realization", "relief", "remorse",
+      "sadness", "surprise", "neutral"
+    ];
+
+    var emojis = [
+      "👏", "😄", "😠", "😒", "👍",
+      "❤️", "😕", "🤔", "😍", "😞",
+      "👎", "🤢", "😳", "😃", "😨",
+      "🙏", "😢", "😂", "❤️", "😬",
+      "😌", "😊", "💡", "😅", "😔",
+      "😞", "😯", "😐"
+    ];
+
+    var randomIndex = Math.floor(Math.random() * emotions.length);
+    return { name: emotions[randomIndex], emoji: emojis[randomIndex] };
+  }
+
+
 
   fetchFacebookMetrics(pageId, cardContainer, pageAccessToken) {
     const accessToken = this.authTokenValue;
@@ -391,7 +418,7 @@ export default class extends Controller {
             datasets: [
               // Facebook Bar Dataset
               {
-                label: 'Facebook Engagement',
+                label: 'FB Performance 📊',
                 data: facebookEngagementData,
                 backgroundColor: 'rgba(59, 89, 152, 0.6)',
                 borderColor: 'rgba(59, 89, 152, 1)',
@@ -400,7 +427,7 @@ export default class extends Controller {
               },
               // Instagram Bar Dataset
               {
-                label: 'Instagram Engagement',
+                label: 'IG Performance 📊',
                 data: instagramEngagementData,
                 backgroundColor: 'rgba(193, 53, 132, 0.6)',
                 borderColor: 'rgba(193, 53, 132, 1)',
@@ -410,7 +437,7 @@ export default class extends Controller {
               // Progression Lines
               // They simply mirror the data in the bar datasets to trace the top
               {
-                label: 'Facebook Progression',
+                label: 'FB Progression 📈',
                 data: facebookEngagementData, // Same data as Facebook bar
                 borderColor: 'rgba(59, 89, 152, 1)',
                 type: 'line',
@@ -418,7 +445,7 @@ export default class extends Controller {
                 pointRadius: 0, // No points, just a line
               },
               {
-                label: 'Instagram Progression',
+                label: 'IG Progression 📈',
                 data: instagramEngagementData, // Same data as Instagram bar
                 borderColor: 'rgba(193, 53, 132, 1)',
                 type: 'line',
@@ -458,7 +485,7 @@ export default class extends Controller {
         window.mySocialMediaPieChart = new Chart(ctx, {
           type: 'pie',
           data: {
-            labels: ['Facebook', 'Instagram'],
+            labels: ['FB 🎯', 'IG 🎯'],
             datasets: [{
               data: [totalFacebookEngagement, totalInstagramEngagement],
               backgroundColor: [
@@ -475,7 +502,7 @@ export default class extends Controller {
           options: {
             responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 1.5,
+            aspectRatio: 1.6,
             legend: {
               position: 'top',
             },

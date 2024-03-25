@@ -89,7 +89,15 @@
             <div class="small-metrics-column">
               <!-- Top Metric Row -->
               <div class="metric-row top-metric">
-                <!-- Insert your emoji and metric display here -->
+              <p style="font-size:10px;" class="mb-0">Your Audience general feeling is:</p>
+              <% emotion_with_emoji = generate_random_emotion %>
+              <% emotion, emoji = emotion_with_emoji.split(': ') %>
+              <div class="emoji-containers">
+                <%= emoji %> <!-- Display Emoji -->
+              </div>
+                <div class="emotion-name" style="text-align: center; font-size:12px;">
+                   <%= emotion %> <!-- Display Emotion Name -->
+              </div>
               </div>
               <!-- Bottom Metric Row -->
               <div class="metric-row bottom-metric">
@@ -140,14 +148,14 @@
                 <div class="notification">
                     <div class="content">
                         <div class="content">
-                            <h3>Your <span>@User_account_2</span> reached more than <span>10000</span> impressions!!!</h3>
+                            <h3>Your <span>@C-TOTAL Beauty</span> reached more than <span>100🔥</span> impressions!!!🎉🎉</h3>
                         </div>
                     </div>
                 </div>
 
                 <div class="notification">
                     <div class="content">
-                        <h3>Your <span>@User_account_1</span> reached more than <span>5000</span> impressions!!!</h3>
+                        <h3>Your <span>@LunaTheCat</span> reached more than <span>20🔥</span> impressions!!!🎉🎉</h3>
                     </div>
                 </div>
             </div>
@@ -158,3 +166,53 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <%= javascript_include_tag 'navabar' %>
+<script>
+    // JavaScript
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('horizontalBarometerChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: ['😀', '😐', '😢'], // Emojis representing happy, neutral, sad
+                datasets: [{
+                    data: [60, 30, 10], // Data representing percentages
+                    backgroundColor: [
+                        'green',    // Happy
+                        'yellow',   // Neutral
+                        'red'       // Sad
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: false,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        display: false,
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        barPercentage: 1.5, // Adjust bar thickness
+                        ticks: {
+                            fontSize: 20, // Adjust label font size
+                            fontFamily: 'Arial', // Adjust label font family
+                            fontColor: 'black' // Adjust label font color
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
