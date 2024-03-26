@@ -76,36 +76,54 @@
      </div>
   </aside>
 <main>
-    <div class ="geneeeeral-analytics">
+    <div class ="accooounts">
       <div class="settings_cards">
+
       <a href="<%= settings_account_path %>">
-        <div class="sard">
-          <h2>Account settings</h2>
-          <p>Manage Your Profile here</p>
+        <div class="accooounts-card ">
+
+          <div class="h22"> <i class="fa-solid fa-gear mx-2"></i> Account settings</div>
+
         </div>
       </a>
       <a href="<%= settings_notifications_path %>">
-         <div class="sard">
-           <h2>Notifications</h2>
-           <p>Check out your notifications</p>
+         <div class="accooounts-card ">
+           <div class="h22"> <i class="fa-solid fa-bell mx-2"> </i> Notifications</div>
+
          </div>
       </a>
       <a href="<%= settings_privacy_path %>" >
-        <div class="sard">
-          <h2>Privacy</h2>
-          <p>Secure your Account with Privacy settings</p>
+        <div class="accooounts-card ">
+         <div class="h22"> <i class="fa-solid fa-fingerprint mx-2"></i> Privacy</div>
          </div>
       </a>
       <a href="<%= settings_connected_accounts_path %>">
-       <div class="sard">
-         <h2>connected Accounts</h2>
-         <p>Check out your connected accounts on Social Media</p>
+       <div class="accooounts-card ">
+         <div class="h22"> <i class="fa-solid fa-wifi mx-2"></i> Connected Accounts</div>
        </div>
       </a>
     </div>
  </div>
 
 </main>
+
+<style>
+    .h22 {
+        background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline;
+        font-size: 21px;
+    }
+    .fa-solid {
+        /* Applying the gradient to the icon as well */
+        background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+</style>
 
 <div class="right-section">
   <div class="nav">

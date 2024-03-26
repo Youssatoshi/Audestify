@@ -1,22 +1,44 @@
-main .geneeeeral-analytics {
+.accooounts {
+  /* display: flex; */
+  flex-wrap: wrap;
+  gap: 1.4rem;
   background-color: var(--color-white);
   padding: var(--card-padding);
-  border-radius: var(--card-border-radius);
+  border-radius: 15px;
+  margin-top: 126px;
   box-shadow: var(--box-shadow);
+  justify-content: space-around;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 99px;
-
+  max-height: 50.5%;
+  overflow-y: auto;
+  width: 100%;
+  /* margin-left: 20px; */
 }
-
+/* Responsive individual account cards */
+.accooounts-card {
+  background-color: var(--color-white);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--card-padding);
+  width: 700px; /* Adjusts based on the parent's width */
+  height: 110px;
+  position: relative;
+  cursor: pointer;
+  margin: 16px auto; /* Centered horizontally */
+  margin-left: 45px;
+}
 .settings_cards {
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  gap: 28px;
-  margin-top: 100px;
-  margin-bottom: 50px;
-  margin-left: 306px;
+  /* gap: 28px; */
+  /* margin-top: 100px; */
+  /* margin-bottom: 50px; */
+  /* margin-left: 262px; */
   width: 474px;
   text-align: center;
 }
