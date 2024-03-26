@@ -1,0 +1,163 @@
+.unique-card-containerrr {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: center; /* Centers the cards in the container */
+  padding-top: 20px; /* Space above the card container */
+}
+
+.unique-cardrr {
+  flex: 0 1 calc(33.333% - 20px); /* Each card takes up a third of the container width minus the gap */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  padding: 20px; /* Inner space */
+  background-color: #fff; /* Background color */
+  border-radius: 10px; /* Rounded corners */
+  /* Assign a fixed height or keep it auto based on content */
+  height: 230px; /* Example fixed height, adjust as needed */
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  align-items: center;
+  position: relative;
+}
+
+.media-containerrr {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  border-radius: 100px;
+  box-shadow: 0 0 10px rgba(97, 97, 255, 0.6); /* Add shadow effect */
+}
+
+.media-containerrr img {
+  width: 150px;
+  height:150px;
+  border-radius: 100px;
+  object-fit: cover; /* Ensure the content covers the entire container */
+}
+
+.accountosss {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  gap: 1.4rem;
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: 15px;
+  margin-top: 39px;
+  box-shadow: var(--box-shadow);
+  justify-content: space-around;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  max-height: 50.5%;
+  overflow-y: auto;
+  width: 100%;
+  margin-bottom: 20px; /* Ensures the container is fully responsive */
+}
+
+.select-all-container {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  left: 21px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.select-all-container input[type="checkbox"] {
+  margin-right: 5px; /* Space between checkbox and label */
+}
+
+.card-checkbox {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.accountosss-card {
+  background-color: var(--color-white);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--card-padding);
+  width: 700px; /* Adjusts based on the parent's width */
+  height: 110px;
+  position: relative;
+  cursor: pointer;
+  margin: 16px auto; /* Centered horizontally */
+}
+
+/* Custom scrollbar styles */
+.accountosss::-webkit-scrollbar {
+  width: 8px; /* Scrollbar width */
+}
+
+.accountosss::-webkit-scrollbar-track {
+  background: var(--color-white); /* Scrollbar track color */
+  border-radius: var(--card-border-radius);
+  box-shadow: inset 0 0 2px grey; /* Adds inset shadow to the track */
+}
+
+.accountosss::-webkit-scrollbar-thumb {
+  background: var(--color-primary); /* Scrollbar thumb color */
+  border-radius: var(--card-border-radius);
+  border: 2px solid var(--color-white); /* Adds a white border around the thumb */
+}
+
+.accountosss::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary); /* Scrollbar thumb color on hover */
+}
+
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Circle shape */
+  width: 12px; /* Checkbox size */
+  height: 12px; /* Checkbox size */
+  border-radius: 50%; /* Circle shape */
+
+  border: 2px solid #9398ed94; /* Border color */
+  background-color: transparent; /* Transparent background */
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #9398ed94; /* Background color when checked */
+  border-color: #9398ed94; /* Border color to match the background */
+}
+
+/* Optional: Style for the checked state to include a checkmark or some indicator */
+input[type="checkbox"]:checked:after {
+
+  color: #fff; /* Checkmark color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px; /* Adjust as needed */
+}
+
+.weird{
+  font-size: 13px;
+  color:  #9398ed;
+  font-weight: 500;
+}
+
+.myicon{
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+}
+
+.fa-instagram {
+  font-size: 25px; /* Adjust the size as needed */
+  background: -webkit-linear-gradient(right, #833ab4, #fd1d1d, #fcb045);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block; /* Ensures the gradient applies correctly */
+}
