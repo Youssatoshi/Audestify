@@ -1,0 +1,220 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+
+<div class = "all">
+ <div class="page-container">
+    <!-- Navbar -->
+  <aside>
+    <div class="toggle">
+        <div class="logo">
+          <img src="<%= asset_path('LOGOS.png') %>" alt="logo" style="width: 45px; height: auto;"> <!-- Adjust the width as needed -->
+          <h2 class = "mt-2" style="font-size: 25px;">Audestify<span class="danger"></span></h2>
+        </div>
+        <div class="close" id="close-btn">
+            <span class="material-icons-sharp">
+              close
+            </span>
+        </div>
+    </div>
+
+     <div class="sidebar">
+
+       <a href="<%= social_sync_index_path %>" class="active">
+          <span class="material-icons-sharp">
+              sync
+          </span>
+          <h3>Social Sync</h3>
+        </a>
+        <a href="analytics.html">
+            <span class="material-icons-sharp">
+                insights
+            </span>
+            <h3>General Analytics</h3>
+        </a>
+        <a href="dashboard.html">
+            <span class="material-icons-sharp">
+                dashboard
+            </span>
+            <h3>Dashboard</h3>
+        </a>
+        <a href="publish_center.html">
+            <span class="material-icons-sharp">
+                library_add
+            </span>
+            <h3>Publish Center</h3>
+        </a>
+        <a href="content_library.html">
+            <span class="material-icons-sharp">
+                photo_library
+            </span>
+            <h3>Content Library</h3>
+        </a>
+        <a  href="#">
+            <span class="material-icons-sharp">
+                groups
+            </span>
+            <h3>Collaboration Hub</h3>
+        </a>
+        <a href="settings.html">
+            <span class="material-icons-sharp">
+                settings
+            </span>
+            <h3>Settings</h3>
+        </a>
+        <a href="new_login.html">
+            <span class="material-icons-sharp">
+                add
+            </span>
+            <h3>New Login</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">
+                logout
+            </span>
+            <h3>Logout</h3>
+        </a>
+     </div>
+  </aside>
+
+<div class="notification-settings">
+    <h1>Notification Settings</h1>
+
+    <div class="notification-category">
+        <div class="category-header">
+            <h2 class="category-title">Email Notifications</h2>
+            <span class="category-subtitle">Receive notifications via email</span>
+        </div>
+        <div class="notification-method">
+            <span>Enable Email Notifications:</span>
+            <label class="switch">
+                <input type="checkbox" id="email-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="notification-category">
+        <div class="category-header">
+            <h2 class="category-title">Push Notifications</h2>
+            <span class="category-subtitle">Receive notifications on your device</span>
+        </div>
+        <div class="notification-method">
+            <span>Enable Push Notifications:</span>
+            <label class="switch">
+                <input type="checkbox" id="push-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Add more notification categories as needed -->
+
+    <button id="save-settings">Save Settings</button>
+
+
+    <!-- Include back arrow link -->
+  <div class="back-arrow">
+  <%= link_to 'Back', settings_show_path %>
+  </div>
+</div>
+
+<style>
+.notification-settings {
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    max-width: 500px;
+    margin: auto;
+    width: 700px;
+    height: 500px;
+    margin-top: 100px;
+    margin-left: 250px;
+}
+
+h1 {
+    color: #1c1e21;
+    font-size: 30px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.notification-category {
+    border-top: 1px solid #ccd0d5;
+    padding-top: 16px;
+    margin-top: 16px;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.category-title {
+    font-weight: bold;
+}
+
+.category-subtitle {
+    color: #606770;
+    font-size: 12px;
+}
+
+.notification-method {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #94B9FF;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #94B9FF;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+</style>

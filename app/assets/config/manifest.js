@@ -5,3 +5,5 @@
 //= link popper.js
 //= link bootstrap.min.js
 //= link application.css
+//= require Chart.bundle
+//= require chartkick

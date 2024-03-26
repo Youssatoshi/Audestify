@@ -1,0 +1,329 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+<div class = "all">
+ <div class="page-container">
+    <!-- Navbar -->
+  <aside>
+    <div class="toggle">
+        <div class="logo">
+          <img src="<%= asset_path('LOGOS.png') %>" alt="logo" style="width: 45px; height: auto;"> <!-- Adjust the width as needed -->
+          <h2 class = "mt-2" style="font-size: 25px;">Audestify<span class="danger"></span></h2>
+
+        </div>
+        <div class="close" id="close-btn">
+            <span class="material-icons-sharp">
+              close
+            </span>
+        </div>
+    </div>
+
+     <div class="sidebar">
+
+       <a href="<%= social_sync_index_path %>">
+          <span class="material-icons-sharp">
+              sync
+          </span>
+          <h3>Social Sync</h3>
+        </a>
+        <a href="<%= social_media_accounts_path %>">
+            <span class="material-icons-sharp">
+                insights
+            </span>
+            <h3>General Analytics</h3>
+        </a>
+        <a href="dashboard.html">
+            <span class="material-icons-sharp">
+                dashboard
+            </span>
+            <h3>Dashboard</h3>
+        </a>
+        <a href="<%=posts_path%>">
+            <span class="material-icons-sharp">
+                library_add
+            </span>
+            <h3>Publish Center</h3>
+        </a>
+        <a href="<%=library_index_path%>">
+            <span class="material-icons-sharp">
+                photo_library
+            </span>
+            <h3>Content Library</h3>
+        </a>
+        <a  href="<%= collaboration_hubs_path %>" class="active">
+            <span class="material-icons-sharp">
+                groups
+            </span>
+            <h3>Collaboration Hub</h3>
+        </a>
+        <a href="settings.html">
+            <span class="material-icons-sharp">
+                settings
+            </span>
+            <h3>Settings</h3>
+        </a>
+        <a href="new_login.html">
+            <span class="material-icons-sharp">
+                add
+            </span>
+            <h3>New Login</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">
+                logout
+            </span>
+            <h3>Logout</h3>
+        </a>
+     </div>
+  </aside>
+
+        <main>
+
+          <div class="general-analyticsitas">
+              <!-- First Column -->
+              <div class="columnositass" style="float: left; width: 50%;">
+                  <div class="charot-container">
+                    <!-- Unique Canvas ID for Collaboration Chart -->
+                    <canvas id="collabora-feddsfsdf-canva" style="display: block;box-sizing: border-box;height: 174px;width: 348px;margin-top: 35px;"></canvas>
+                  </div>
+              </div>
+
+              <div class="columnositas" style="float: right; width: 50%;">
+                <!-- Pie Chart Container -->
+                <div class="chart-container">
+                  <!-- Unique Canvas ID for Pie Chart -->
+                    <canvas id="total-collab-money-pie" style="max-width: 300px;max-height: 300px;display: block;box-sizing: border-box;height: 186px;width: 316px;margin-top: 15px;"></canvas>
+                </div>
+              </div>
+
+          </div>
+
+        <div class="search-bar-container-5435345">
+          <form action="#" method="get" class="search-form-642356">
+            <div class="search-fields-345345">
+              <input type="text" name="location" placeholder="Location" class="search-input-546456 location-132435">
+              <input type="text" name="expertise" placeholder="Expertise" class="search-input-546456 expertise-542134">
+              <input type="text" name="price" placeholder="Price" class="search-input-546456 price-543465">
+              <input type="text" name="search" placeholder="Search" class="search-input-546456 search-text-213546">
+            </div>
+            <button type="submit" class="search-button-2132156">Search</button>
+          </form>
+        </div>
+
+          <div class="containeer">
+            <div class="row">
+              <% @collaboration_hubs.each do |hub| %>
+                <div class="col-md-3 mb-4">
+                  <a href="<%= collaboration_hubs_path(hub) %>" class="card-link">
+                  <div class="card h-100">
+                    <div class="profile-image-container">
+                      <% if hub.profile_picture_url.present? %>
+                        <img src="<%= hub.profile_picture_url %>" class="profile-image" alt="Profile picture of <%= hub.name %>">
+                      <% else %>
+                        <!-- Placeholder image if no profile picture URL is provided -->
+                        <img src="https://via.placeholder.com/150" class="profile-image" alt="Default profile picture">
+                    <% end %>
+                    </div>
+                    <div class="card-bodyy d-flex flex-column">
+                      <h5 class="card-title"><%= hub.name %></h5>
+                      <p class="card-age"><%= hub.age %> years old</p>
+                      <p class="card-text"><%= hub.roles %></p>
+                      <p class="card-price"><strong><%= hub.price %> </strong> $/hour</p>
+                    </div>
+                  </div>
+                  </a>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+        </main>
+
+        <div class="right-section">
+            <div class="nav">
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div>
+            </div>
+
+            <div class="user-profile">
+                <div class="logo">
+                    <img src="<%= asset_path('149071.png') %>">
+                    <h2>UserName</h2>
+                    <p>Fullstack Web Developer</p>
+                </div>
+            </div>
+
+            <div class="notifications">
+                <div class="header">
+                    <h2>Notifications</h2>
+                    <span class="material-icons-sharp">
+                        notifications_none
+                    </span>
+                </div>
+
+                <div class="notification">
+                    <div class="content">
+                        <div class="content">
+                            <h3>Your <span>@User_account_2</span> reached more than <span>10000</span> impressions!!!</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification">
+                    <div class="content">
+                        <h3>Your <span>@User_account_1</span> reached more than <span>5000</span> impressions!!!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<%= javascript_include_tag 'navabar' %>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var collaborationCtx = document.getElementById('collabora-feddsfsdf-canva').getContext('2d');
+
+    // Creating two gradients for each dataset
+    var gradientStrokeCollaborations = collaborationCtx.createLinearGradient(0, 0, 0, 450);
+    gradientStrokeCollaborations.addColorStop(0, '#33ccff');
+    gradientStrokeCollaborations.addColorStop(1, '#ff99cc');
+
+    var gradientStrokeEarnings = collaborationCtx.createLinearGradient(0, 0, 0, 450);
+    gradientStrokeEarnings.addColorStop(0, '#ff99cc');
+    gradientStrokeEarnings.addColorStop(1, '#33ccff');
+
+    var collaborationChart = new Chart(collaborationCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar'],
+            datasets: [
+                {
+                    label: 'Number of Collaborations',
+                    data: [5, 10, 15], // Example data
+                    borderColor: gradientStrokeCollaborations,
+                    pointBackgroundColor: gradientStrokeCollaborations,
+                    borderWidth: 1,
+                    fill: false,
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'Money Made (€)',
+                    data: [1200, 1500, 1800], // Example data in Euros
+                    borderColor: gradientStrokeEarnings,
+                    pointBackgroundColor: gradientStrokeEarnings,
+                    borderWidth: 1,
+                    fill: false,
+                    yAxisID: 'y1',
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    beginAtZero: true,
+                    ticks: {
+                        padding: 10 // Adjust the padding as needed
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    beginAtZero: true,
+                    grid: {
+                      drawOnChartArea: false, // Only show the grid for this axis
+                    },
+                    ticks: {
+                        // Include a Euro sign in the ticks and add padding
+                        callback: function(value, index, values) {
+                            return '€' + value;
+                        },
+                        padding: 0 // Adjust the padding as needed
+                    }
+                },
+                x: {
+                    ticks: {
+                        padding: 0 // Adds padding between the labels and the chart
+                    }
+                }
+            },
+            elements: {
+                line: {
+                    tension: 0.4 // Adds some curve to the line
+                }
+            },
+            plugins: {
+                legend: {
+                  position: 'bottom',
+                    labels: {
+
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById('total-collab-money-pie').getContext('2d');
+    var revenuePerCollabTypeChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Marketing', 'Product Development', 'Sales Partnerships'],
+            datasets: [{
+                data: [1200, 1500, 1800], // Revenue in Euros
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.7,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            var label = context.label || '';
+                            if (label) {
+                                label += ': €';
+                            }
+                            label += context.parsed;
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+
+</script>

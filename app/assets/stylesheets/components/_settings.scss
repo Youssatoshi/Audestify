@@ -1,0 +1,61 @@
+main .geneeeeral-analytics {
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 99px;
+
+}
+
+.settings_cards {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  gap: 28px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  margin-left: 306px;
+  width: 474px;
+  text-align: center;
+}
+
+.cooooontainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 20px; /* Adjust the gap between cards */
+}
+
+/* CSS styles for the cards */
+.sard {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%; /* Card takes up full width of grid cell */
+
+}
+
+/* Additional styling for card content */
+.sard h2 {
+  margin-top: 0;
+}
+
+.sard p {
+  margin-bottom: 0;
+}
+
+
+.arrow-link {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  text-decoration: none;
+  color: #007bff;
+}
+
+.arrow-link:hover {
+  color: #0056b3;
+}

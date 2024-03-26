@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_02_144733) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_26_155114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "collaboration_hubs", force: :cascade do |t|
+    t.string "name"
+    t.text "bio"
+    t.string "address"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "roles"
+    t.integer "price"
+    t.string "profile_picture_url"
+    t.integer "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "libraries", force: :cascade do |t|
     t.bigint "user_id", null: false

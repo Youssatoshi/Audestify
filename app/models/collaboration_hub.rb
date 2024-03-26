@@ -1,0 +1,4 @@
+class CollaborationHub < ApplicationRecord
+
+
+end

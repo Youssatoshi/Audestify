@@ -115,7 +115,8 @@ main .general-analytics {
 .card-button {
   padding: 0.6rem 1.2rem; /* Adjust padding as needed */
   border: none; /* Remove default border */
-  background-color: var(--color-primary); /* Use your primary color variable */
+  background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%); /* Gradient background */
+  /* Use your primary color variable */
   color: var(--color-white); /* Text color */
   border-radius: var(--card-border-radius); /* Rounded corners */
   cursor: pointer;

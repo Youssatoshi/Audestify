@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'settings/show'
+  get 'settings/account'
+  get 'settings/notifications'
+  get 'settings/privacy'
+  get 'settings/connected_accounts'
   get 'library/index'
   get 'posts/show'
   get 'posts/new'
@@ -31,8 +36,17 @@ Rails.application.routes.draw do
   resources :social_media_accounts, only: [:create, :index]
   resources :posts
   resources :library, only: [:index]
-
+  resources :collaboration_hubs, only: [:index]
+  resource :settings, only: [:show] do
+      get 'account'
+      get 'notifications'
+      get 'privacy'
+      get 'connected_accounts'
+    # Custom route for deleting SocialMediaAccount
+    delete '/socialmediaaccounts/:id', to: 'social_media_accounts#destroy', as: 'destroy_social_media'
+  end
   post '/social_media_accounts/receive_data', to: 'social_media_accounts#receive_data'
+
 
 
 
