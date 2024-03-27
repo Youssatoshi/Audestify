@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 
@@ -19,53 +20,47 @@
 
      <div class="sidebar">
 
-       <a href="<%= social_sync_index_path %>" class="active">
+       <a href="<%= social_sync_index_path %>">
           <span class="material-icons-sharp">
               sync
           </span>
           <h3>Social Sync</h3>
         </a>
-        <a href="analytics.html">
+        <a href="<%= social_media_accounts_path %>">
             <span class="material-icons-sharp">
                 insights
             </span>
             <h3>General Analytics</h3>
         </a>
-        <a href="dashboard.html">
+        <a href="/dashboard">
             <span class="material-icons-sharp">
                 dashboard
             </span>
             <h3>Dashboard</h3>
         </a>
-        <a href="publish_center.html">
+        <a href="<%=posts_path%>">
             <span class="material-icons-sharp">
                 library_add
             </span>
             <h3>Publish Center</h3>
         </a>
-        <a href="content_library.html">
+        <a href="<%=library_index_path%>">
             <span class="material-icons-sharp">
                 photo_library
             </span>
             <h3>Content Library</h3>
         </a>
-        <a  href="#">
+        <a  href="<%= collaboration_hubs_path %>">
             <span class="material-icons-sharp">
                 groups
             </span>
             <h3>Collaboration Hub</h3>
         </a>
-        <a href="settings.html">
+        <a href="<%= settings_path %>"  class="active">
             <span class="material-icons-sharp">
                 settings
             </span>
             <h3>Settings</h3>
-        </a>
-        <a href="new_login.html">
-            <span class="material-icons-sharp">
-                add
-            </span>
-            <h3>New Login</h3>
         </a>
         <a href="#">
             <span class="material-icons-sharp">
@@ -75,92 +70,67 @@
         </a>
      </div>
   </aside>
-<div class="connected-account-settings">
+
+<main>
+
+<div class="connected-container">
   <h1>Connected Accounts</h1>
 
   <div class="account">
     <h2>Facebook</h2>
-    <p>Status: Connected</p>
+    <p>Status: <span class="green">Connected</span></p>
     <button>Disconnect</button>
   </div>
 
-
-
   <div class="account">
     <h2>Instagram</h2>
-    <p>Status: Not Connected</p>
+    <p>Status: <span class="red">Not Connected</span></p>
     <button>Connect</button>
   </div>
- <!-- Include back arrow link -->
-  <div class="back-arrow">
-  <%= link_to 'Back', settings_show_path %>
-  </div>
-  <!-- Add more connected account sections as needed -->
-
-  <footer>
-    <p>&copy; 2024 Audestify. All rights reserved.</p>
-  </footer>
 </div>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #F2FAFF;
-  padding: 20px;
-}
 
-.connected-account-settings {
-  background-color: #FFFFFF;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
-  margin: auto;
-  margin-top: 100px;
-  width: 900px;
-  margin-left: 250px;
-  text-align: center;
-}
 
-h1 {
-  color: #1c1e21;
-  font-size: 24px;
-  margin-bottom: 20px;
+</main>
 
-}
+<div class="right-section">
+  <div class="nav">
+      <div class="dark-mode">
+          <span class="material-icons-sharp active">
+              light_mode
+          </span>
+          <span class="material-icons-sharp">
+              dark_mode
+          </span>
+      </div>
+  </div>
+  <div class="user-profile">
+      <div class="logo">
+          <img src="<%= asset_path('149071.png') %>" alt="logo">
+          <h2>Youssef Boulahcen</h2>
+          <p>Content Creator</p>
+      </div>
+  </div>
+  <div class="notifications">
+      <div class="header">
+          <h2>Notifications</h2>
+          <span class="material-icons-sharp">
+              notifications_none
+          </span>
+      </div>
+      <div class="notification">
+          <div class="content">
+              <div class="content">
+                  <h3><span>@C-TOTAL Beauty</span> reached more than <span>100🔥</span> impressions!!!🎉🎉</h3>
+              </div>
+          </div>
+      </div>
+      <div class="notification">
+          <div class="content">
+              <h3><span>@LunaTheCat</span> reached more than <span>20🔥</span> impressions!!! 🎉🎉</h3>
+          </div>
+      </div>
+  </div>
+</div>
 
-.account {
-  margin-bottom: 16px;
-  border: 1px solid #94B9FF;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-h2 {
-  color: #1c1e21;
-  font-size: 20px;
-  margin-bottom: 8px;
-}
-
-p {
-  color: #606770;
-  margin-bottom: 8px;
-}
-
-button {
-  background-color: #94B9FF;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #75a6e0;
-}
-
-footer {
-  margin-top: 20px;
-  text-align: center;
-  color: #606770;
-}
-</style>
+</div>
+</div>
