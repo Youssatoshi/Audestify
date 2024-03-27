@@ -2,18 +2,13 @@
   /* display: flex; */
   flex-wrap: wrap;
   gap: 1.4rem;
-  background-color: var(--color-white);
+  background-color: transparent;
   padding: var(--card-padding);
   border-radius: 15px;
-  margin-top: 126px;
-  box-shadow: var(--box-shadow);
+  margin-top: 55px;
   justify-content: space-around;
   cursor: pointer;
-  transition: all 0.3s ease;
-  max-height: 50.5%;
-  overflow-y: auto;
   width: 100%;
-  /* margin-left: 20px; */
 }
 /* Responsive individual account cards */
 .accooounts-card {
@@ -24,22 +19,20 @@
   align-items: center;
   justify-content: center;
   padding: var(--card-padding);
-  width: 700px; /* Adjusts based on the parent's width */
   height: 110px;
   position: relative;
   cursor: pointer;
+  transition: all 0.3s ease;
   margin: 16px auto; /* Centered horizontally */
-  margin-left: 45px;
 }
+
+.accooounts-card:hover {
+  box-shadow: none;
+}
+
 .settings_cards {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* gap: 28px; */
-  /* margin-top: 100px; */
-  /* margin-bottom: 50px; */
-  /* margin-left: 262px; */
-  width: 474px;
   text-align: center;
 }
 
@@ -69,15 +62,88 @@
 }
 
 
-.arrow-link {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  text-decoration: none;
-  color: #007bff;
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 99px;
 }
 
-.arrow-link:hover {
-  color: #0056b3;
+.delete-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.connected-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 99px;
+  align-items: center;
+}
+
+.settings-container h1,
+.delete-container h1,
+.connected-container h1 {
+  text-align: center;
+}
+
+.settings-container:hover,
+.delete-container:hover,
+.connected-container:hover {
+  box-shadow: none;
+}
+
+.settings-container button,
+.delete-container button,
+.connected-container button {
+  padding: 10px 20px;
+  background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%);
+  /* Gradient background */
+  color: white;
+  border: none;
+  border-radius: 31px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.account {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.account input[type=password],
+.account input[type=text],
+.account input[type=email] {
+  margin-bottom: 10px;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+  font-weight: bold;
 }
