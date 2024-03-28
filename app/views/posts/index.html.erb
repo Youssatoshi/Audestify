@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 
+
     <div class = "all">
       <div class="page-container">
           <!-- Navbar -->
@@ -339,25 +340,37 @@
 <%= javascript_include_tag 'navabar' %>
 
 <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const selectAllCheckbox = document.getElementById('selectAll');
-        const cardCheckboxes = document.querySelectorAll('.unique-cardrr .card-checkbox');
+  document.addEventListener("turbo:load", function() {
+    const selectAllCheckbox = document.getElementById('selectAll');
+    if (!selectAllCheckbox) return; // Exit if selectAllCheckbox doesn't exist on the page
 
-        selectAllCheckbox.addEventListener('change', function() {
-          cardCheckboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
-            checkbox.closest('.unique-cardrr').classList.toggle('selected', this.checked);
-          });
-        });
+    const cardCheckboxes = document.querySelectorAll('.unique-cardrr .card-checkbox');
 
-        cardCheckboxes.forEach(checkbox => {
-          checkbox.addEventListener('change', function() {
-            this.closest('.unique-cardrr').classList.toggle('selected', this.checked);
+    // Clear previous event listeners to prevent duplication
+    selectAllCheckbox.removeEventListener('change', handleSelectAllChange);
+    cardCheckboxes.forEach(checkbox => checkbox.removeEventListener('change', handleCardCheckboxChange));
 
-            // Check if all cards are selected, update the state of selectAllCheckbox
-            const allChecked = [...cardCheckboxes].every(cb => cb.checked);
-            selectAllCheckbox.checked = allChecked;
-          });
-        });
+    // Attach event listener for select all checkbox
+    selectAllCheckbox.addEventListener('change', handleSelectAllChange);
+
+    // Attach event listener for each card checkbox
+    cardCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', handleCardCheckboxChange);
+    });
+
+    function handleSelectAllChange() {
+      cardCheckboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+        checkbox.closest('.unique-cardrr').classList.toggle('selected', this.checked);
       });
+    }
+
+    function handleCardCheckboxChange() {
+      this.closest('.unique-cardrr').classList.toggle('selected', this.checked);
+
+      // Check if all cards are selected, update the state of selectAllCheckbox
+      const allChecked = [...cardCheckboxes].every(cb => cb.checked);
+      selectAllCheckbox.checked = allChecked;
+    }
+  });
 </script>

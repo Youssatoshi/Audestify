@@ -181,10 +181,15 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var collaborationCtx = document.getElementById('collabora-feddsfsdf-canva').getContext('2d');
+  document.addEventListener("turbo:load", function() {
+    var collaborationCanvas = document.getElementById('collabora-feddsfsdf-canva');
+    if (!collaborationCanvas) return; // Guard clause for pages without this canvas
 
-    // Creating two gradients for each dataset
+    var collaborationCtx = collaborationCanvas.getContext('2d');
+
+    // Destroy any existing chart to prevent memory leaks
+    if (window.collaborationChart) window.collaborationChart.destroy();
+
     var gradientStrokeCollaborations = collaborationCtx.createLinearGradient(0, 0, 0, 450);
     gradientStrokeCollaborations.addColorStop(0, '#33ccff');
     gradientStrokeCollaborations.addColorStop(1, '#ff99cc');
@@ -193,14 +198,14 @@ document.addEventListener("DOMContentLoaded", function() {
     gradientStrokeEarnings.addColorStop(0, '#ff99cc');
     gradientStrokeEarnings.addColorStop(1, '#33ccff');
 
-    var collaborationChart = new Chart(collaborationCtx, {
+    window.collaborationChart = new Chart(collaborationCtx, {
         type: 'line',
         data: {
             labels: ['Jan', 'Feb', 'Mar'],
             datasets: [
                 {
                     label: 'Number of Collaborations',
-                    data: [5, 10, 15], // Example data
+                    data: [5, 10, 15],
                     borderColor: gradientStrokeCollaborations,
                     pointBackgroundColor: gradientStrokeCollaborations,
                     borderWidth: 1,
@@ -209,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 },
                 {
                     label: 'Money Made (€)',
-                    data: [1200, 1500, 1800], // Example data in Euros
+                    data: [1200, 1500, 1800],
                     borderColor: gradientStrokeEarnings,
                     pointBackgroundColor: gradientStrokeEarnings,
                     borderWidth: 1,
@@ -226,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     position: 'left',
                     beginAtZero: true,
                     ticks: {
-                        padding: 10 // Adjust the padding as needed
+                        padding: 10
                     }
                 },
                 y1: {
@@ -235,32 +240,30 @@ document.addEventListener("DOMContentLoaded", function() {
                     position: 'right',
                     beginAtZero: true,
                     grid: {
-                      drawOnChartArea: false, // Only show the grid for this axis
+                      drawOnChartArea: false,
                     },
                     ticks: {
-                        // Include a Euro sign in the ticks and add padding
-                        callback: function(value, index, values) {
+                        callback: function(value) {
                             return '€' + value;
                         },
-                        padding: 0 // Adjust the padding as needed
+                        padding: 0
                     }
                 },
                 x: {
                     ticks: {
-                        padding: 0 // Adds padding between the labels and the chart
+                        padding: 0
                     }
                 }
             },
             elements: {
                 line: {
-                    tension: 0.4 // Adds some curve to the line
+                    tension: 0.4
                 }
             },
             plugins: {
                 legend: {
                   position: 'bottom',
                     labels: {
-
                         font: {
                             size: 14
                         }
@@ -273,15 +276,21 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var ctx = document.getElementById('total-collab-money-pie').getContext('2d');
-    var revenuePerCollabTypeChart = new Chart(ctx, {
+  document.addEventListener("turbo:load", function() {
+    var ctx = document.getElementById('total-collab-money-pie');
+    if (!ctx) return; // Guard clause for pages without this canvas
+
+    // Destroy any existing chart to prevent memory leaks
+    if (window.revenuePerCollabTypeChart) window.revenuePerCollabTypeChart.destroy();
+
+    window.revenuePerCollabTypeChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Marketing', 'Product Development', 'Sales Partnerships'],
             datasets: [{
-                data: [1200, 1500, 1800], // Revenue in Euros
+                data: [1200, 1500, 1800],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
                     'rgba(54, 162, 235, 0.6)',
@@ -319,5 +328,4 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
 </script>

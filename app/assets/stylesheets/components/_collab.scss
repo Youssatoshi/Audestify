@@ -28,7 +28,7 @@
   position: relative;
   width: 100%;
   padding-top: 100%; /* 1:1 Aspect Ratio */
-  background-color:  white; /* Placeholder color if image doesn't load */
+  background-color: var(--color-white);/* Placeholder color if image doesn't load */
 }
 
 .profile-image {
@@ -45,18 +45,19 @@
 
 .card-bodyy {
   text-align: center;
-  background-color: white;
-  color: black;
+  background-color: var(--color-white);
+  color: var(--color-dark-variant);
 }
 
 .card-title {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
+  color: var(--color-dark-variant);
 }
 
 .card-age {
   font-size: 0.875rem;
-  color: black;
+  color: var(--color-dark-variant);
   margin-bottom: 1rem;
 }
 
@@ -65,7 +66,7 @@
 }
 
 .btn-view-profile {
-  background-color: #fff;
+  background-color: var(--color-white);
   color: #444;
   border-width: 3px;
   border-color: #e07a5f;

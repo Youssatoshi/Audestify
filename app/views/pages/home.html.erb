@@ -10,17 +10,18 @@
           <a href="">Home</a>
         <% end %>
         <a href="#features">Features</a>
-        <a href="">Community</a>
-        <a href="">Resources</a>
-        <a href="">Pricing</a>
-        <a href="">About Us</a>
-        <a href="">Contact</a>
+        <a href="#community">Community</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
     </div>
     <div class="menu session">
         <%= link_to "Log In", new_user_session_path %>
         <%= link_to "Sign Up", new_user_registration_path, class: "signup" %>
     </div>
 </div>
+
+
 <div class="banner-container">
   <video   src="feel.mp4" width="100%" height="100%" autoplay muted loop>
 
@@ -32,8 +33,10 @@
   <h1 class="title">⚙️ FEATURES ⚙️</h1>
   <div class="cards-container">
     <div class="feature-card mb-5">
-      <div class="image-container mb-4">
-         <%= image_tag "unified_analytics.png" %>
+      <div class="first">
+        <div class="image-container mb-4">
+         <%= image_tag "unified_analytics.png"%>
+        </div>
       </div>
       <h2>Unified Analytics </h2>
       <p>Get a comprehensive view of your social media performance across all platforms in one dashboard.</p>
@@ -54,6 +57,62 @@
       <h2>Emotion Insight Analytics</h2>
       <p>Dive deep into your audience's reactions with advanced emotion analysis of your posts.</p>
       <p>Understand the emotional impact of your content, and create more resonant and effective media campaigns.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="pricing-container mt-10" id="pricing">
+  <h1 class="title">💰 PRICING 💰</h1>
+  <div class="cards-container">
+    <div class="pricing-card mb-5">
+      <h2>Basic</h2>
+      <p class="text">Basic Analytics</p>
+      <p class="text-hidden">One click posting</p>
+      <p class="text-hidden">Advanced analytics</p>
+      <p>$5<span>/month</span></p>
+      <button>Purchase</button>
+    </div>
+    <div class="pricing-card mb-5">
+      <h2>Standard</h2>
+      <p class="text">Basic Analytics</p>
+      <p class="text">One click posting</p>
+      <p class="text-hidden">Advanced analytics</p>
+      <p>$10<span>/month</span></p>
+      <button>Purchase</button>
+    </div>
+    <div class="pricing-card mb-5">
+      <h2>Premium</h2>
+      <p class="text">Basic Analytics</p>
+      <p class="text">One click posting</p>
+      <p class="text">Advanced analytics</p>
+      <p>$30<span>/month</span></p>
+      <button>Purchase</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="contact-section mt-10" id="contact">
+  <h1 class="title">CONTACT</h1>
+  <div class="contact-container">
+    <div class="form-inputs">
+      <div class="form-input-group">
+        <input class="input" type="email" id="user_email" name="user[email]" required autofocus autocomplete="email">
+        <label class="label" for="user_email">Email</label>
+      </div>
+
+      <div class="form-input-group">
+        <input class="input" type="phone" id="user_password" name="user[password]" required autocomplete="current-password">
+        <label class="label" for="user_password">Phone Number</label>
+      </div>
+      <input class="btn btn-primary" type="submit" value="Submit">
+    </div>
+    <div>
+      <p>Have questions or need assistance? Don't hesitate to get in touch with us. Our team is here to help you.</p>
     </div>
   </div>
 </div>

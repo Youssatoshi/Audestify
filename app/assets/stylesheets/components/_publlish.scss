@@ -10,7 +10,7 @@
   flex: 0 1 calc(33.333% - 20px); /* Each card takes up a third of the container width minus the gap */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
   padding: 20px; /* Inner space */
-  background-color: #fff; /* Background color */
+  background-color: var(--color-white); /* Background color */
   border-radius: 10px; /* Rounded corners */
   /* Assign a fixed height or keep it auto based on content */
   height: 230px; /* Example fixed height, adjust as needed */
